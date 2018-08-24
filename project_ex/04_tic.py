@@ -8,7 +8,6 @@ Date        2018.08.24
 # Shallow and deep copy operations
 import copy
 import random
-import os
 
 
 def draw_board(board):
@@ -22,7 +21,7 @@ def draw_board(board):
      -----------
         |   |
      -----------
-    :param board: 틱택토의 현재 상태가 저장되어 있는 List
+    :param board: 틱택토 상태가 저장되어 있는 맵 List
     """
     print()
     print('-' * 11)
@@ -69,6 +68,13 @@ def make_move(board, letter, move_target):
 def is_winner(board, letter):
     """
     테스트 할 판을 입력과 말을 입력 받아서, 지금 상태가 승리 조건인지를 확인하여 반환하는 함수
+     -----------
+      1 | 2 | 3
+     -----------
+      4 | 5 | 6
+     -----------
+      7 | 8 | 9
+     -----------
     :param board: 테스트 할 판을 입력 받음
     :param letter: 'X' or 'O'
     :return: 승리: True, 패배: False
@@ -88,7 +94,7 @@ def is_winner(board, letter):
 
 def get_board_copy(board):
     """
-    컴퓨터가 둘 곳을 결정하기 위해서, 본 판이 아닌 임시의 판을 복제하는 함수
+    컴퓨터가 둘 곳을 결정하기 위해서, 본 판이 아닌 임시의 판을 복제하는 함수 (1)
     :param board: 본 판의 상태가 저장되어 있는 list 를 입력 받음
     :return: 복사한 list 를 반환함
     """
@@ -102,7 +108,7 @@ def get_board_copy(board):
 
 def get_board_copy_other(board):
     """
-    컴퓨터가 둘 곳을 결정하기 위해서, 본 판이 아닌 임시의 판을 복제하는 함수
+    컴퓨터가 둘 곳을 결정하기 위해서, 본 판이 아닌 임시의 판을 복제하는 함수 (2)
     copy 라이브러리 활용 / https://docs.python.org/ko/3/library/copy.html
     :param board: 본 판의 상태가 저장되어 있는 list 를 입력 받음
     :return: 복사한 list 를 반환함
