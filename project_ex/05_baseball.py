@@ -17,10 +17,10 @@ def get_secret_num(num_digits):
     :param num_digits: 원하는 문자열의 길이
     :return: 중복되지 않은 숫자로 이루어진 문자열
     """
-    numbers = list(range(10))  # range() 함수의 반환형은 iterator 형식의 객체 / list() 를 이용하여 list 형으로 변경
-    random.shuffle(numbers)  # list 의 값을 임의의 순서로 섞는다. [0, 1, ~ 8, 9] > [1, 7, ~ 6, 2] 와 같이..
+    numbers = list(range(10))       # range() 함수의 반환형은 iterator 형식의 객체 / list() 를 이용하여 list 형으로 변경
+    random.shuffle(numbers)         # list 의 값을 임의의 순서로 섞는다. [0, 1, ~ 8, 9] > [1, 7, ~ 6, 2] 와 같이..
     secret_number = ''
-    for i in range(num_digits):  # 원하는 길이 만큼 반복하며 원하는 길이의 문자열을 만듬
+    for i in range(num_digits):     # 원하는 길이 만큼 반복하며 원하는 길이의 문자열을 만듬 / 이렇게 만들경우 중복이 생기지 않는다.
         secret_number += str(numbers[i])
     return secret_number
 
