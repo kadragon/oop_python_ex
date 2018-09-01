@@ -13,6 +13,9 @@ pey = house_sasa()
 pes = house_sasa()
 
 print(house_sasa.sub_title)
+
+house_sasa.sub_title = "Sejong Academy of Science and Arts"
+
 print(pey.sub_title)
 print(pes.sub_title)
 
