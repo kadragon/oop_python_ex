@@ -21,9 +21,9 @@ print(explain)
 inputLength = int(input("Length of Number: "))
 
 
-def get_num() -> str:   
+def get_num() -> str:
     while True:
-        numList = list(map(str,range(10)))
+        numList = list(map(str, range(10)))
         random.shuffle(numList)
         newNumber = numList[:inputLength]
         if newNumber[0] == '0':
@@ -35,7 +35,6 @@ def get_num() -> str:
 
 
 def compare(secretNumber, inputNumber) -> dict:
-
     ret = {'S': 0, 'B': 0, 'O': 0}
     length = len(inputNumber)
     for i in range(length):
@@ -47,13 +46,11 @@ def compare(secretNumber, inputNumber) -> dict:
                 ret['B'] += 1
         else:
             ret['O'] += 1
-            
+
     return ret
 
 
-
 while True:
-
     secretNumber = get_num()
     i = 0
     flag = False
@@ -79,10 +76,10 @@ while True:
 
         else:
             print("%d Strike, %d Ball, %d Out" % (info['S'], info['B'], info['O']))
-            
+
     if flag is False:
-        print("Fail, the answer was %d." %(int(secretNumber)), end='\n')
-        
+        print("Fail, the answer was %d." % (int(secretNumber)), end='\n')  # end='\n' 기본값이기 때문에 안해도 된다.
+
     tryAgain = input("Try again?(Yes/No)")
     if tryAgain == 'Yes':
         continue

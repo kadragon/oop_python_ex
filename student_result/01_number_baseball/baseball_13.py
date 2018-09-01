@@ -1,6 +1,8 @@
 import random
 import time
 
+
+# 함수의 선언시 첫글자는 소문자로 시작하는 것을 권장한다.
 # Introduction
 def Intro():
     print("\n\nLet's start the Number Baseball Game!")
@@ -33,13 +35,14 @@ def Input(trial):
 
     return n
 
+
 # Guess a number and grade
 # Return whether to replay or not
 def Guess(ans):
     trial = 1
     n = Input(trial)
 
-    while(n != ans and trial < 10):
+    while n != ans and trial < 10:
         ball = 0
         strike = 0
         out = 0
@@ -48,7 +51,7 @@ def Guess(ans):
             found = False
 
             for j in str(n):
-                if i==j:
+                if i == j:
                     found = True
                     if str(ans).find(i) == str(n).find(j):
                         strike += 1
@@ -63,13 +66,13 @@ def Guess(ans):
 
         n = Input(trial)
 
-    if trial>=10:
+    if trial >= 10:
         print("\nGood luck next time!")
     else:
         print("\nGood Job!(*^-^*)")
 
     sel = input("Play again? (y/n)  ")
-    return (sel == 'y' or sel == 'Y' or sel == 'yes' or sel == 'Yes')
+    return sel in ['Yes', 'Y', 'yes', 'y']
 
 
 # Check if a number has no repeats
@@ -86,9 +89,9 @@ retry = True
 while retry:
 
     digits = Intro()
-    ans = str(random.randint(10**(digits-1), 10**(digits)))
+    ans = str(random.randint(10 ** (digits - 1), 10 ** digits))
     while not Check(ans):
-        ans = str(random.randint(10**(digits-1), 10**(digits)))
+        ans = str(random.randint(10 ** (digits - 1), 10 ** digits))
     retry = Guess(ans)
 
 print("\nGoodbye!(^_-)~")

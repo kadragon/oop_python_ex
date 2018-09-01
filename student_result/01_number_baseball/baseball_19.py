@@ -1,5 +1,5 @@
 # making a baseball game!
-# 20180829_by dany_at Object-Oriented Programming class
+# 20180829 Object-Oriented Programming class
 
 import random
 
@@ -11,6 +11,7 @@ t1 = t2 = t3 = 0
 def inputcheck(t):
     global t1, t2, t3
 
+    # 0 으로 시작하는 3자리는 만들어 지지 않음
     if t < 100 or t >= 1000:
         print("Please type a three-digit number")
         return 0
@@ -31,27 +32,24 @@ def compare(t1, t2, t3):
     bcnt = 0
     ocnt = 0
 
-    if t1 == a:
-        scnt += 1
-    if t2 == b:
-        scnt += 1
-    if t3 == c:
-        scnt += 1
-    if (t1 == b) or (t1 == c):
-        bcnt += 1
-    if (t2 == a) or (t2 == c):
-        bcnt += 1
-    if (t3 == b) or (t3 == a):
-        bcnt += 1
-    ocnt = 3 - (scnt + bcnt)
+    test_list = [t1, t2, t3]
+    ans_list = [a, b, c]
 
-    return (scnt * 100) + (bcnt * 10) + ocnt
+    for i in range(3):
+        if test_list[i] == ans_list[i]:
+            scnt += 1
+        elif test_list[i] in ans_list:
+            bcnt += 1
+        else:
+            ocnt += 1
+
+    return scnt * 100 + bcnt * 10 + ocnt
 
 
 def make_quest():
     global a, b, c
 
-    quest = list(range(1, 10, 1))
+    quest = list(range(1, 10))  # default 가 1이라서 빼 먹어도 됨
     random.shuffle(quest)
 
     a = quest[0]
@@ -91,9 +89,7 @@ while 1:
         else:
             break
     else:
-        print(result//100, " S  | ", (result//10)%10, " B  | ", result%10, " O")
+        print(result // 100, " S  | ", (result // 10) % 10, " B  | ", result % 10, " O")
         life -= 1
         print("life : ", life)
         continue
-
-

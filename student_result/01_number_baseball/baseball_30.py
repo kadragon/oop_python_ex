@@ -1,11 +1,10 @@
 import random
 from time import sleep
 
-# getNumber(): returns a 3-digit number in the form of list.
-
 DIGITS = 4
 
 
+# getNumber(): returns a 3-digit number in the form of list.
 def getNumber():
     # makes a list containing 0 to 9(It's a string!).
     numList = list(map(str, range(0, 10)))
@@ -14,23 +13,23 @@ def getNumber():
     # returns the first "DIGITS" elements of the list.
     return numList[:DIGITS]
 
-# ItoL(): converts string to list.
-# Params:
-# guess: The number to be converted.
-
 
 def ItoL(guess):
-    # returns a list with each digits seperated.
+    """
+    ItoL(): converts string to list.
+    Params:
+    guess: The number to be converted.
+    returns a list with each digits seperated.
+    """
     list = []
     for i in range(0, DIGITS):
         list.append(guess[i])
     return list
 
+
 # Intro(): Shows player intro
-
-
 def Intro():
-    showList = ['='*40+'\nWelcome to the Number baseball game!\n'+'='*40,
+    showList = ['=' * 40 + '\nWelcome to the Number baseball game!\n' + '=' * 40,
                 '<How to play>',
                 'You must guess a %d-digit number.' % DIGITS,
                 'Every time when you guess, you get a hint',
@@ -38,15 +37,15 @@ def Intro():
                 '\"Ball(B)\" Means the number of digits in your guess that is contained in the answer, but with different place.',
                 '\"Strike(S)\" Means the number of digits in your guess that is contained in the answer with same place',
                 'Now let the game begin!']
+
     # ShowList: list of strings to be shown to the player.
     for lines in showList:
         print(lines)
         sleep(1.5)
         # Prints each element in ShowList with 2-seconds delay.
 
+
 # getInput(): gets Input from the player and returns in int form.
-
-
 def getInput():
     guess = input('Guess the number!: ')
     if guess.isdigit():  # if guess is numeric:
@@ -61,7 +60,6 @@ def getInput():
 
 
 # Intro()
-
 while True:
     ans = getNumber()
     guess = ''
@@ -88,13 +86,14 @@ while True:
             print("%dB " % ball if ball > 0 else '')
         guess = getInput()  # get more Inputs!
     print("You've got it! the answer was %s!" % guess)
+
     re = ''
     while re == '':  # Repeat until it gets desired result.
         # Ask if the player wants to play again
-        replay = input('Do you want to play it again?(Yes/No): ')
-        if 'y' in replay.lower():
+        replay = input('Do you want to play it again?(Yes/No): ').lower()
+        if 'y' in replay:
             re = True
-        elif 'n' in replay.lower():
+        elif 'n' in replay:
             re = False
         else:
             print('Please answer yes or no.')
