@@ -7,8 +7,9 @@ Date    2018.09.05
 import phone_base
 import camera_base
 
+print("smart.py's module name is", __name__)
 print("=" * 50)
 
-camera_base.photo()
-phone_base.make_call()
-phone_base.make_call()
+# camera_base.photo()
+# phone_base.make_call()
+# phone_base.make_call()
