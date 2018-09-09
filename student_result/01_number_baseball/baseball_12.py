@@ -1,7 +1,7 @@
 # Time access and conversions
-import time
 # Generate pseudo-random numbers
 import random
+import time
 
 # Python 에서는 상수 선언이 없다. 다만, 표기를 대문자와 '_' 만을 사용하여 구분함.
 TEXT_LINE = 80

@@ -107,19 +107,6 @@ def get_trans_message(mode, message, key):
     return translated
 
 
-def get_trans_message_other(mode, message, key):
-    if mode[0] == 'd':
-        key = -key
-
-    translated = ''
-
-    for symbol in message:
-        if symbol.isalpha():
-            pass
-        else:
-            translated += symbol
-
-
 mode = get_mode()  # 암호화인지 복호화인지 모드를 입력 받는다.
 message = get_message()  # 진행할 메시지를 입력 받는다.
 key = get_key()  # 암호화 키를 입력 받는다.
