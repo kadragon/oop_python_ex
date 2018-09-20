@@ -211,7 +211,7 @@ while True:
                                                                         playerLetter):
                 this_function_will_draw_the_board(this_value_mean_the_plate_which_is_game_)
                 print(comp_T + '이기니깐 좋냐? ㅋㅋㅋㅋㅋㅋㅋ')
-                is_the_game_was_end_or_not_end_a_Ha_its_commencing_now == False
+                is_the_game_was_end_or_not_end_a_Ha_its_commencing_now = False
                 break
             # 아니면 유감
             else:

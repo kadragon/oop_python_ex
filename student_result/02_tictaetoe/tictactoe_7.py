@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 """
 Title       Tic Tac Toe
-Author      ITSC (Taewon Kang)
 Date        2018.09.05
 """
 
@@ -143,7 +141,7 @@ def getComMove(board, c_letter):  # 알고리즘 Github 참조
 def input_letter():
     while True:
         letter = input('Do you want to be X or O? :').upper()  # X, O 말을 입력받는다
-        if is_vaild_char(letter) == True:  # 입력된 문자가 X나 O인지 검사
+        if is_vaild_char(letter):  # 입력된 문자가 X나 O인지 검사
             return ['X', 'O'] if letter == 'X' else ['O', 'X']
         else:
             print('Wrong Input, Try again.')
@@ -172,11 +170,11 @@ def main():
                     print('You win!')  # 판 출력, 승리 출력
                     while True:
                         chk = input('one more(Y/N) ?')  # 다시 플레이할지 여부
-                        if is_no(chk) == True:  # No
+                        if is_no(chk):  # No
                             print("Thank you for using this program")
                             print("End of the Game")
                             exit()
-                        if is_yes(chk) == True:  # Yes
+                        if is_yes(chk):  # Yes
                             find = 1
                             break
                         else:
@@ -193,7 +191,6 @@ def main():
                 if find == 1:  # 다시 하겠다는 의사를 밝히면 초기로 돌아감
                     break
 
-
             else:  # 컴퓨터의 턴
                 move = getComMove(board, c_letter)
                 make_move(board, c_letter, move)
@@ -203,11 +200,11 @@ def main():
                     print('The computer has beaten you! You lose.')  # 실패 출력
                     while True:
                         chk = input('one more(Y/N) ?')  # Play again?
-                        if is_no(chk) == True:  # No
+                        if is_no(chk):  # No
                             print("Thank you for using this program")
                             print("End of the Game")
                             exit()
-                        if is_yes(chk) == True:  # Yes
+                        if is_yes(chk):  # Yes
                             find = 1
                             break
                         else:

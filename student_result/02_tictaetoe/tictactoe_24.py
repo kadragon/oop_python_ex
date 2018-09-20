@@ -133,7 +133,7 @@ def makeboard():
 
 Game = 1
 
-while (Game == 1):
+while Game == 1:
     # vis: 숫자로 된 board 배열
     # board: 출력을 위한 배열
     # win: 한 줄이 되는 경우
@@ -181,7 +181,7 @@ X will start the game first
     # 최대 9턴까지
     while Times < 9:
         Times += 1
-        if (Turn == 1):
+        if Turn == 1:
             print("Computer's Turn:")
             # 컴퓨터 턴 진행
             computerturn()
@@ -204,7 +204,8 @@ X will start the game first
                 break
 
     # 꽉 차서 끝날 경우 무승부 출력
-    if Times == 9: print("DRAW")
+    if Times == 9:
+        print("DRAW")
 
     # 게임 재실행 여부 확인
     print("Play Again? Yes: O NO: X")

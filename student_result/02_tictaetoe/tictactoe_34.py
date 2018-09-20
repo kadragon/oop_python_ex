@@ -18,13 +18,13 @@ def print_result():
 def input_char(c, d):
     while True:
         c = input()
-        if (c != 'X' and c != 'O'):
+        if c != 'X' and c != 'O':
             print("다시 입력좀")
         else:
-            if (c == 'X'):
+            if c == 'X':
                 d = 'O'
                 break
-            if (c == 'O'):
+            if c == 'O':
                 d = 'X'
                 break
 
@@ -32,7 +32,7 @@ def input_char(c, d):
 def user(k):
     while True:
         b = int(input())
-        if (1 <= b <= 9):
+        if 1 <= b <= 9:
             break
         else:
             print("다시 입력좀")
@@ -43,14 +43,22 @@ def user(k):
 #    print(check1)
 def check(win):
     win = 0
-    if (a[0] == a[1] and a[1] == a[2]): win += 1
-    if (a[3] == a[4] and a[4] == a[5]): win += 1
-    if (a[6] == a[7] and a[7] == a[8]): win += 1
-    if (a[0] == a[3] and a[3] == a[6]): win += 1
-    if (a[1] == a[4] and a[4] == a[7]): win += 1
-    if (a[2] == a[5] and a[5] == a[8]): win += 1
-    if (a[0] == a[4] and a[4] == a[8]): win += 1
-    if (a[2] == a[4] and a[4] == a[6]): win += 1
+    if a[0] == a[1] and a[1] == a[2]:
+        win += 1
+    if a[3] == a[4] and a[4] == a[5]:
+        win += 1
+    if a[6] == a[7] and a[7] == a[8]:
+        win += 1
+    if a[0] == a[3] and a[3] == a[6]:
+        win += 1
+    if a[1] == a[4] and a[4] == a[7]:
+        win += 1
+    if a[2] == a[5] and a[5] == a[8]:
+        win += 1
+    if a[0] == a[4] and a[4] == a[8]:
+        win += 1
+    if a[2] == a[4] and a[4] == a[6]:
+        win += 1
 
 
 def com(l):

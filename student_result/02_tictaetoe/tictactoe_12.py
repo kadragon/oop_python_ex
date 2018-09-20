@@ -18,7 +18,7 @@ def inputPlayerLetter():  # 사용자가 O,X중 원하는 돌을 선택
     while True:
         print('Choose X or O')
         letter = input().upper()
-        if (letter == 'X' or letter == 'O'):
+        if letter == 'X' or letter == 'O':
             break
         print('Only X or O!')
 

@@ -140,7 +140,7 @@ while 1:
             print("You lose..")  # 사용자가 졌다고 출력
             break  # 반복문 탈출
 
-        if draw() == True:
+        if draw():
             board()  # 판 상황 출력
             print("draw")  # 무승부라고 출력
             break  # 반복문 탈출

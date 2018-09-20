@@ -215,7 +215,7 @@ while True:
     first = 2
     if first == 1:  # 컴퓨터가 후공인 경우
         print("먼저 시작하세요.")
-        while is_win() == False:  # 게임이 끝나지 않은 동안
+        while not is_win():  # 게임이 끝나지 않은 동안
             print("당신의 말을 놓을 위치를 골라주세요.", end=' ')
             print(possible)
             loc = input()
@@ -230,7 +230,7 @@ while True:
                 possible.remove(loc)  # 놓을 수 있는 위치에서 놓은 위치 제거
                 put(loc, user)
                 chk += 1
-                if is_win() == True:  # 게임이 끝난 경우 while문 탈출
+                if is_win():  # 게임이 끝난 경우 while문 탈출
                     printmap()
                     break
                 comput = findput()  # 컴퓨터가 놓을 곳 탐색
@@ -238,20 +238,20 @@ while True:
                 possible.sort()  # 컴퓨터가 놓을 곳 고를 때 섞였던 배열 다시 정렬
                 put(comput, com)
                 chk += 1
-                if is_win() == True:
+                if is_win():
                     break
                 else:
                     printmap()
     else:  # 컴퓨터가 선공인 경우
         print("제가 먼저 시작할게요.")
-        while is_win() == False:  # 게임이 끝나지 않은 동안
+        while not is_win():  # 게임이 끝나지 않은 동안
             comput = findput()  # 컴퓨터 착수
             possible.remove(comput)
             possible.sort()
             put(comput, com)
             chk += 1
             printmap()
-            if is_win() == True:  # 사용자 착수
+            if is_win():  # 사용자 착수
                 break
             loc = 10
             # 입력이 정상적이지 않은 경우 제거
@@ -272,10 +272,10 @@ while True:
             possible.remove(loc)  # 놓을 수 있는 위치에서 놓은 위치 제거
             put(loc, user)
             chk += 1
-            if is_win() == True:  # 게임이 끝난 경우 while문 탈출
+            if is_win():  # 게임이 끝난 경우 while문 탈출
                 printmap()
                 break
-    if retry() == False:  # 재시작하지 않을 경우 프로그램 종료
+    if not retry():  # 재시작하지 않을 경우 프로그램 종료
         print("이용해 주셔서 감사합니다.", end='')
         break
     else:

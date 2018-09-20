@@ -186,31 +186,31 @@ def computer_turn():
 
     # 최적전략에 알맞게 귀,변,중앙 순으로 가능한 위치를 탐색
     while 1:
-        if (isOK(0, 0)):
+        if isOK(0, 0):
             doX = 0
             doY = 0
-        elif (isOK(0, 2)):
+        elif isOK(0, 2):
             doX = 0
             doY = 2
-        elif (isOK(2, 0)):
+        elif isOK(2, 0):
             doX = 2
             doY = 0
-        elif (isOK(2, 2)):
+        elif isOK(2, 2):
             doX = 2
             doY = 2
-        elif (isOK(1, 0)):
+        elif isOK(1, 0):
             doX = 1
             doY = 0
-        elif (isOK(0, 1)):
+        elif isOK(0, 1):
             doX = 0
             doY = 1
-        elif (isOK(2, 1)):
+        elif isOK(2, 1):
             doX = 2
             doY = 1
-        elif (isOK(1, 2)):
+        elif isOK(1, 2):
             doX = 1
             doY = 2
-        elif (isOK(1, 1)):
+        elif isOK(1, 1):
             doX = 1
             doY = 1
         mapper(doX, doY, Com)  # 놓은 뒤

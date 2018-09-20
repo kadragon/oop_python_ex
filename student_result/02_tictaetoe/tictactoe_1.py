@@ -24,7 +24,7 @@ def choose_shape():
 def reset():
     global board
     board = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]]
-    return (random.random() > 0.5)
+    return random.random() > 0.5
 
 
 # print gameboard. (parameter: X; return: X)
@@ -50,7 +50,7 @@ def get_place():
     place = input("Choose place to mark. (0~8, in regular sequence) ")
     try:
         place = int(place)
-        if 0 <= place and place <= 8 and board[place // 3][place % 3] == -1:
+        if 0 <= place <= 8 and board[place // 3][place % 3] == -1:
             return place
         else:
             print("Please answer correctly.")

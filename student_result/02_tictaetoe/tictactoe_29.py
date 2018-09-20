@@ -137,6 +137,6 @@ while True:
 (　･ω･) 
  /　　ﾉ 
  しーU""")
-    if input('\nDo you want to play again? (yes or no): ').lower().startswith(
-            'y') == False:  # 사용자로 부터 값을 입력 > 소문자로 변환 > 만약 'y' 로 시작하는 문자열이라면 True, 아니면 False
+    # 사용자로 부터 값을 입력 > 소문자로 변환 > 만약 'y' 로 시작하는 문자열이라면 True, 아니면 False
+    if not input('\nDo you want to play again? (yes or no): ').lower().startswith('y'):
         break

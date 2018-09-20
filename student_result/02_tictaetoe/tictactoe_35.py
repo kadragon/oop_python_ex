@@ -95,7 +95,7 @@ while play_again == 'yes' or play_again == 'y':
     print("""
         You choose %s team. You goes first!
         Check where you want to draw        ex) first row, first column -> 1 1
-        """ % (team))
+        """ % team)
     life = 1  # 게임의 종료여부를 확인하는 임시변수
     while life == 1:
         a, b = map(int, input().split())
@@ -104,6 +104,6 @@ while play_again == 'yes' or play_again == 'y':
         insert(team, a, b)
         enemy_turn(enemy)
         show_now()
-        if win_point() == True:
+        if win_point():
             life = 0
     play_again = input('Do you want to play again? (yes or no): ')
