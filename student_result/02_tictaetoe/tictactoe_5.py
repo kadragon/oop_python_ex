@@ -36,11 +36,11 @@ def getPlayerMove():  # 플레이어의 수를 입력받음
             break
         except ValueError:  # 만약 a가 숫자가 아니라면 다시 입력
             print("Error, Try again")
-            #print(a, x, y)
+            # print(a, x, y)
             continue
         except IndexError:  # 좌표가 보드를 벗어날 경우 다시 입력
             print("Error, Try again")
-            #print(a, x, y)
+            # print(a, x, y)
             continue
 
     return x, y  # 플레이어가 놓은 좌표 반환

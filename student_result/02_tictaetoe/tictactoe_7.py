@@ -7,19 +7,24 @@ Date        2018.09.05
 
 import random
 
+
 def draw_board(board):  # tictactoe 현황 표시
     print(board[1] + '|' + board[2] + '|' + board[3])
     print(board[4] + '|' + board[5] + '|' + board[6])
     print(board[7] + '|' + board[8] + '|' + board[9])
 
+
 def free_space(board, move):
     return board[move] == ' '  # 두고자 하는 곳이 비어 있는지 확인
+
 
 def make_move(board, letter, move):  # 판 정보와, 'O'/'X' 구분, 말을 놓을 위치 (1~9) 를 입력받는다
     board[move] = letter  # 판의 말을 놓을 위치에 O 또는 X를 저장한다.
 
+
 def winner_check(board, letter):
-    win = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]  # 가로, 세로 대각선 승리조건을 win 리스트로 제작
+    win = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9],
+           [3, 5, 7]]  # 가로, 세로 대각선 승리조건을 win 리스트로 제작
 
     for i in win:  # win에서 값을 하나씩 꺼내 i에 넣는다.
         tmp = 0  # 일치 개수 저장
@@ -29,6 +34,7 @@ def winner_check(board, letter):
                 if tmp == 3:  # 3개를 채웠다면 승리로 True 반환
                     return True
 
+
 def is_vaild_char(letter):  # 사용자가 입력한 문자가 O 또는 X인지 검사
     result = None
     if letter == 'X' or letter == 'O':
@@ -37,15 +43,18 @@ def is_vaild_char(letter):  # 사용자가 입력한 문자가 O 또는 X인지 
         result = False
     return result
 
+
 def is_digit(user_input_number):  # 문자열 값을 입력받아 정수로 변환 가능할 경우에는 True, 그렇지 않다면 False로 변환해줌
     result = user_input_number.isdigit()
     return result
+
 
 def is_vaild_num(num):  # 사용자가 입력한 숫자가 1부터 9 사이인지 검사
     if int(num) > 9 or int(num) < 1:
         return False
     else:
         return True
+
 
 def is_yes(letter):  # 문자열값이 대소문자에 관계 없이 Y인지 감지
     result = None
@@ -64,20 +73,24 @@ def is_no(letter):  # 문자열값이 대소문자에 관계 없이 N인지 감�
         result = False
     return result
 
+
 def get_board_copy(board):  # 컴퓨터가 말을 둘 곳을 결정하기 위해서 임시로 판을 복제함.
     new_board = []  # 복사할 빈 list 선언
     for i in board:  # list에서 값을 하나씩 꺼냄
         new_board.append(i)  # list에 값 추가
     return new_board  # 만든 new_board 반환
 
+
 def get_turn():  # 차례가 컴퓨터인지 사람인지를 구함
     return 'computer' if random.randint(0, 1) == 0 else 'human'
+
 
 def board_full(board):  # 판에 더 둘 곳이 있는지 확인
     for i in range(1, 10):
         if free_space(board, i):
             return False
     return True
+
 
 def getPlayermove():  # 플레이어가 둘 수를 입력받음
     playermove = ' '
@@ -91,6 +104,7 @@ def getPlayermove():  # 플레이어가 둘 수를 입력받음
                 break
         else:
             print("Wrong Input, Input again (number only)")
+
 
 def random_list(board, moves_list):  # 둘 수 있는 곳의 목록 반환
     possible = []
@@ -134,6 +148,7 @@ def input_letter():
         else:
             print('Wrong Input, Try again.')
 
+
 def main():
     # Main 함수, 프로그램 시작
     print('Welcome to TicTacToe!')
@@ -144,7 +159,7 @@ def main():
         p_letter, c_letter = input_letter()  # 사용자가 선택한 말, 컴퓨터가 택해야 하는 말을 지정
 
         turn = get_turn()  # 누가 먼저인가 결정
-        print('The ' + turn +' will go first.')
+        print('The ' + turn + ' will go first.')
 
         while True:
             if turn == 'human':  # 사용자의 턴
@@ -154,7 +169,7 @@ def main():
 
                 if winner_check(board, p_letter):  # 승리했다면?
                     draw_board(board)
-                    print('You win!') # 판 출력, 승리 출력
+                    print('You win!')  # 판 출력, 승리 출력
                     while True:
                         chk = input('one more(Y/N) ?')  # 다시 플레이할지 여부
                         if is_no(chk) == True:  # No
@@ -182,12 +197,12 @@ def main():
             else:  # 컴퓨터의 턴
                 move = getComMove(board, c_letter)
                 make_move(board, c_letter, move)
-                
+
                 if winner_check(board, c_letter):  # 컴퓨터가 승리했다면?
                     draw_board(board)
-                    print('The computer has beaten you! You lose.') # 실패 출력
+                    print('The computer has beaten you! You lose.')  # 실패 출력
                     while True:
-                        chk = input('one more(Y/N) ?')  #Play again?
+                        chk = input('one more(Y/N) ?')  # Play again?
                         if is_no(chk) == True:  # No
                             print("Thank you for using this program")
                             print("End of the Game")
@@ -210,6 +225,7 @@ def main():
                     break
 
                 # 승리 후 다시 플레이할지 여부에 대한 코드는 human과 동일
+
 
 if __name__ == "__main__":
     main()

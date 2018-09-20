@@ -1,6 +1,7 @@
 import random
 
-def showBoard(board): #ÀÛ¾÷µÈ °ÔÀÓÆÇÀ» Ãâ·Â
+
+def showBoard(board):  # ì‘ì—…ëœ ê²Œì„íŒì„ ì¶œë ¥
     print('=' * 80)
     print("""
       %c |  %c  | %c
@@ -11,7 +12,8 @@ def showBoard(board): #ÀÛ¾÷µÈ °ÔÀÓÆÇÀ» Ãâ·Â
     """ % (board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8], board[9]))
     print('=' * 80)
 
-def inputPlayerLetter(): #»ç¿ëÀÚ°¡ O,XÁß ¿øÇÏ´Â µ¹À» ¼±ÅÃ
+
+def inputPlayerLetter():  # ì‚¬ìš©ìê°€ O,Xì¤‘ ì›í•˜ëŠ” ëŒì„ ì„ íƒ
     letter = ''
     while True:
         print('Choose X or O')
@@ -21,25 +23,29 @@ def inputPlayerLetter(): #»ç¿ëÀÚ°¡ O,XÁß ¿øÇÏ´Â µ¹À» ¼±ÅÃ
         print('Only X or O!')
 
     if letter == 'X':
-        return['X','O']
+        return ['X', 'O']
     else:
-        return ['O','X']
+        return ['O', 'X']
 
-def whoGoFirst(): #¼±°øÀ» ·£´ıÀ¸·Î Á¤ÇÔ
-    if random.randint(0,1) == 0:
+
+def whoGoFirst():  # ì„ ê³µì„ ëœë¤ìœ¼ë¡œ ì •í•¨
+    if random.randint(0, 1) == 0:
         return 'com'
     else:
         return 'player'
 
-def playAgain(): #´Ù½Ã ÇÒÁö ¹°¾îº¸´Â ÇÔ¼ö
+
+def playAgain():  # ë‹¤ì‹œ í• ì§€ ë¬¼ì–´ë³´ëŠ” í•¨ìˆ˜
     print('You want to play again? (yes or no)')
     return input().lower().startswith('y')
 
-def makeMove(board, letter, move): #°ÔÀÓÆÇ¿¡ moveÀ§Ä¡¿¡ µ¹À» ³õ´Â´Ù
+
+def makeMove(board, letter, move):  # ê²Œì„íŒì— moveìœ„ì¹˜ì— ëŒì„ ë†“ëŠ”ë‹¤
     print(move, type(move))
     board[move] = letter
 
-def copyBoard(board): #È­¸é¿¡ ³»º¸³»±â Àü ÀÛ¾÷À» ÇÒ º¸µå »ı¼º
+
+def copyBoard(board):  # í™”ë©´ì— ë‚´ë³´ë‚´ê¸° ì „ ì‘ì—…ì„ í•  ë³´ë“œ ìƒì„±
     otherBoard = []
 
     for i in board:
@@ -47,50 +53,56 @@ def copyBoard(board): #È­¸é¿¡ ³»º¸³»±â Àü ÀÛ¾÷À» ÇÒ º¸µå »ı¼º
 
     return otherBoard
 
-def isWinner(b, l): #bº¸µå¿¡¼­ l µ¹ÀÌ ÀÌ°å´ÂÁö È®ÀÎ
-    return ((b[7] == l and b[8] == l and b[9] == l)or
-    (b[4] == l and b[5] == l and b[6] == l)or
-    (b[1] == l and b[2] == l and b[3] == l) or
-    (b[7] == l and b[4] == l and b[1] == l) or
-    (b[8] == l and b[5] == l and b[2] == l) or
-    (b[9] == l and b[6] == l and b[3] == l) or
-    (b[1] == l and b[5] == l and b[9] == l) or
-    (b[3] == l and b[5] == l and b[7] == l))
 
-def isSpaceEmpty(board, move): #µ¹À» ³õÀ» °ø°£ÀÌ ºñ¾îÀÖ´ÂÁö È®ÀÎ
-    return board[move]==' '
+def isWinner(b, l):  # bë³´ë“œì—ì„œ l ëŒì´ ì´ê²¼ëŠ”ì§€ í™•ì¸
+    return ((b[7] == l and b[8] == l and b[9] == l) or
+            (b[4] == l and b[5] == l and b[6] == l) or
+            (b[1] == l and b[2] == l and b[3] == l) or
+            (b[7] == l and b[4] == l and b[1] == l) or
+            (b[8] == l and b[5] == l and b[2] == l) or
+            (b[9] == l and b[6] == l and b[3] == l) or
+            (b[1] == l and b[5] == l and b[9] == l) or
+            (b[3] == l and b[5] == l and b[7] == l))
 
-def isBoardFull(board): #°ÔÀÓÆÇÀÌ ²ËÃ¡´ÂÁö È®ÀÎ
+
+def isSpaceEmpty(board, move):  # ëŒì„ ë†“ì„ ê³µê°„ì´ ë¹„ì–´ìˆëŠ”ì§€ í™•ì¸
+    return board[move] == ' '
+
+
+def isBoardFull(board):  # ê²Œì„íŒì´ ê½‰ì°¼ëŠ”ì§€ í™•ì¸
     for i in range(1, 10):
         if isSpaceEmpty(board, i):
             return False
     return True
 
-def getPlayerMove(board): #»ç¿ëÀÚ°¡ ³õ´Â°÷À» ÀÔ·Â¹Ş¾Æ ¹İÈ¯
-    move=''
-    while move not in '1 2 3 4 5 6 7 8 9'.split() or not isSpaceEmpty(board, int(move)): #¿øÇÏ´Â °÷ÀÌ ºñ¾îÀÖ¾î¾ßÇÔ
+
+def getPlayerMove(board):  # ì‚¬ìš©ìê°€ ë†“ëŠ”ê³³ì„ ì…ë ¥ë°›ì•„ ë°˜í™˜
+    move = ''
+    while move not in '1 2 3 4 5 6 7 8 9'.split() or not isSpaceEmpty(board, int(move)):  # ì›í•˜ëŠ” ê³³ì´ ë¹„ì–´ìˆì–´ì•¼í•¨
         print('Where do you want to put? input a number in 1~9')
         move = input()
     return int(move)
 
-def chooseRandomMoveFromList(board, moveList): #ÀÌµ¿°¡´ÉÇÑ ¸®½ºÆ®¿¡¼­ À§Ä¡¸¦ ·£´ıÀ¸·Î Á¤ÇÔ
+
+def chooseRandomMoveFromList(board, moveList):  # ì´ë™ê°€ëŠ¥í•œ ë¦¬ìŠ¤íŠ¸ì—ì„œ ìœ„ì¹˜ë¥¼ ëœë¤ìœ¼ë¡œ ì •í•¨
     possibleMoves = []
     for i in moveList:
         if isSpaceEmpty(board, i):
             possibleMoves.append(i)
-    if len(possibleMoves) !=0:
+    if len(possibleMoves) != 0:
         return random.choice(possibleMoves)
     else:
         return None
 
-def getComputerMove(board, computerLetter): #°ÔÀÓÆÇ°ú ÄÄÇ»ÅÍÀÇ µ¹À» ³Ñ°ÜÁÖ°í ÄÄÇ»ÅÍ°¡ ³õÀ» À§Ä¡¸¦ ¹İÈ¯
+
+def getComputerMove(board, computerLetter):  # ê²Œì„íŒê³¼ ì»´í“¨í„°ì˜ ëŒì„ ë„˜ê²¨ì£¼ê³  ì»´í“¨í„°ê°€ ë†“ì„ ìœ„ì¹˜ë¥¼ ë°˜í™˜
     if computerLetter == 'X':
-        playerLetter ='O'
+        playerLetter = 'O'
     else:
         playerLetter = 'X'
 
-    #Æ½ÅÃÅä AIÀÇ ¾Ë°í¸®Áò
-    #1. ´ÙÀ½ µ¹·Î ÀÌ±æ¼ö ÀÖ´Ù¸é ±×À§Ä¡¿¡ ³õÀ½
+    # í‹±íƒí†  AIì˜ ì•Œê³ ë¦¬ì¦˜
+    # 1. ë‹¤ìŒ ëŒë¡œ ì´ê¸¸ìˆ˜ ìˆë‹¤ë©´ ê·¸ìœ„ì¹˜ì— ë†“ìŒ
     for i in range(1, 10):
         copy = copyBoard(board)
         if isSpaceEmpty(copy, i):
@@ -99,8 +111,8 @@ def getComputerMove(board, computerLetter): #°ÔÀÓÆÇ°ú ÄÄÇ»ÅÍÀÇ µ¹À» ³Ñ°ÜÁÖ°í ÄÄÇ
                 print(i)
                 return i
 
-    #2. »ç¿ëÀÚ°¡ ÀÌ±æ¼ö ÀÖ´ÂÁö È®ÀÎÇÏ°í ¹æ¾îÇÔ
-    for i in range(1,10):
+    # 2. ì‚¬ìš©ìê°€ ì´ê¸¸ìˆ˜ ìˆëŠ”ì§€ í™•ì¸í•˜ê³  ë°©ì–´í•¨
+    for i in range(1, 10):
         copy = copyBoard(board)
         if isSpaceEmpty(copy, i):
             makeMove(copy, playerLetter, i)
@@ -108,35 +120,37 @@ def getComputerMove(board, computerLetter): #°ÔÀÓÆÇ°ú ÄÄÇ»ÅÍÀÇ µ¹À» ³Ñ°ÜÁÖ°í ÄÄÇ
                 print(i)
                 return i
 
-    #3. 1,3,7,9 ÄÚ³ÊÁß ÇÏ³ª¸¦ ¸ÕÀú °¡Á®°¨
-    move = chooseRandomMoveFromList(board, [1,3,7,9])
-    if move != None :
+    # 3. 1,3,7,9 ì½”ë„ˆì¤‘ í•˜ë‚˜ë¥¼ ë¨¼ì € ê°€ì ¸ê°
+    move = chooseRandomMoveFromList(board, [1, 3, 7, 9])
+    if move != None:
         return move
 
-    #4. °¡¿îµ¥°¡ ºñ¾îÀÖ´Ù¸é °¡Á®°¨
+    # 4. ê°€ìš´ë°ê°€ ë¹„ì–´ìˆë‹¤ë©´ ê°€ì ¸ê°
     if isSpaceEmpty(board, 5):
         return 5
 
-    #5. ³× º¯Áß ÇÏ³ª¸¦ °¡Á®°¨
-    move = chooseRandomMoveFromList(board,[2,4,6,8])
-    if move != None :
+    # 5. ë„¤ ë³€ì¤‘ í•˜ë‚˜ë¥¼ ê°€ì ¸ê°
+    move = chooseRandomMoveFromList(board, [2, 4, 6, 8])
+    if move != None:
         return move
-#°ÔÀÓ ½ÃÀÛ
+
+
+# ê²Œì„ ì‹œì‘
 print('Tic Tac Toe!')
 
-while True: #¹İº¹°ÔÀÓ ·çÇÁ
-    gameBoard = [' ']*10 #°ÔÀÓÆÇ ÃÊ±âÈ­
-    playerLetter, computerLetter = inputPlayerLetter() #»ç¿ëÀÚ¿Í ÄÄÇ»ÅÍ µ¹°áÁ¤
-    turn = whoGoFirst() #¼±°ø
+while True:  # ë°˜ë³µê²Œì„ ë£¨í”„
+    gameBoard = [' '] * 10  # ê²Œì„íŒ ì´ˆê¸°í™”
+    playerLetter, computerLetter = inputPlayerLetter()  # ì‚¬ìš©ìì™€ ì»´í“¨í„° ëŒê²°ì •
+    turn = whoGoFirst()  # ì„ ê³µ
     print('The ' + turn + ' will go first.')
     isPlaying = True
 
     while isPlaying:
-        if turn =='player':
-            #»ç¿ëÀÚ Â÷·Ê
+        if turn == 'player':
+            # ì‚¬ìš©ì ì°¨ë¡€
             showBoard(gameBoard)
             move = getPlayerMove(gameBoard)
-            makeMove(gameBoard,playerLetter,move)
+            makeMove(gameBoard, playerLetter, move)
 
             if isWinner(gameBoard, playerLetter):
                 showBoard(gameBoard)
@@ -152,11 +166,11 @@ while True: #¹İº¹°ÔÀÓ ·çÇÁ
                     turn = 'com'
 
         else:
-            #ÄÄÇ»ÅÍ Â÷·Ê
-            move = getComputerMove(gameBoard,computerLetter)
+            # ì»´í“¨í„° ì°¨ë¡€
+            move = getComputerMove(gameBoard, computerLetter)
             makeMove(gameBoard, computerLetter, move)
 
-            if isWinner(gameBoard,computerLetter):
+            if isWinner(gameBoard, computerLetter):
                 showBoard(gameBoard)
                 print('You lose...')
                 isPlaying = False

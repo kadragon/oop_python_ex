@@ -31,13 +31,13 @@ def printboard():
     """
     for i in range(3):
         # Prints horizontal line
-        print('+'*13)
+        print('+' * 13)
         # Prints status of the stones between the vertical lines.
         for j in range(0, 3):
-            print('| %s ' % boardstone[i*3+j], end='')
+            print('| %s ' % boardstone[i * 3 + j], end='')
         print('|')
     # Prints the last base line
-    print('+'*13)
+    print('+' * 13)
 
 
 def checkwin(board):

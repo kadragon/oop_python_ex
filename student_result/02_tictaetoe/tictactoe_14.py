@@ -176,10 +176,10 @@ def play_logic(com, player):
             before_win = -1
     for i in range(0, 3):  # 컴퓨터가 세로줄에서 이기기 직전인 곳 찾기
         for j in range(0, 9, 3):
-            if b[i+j] == com:
+            if b[i + j] == com:
                 cnt += 1
-            elif b[i+j] != com:
-                before_win = i+j
+            elif b[i + j] != com:
+                before_win = i + j
         if cnt == 2:
             c[before_win] += 200
             cnt = 0
@@ -219,7 +219,6 @@ def play_logic(com, player):
                 else:
                     pass
 
-
     for i in range(0, 9, 3):  # 플레이어가 가로줄에서 이기기 직전인 곳 찾기
         for j in range(0, 3):
             if b[i + j] == player:
@@ -235,10 +234,10 @@ def play_logic(com, player):
             before_win = -1
     for i in range(0, 3):  # 플레이어가 세로줄에서 이기기 직전인 곳 찾기
         for j in range(0, 9, 3):
-            if b[i+j] == player:
+            if b[i + j] == player:
                 cnt += 1
-            elif b[i+j] != player:
-                before_win = i+j
+            elif b[i + j] != player:
+                before_win = i + j
         if cnt == 2:
             c[before_win] += 100
             cnt = 0
@@ -277,7 +276,6 @@ def play_logic(com, player):
                     c[i + j] += 10
                 else:
                     pass
-
 
     for i in range(9):  # 문자가 채워진 칸 0으로
         if b[i] != ' ':

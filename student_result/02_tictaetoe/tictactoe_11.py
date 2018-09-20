@@ -1,5 +1,6 @@
 import random, time
 
+
 def start():  # 게임 시작 화면, 말 선택하기
     print("-" * 80)
     print("Let's play Tic-Tac-Toe!!!")
@@ -15,6 +16,7 @@ def start():  # 게임 시작 화면, 말 선택하기
             ret = input("Please choose again ( O / X ) : ")
             print()
 
+
 def randomly():  # 순서 정하기
     if random.randint(0, 1) is 0:
         print("Computer will start first!")
@@ -25,7 +27,9 @@ def randomly():  # 순서 정하기
         print()
         return False
 
-board = [[3*i+j+1 for j in range(3)] for i in range(3)]  # 게임 판이 될 리스트!
+
+board = [[3 * i + j + 1 for j in range(3)] for i in range(3)]  # 게임 판이 될 리스트!
+
 
 def printBoard():  # 게임 보드를 출력하는 함수
     print('-' * 13)
@@ -33,12 +37,15 @@ def printBoard():  # 게임 보드를 출력하는 함수
         print('| ' + str(board[i][0]) + ' | ' + str(board[i][1]) + ' | ' + str(board[i][2]) + ' |')
         print('-' * 13)
 
+
 def isEmpty(i, j):  # (i, j)가 비었는지 확인하는 함수
-    if board[i][j] is 3*i+j+1:
+    if board[i][j] is 3 * i + j + 1:
         return True
     return False
 
+
 reserve = []  # 말을 놓을 후보 위치를 저장
+
 
 def check(mode, character):  # 상대의 말을 어디에 놓아야 할 지 체크!
     x, y = 0, 0  # 나의 말과 상대의 말이 각각 몇 개 인지 저장
@@ -55,14 +62,14 @@ def check(mode, character):  # 상대의 말을 어디에 놓아야 할 지 체�
                     break
     elif 3 <= mode <= 5:  # 세로 1~3줄 검사: 같은 방법으로
         for i in range(3):
-            if board[i][mode-3] is ('O' if character else 'X'):
+            if board[i][mode - 3] is ('O' if character else 'X'):
                 x += 1
-            elif board[i][mode-3] is ('X' if character else 'O'):
+            elif board[i][mode - 3] is ('X' if character else 'O'):
                 y += 1
         if x is 2 and y is 0:
             for i in range(3):
-                if isEmpty(i, mode-3):
-                    reserve.append([i, mode-3])
+                if isEmpty(i, mode - 3):
+                    reserve.append([i, mode - 3])
                     break
     elif mode is 6:  # 양 대각선 검사
         for i in range(3):
@@ -77,15 +84,16 @@ def check(mode, character):  # 상대의 말을 어디에 놓아야 할 지 체�
                     break
     elif mode is 7:
         for i in range(3):
-            if board[i][2-i] is ('O' if character else 'X'):
+            if board[i][2 - i] is ('O' if character else 'X'):
                 x += 1
-            elif board[i][2-i] is ('X' if character else 'O'):
+            elif board[i][2 - i] is ('X' if character else 'O'):
                 y += 1
         if x is 2 and y is 0:
             for i in range(3):
-                if isEmpty(i, 2-i):
-                    reserve.append([i, 2-i])
+                if isEmpty(i, 2 - i):
+                    reserve.append([i, 2 - i])
                     break
+
 
 def isDone(mode, character):  # 게임이 끝났는지 검사
     x, y = 0, 0  # 나의 말과 상대의 말이 각각 몇 개 인지 저장
@@ -120,6 +128,7 @@ def isDone(mode, character):  # 게임이 끝났는지 검사
     else:  # 완료된 줄이 없는가?
         return False
 
+
 playAgain = True
 Done = False
 
@@ -141,9 +150,9 @@ while playAgain:
                     break
             for j in range(8):  # 방어해야 하는 위치를 탐색
                 check(j, character)
-            if len(reserve) :
-                ran = random.randint(0, len(reserve)-1)
-                x, y = reserve[ran][0],reserve[ran][1]
+            if len(reserve):
+                ran = random.randint(0, len(reserve) - 1)
+                x, y = reserve[ran][0], reserve[ran][1]
             reserve = []
             for j in range(8):  # 이길 수 있는 위치를 탐색
                 check(j, not character)
@@ -157,25 +166,25 @@ while playAgain:
         else:  # 나의 차례
             available = []
             print("Your turn!")
-            print("Choose your place", end = '')
+            print("Choose your place", end='')
             for i in range(3):
                 for j in range(3):
                     if isEmpty(i, j):
-                        print(", %d" % board[i][j], end = '')
-                        available.append(3*i+j+1)  # 선택 가능한 위치 모두 출력
-            print(" available : ", end = '')
+                        print(", %d" % board[i][j], end='')
+                        available.append(3 * i + j + 1)  # 선택 가능한 위치 모두 출력
+            print(" available : ", end='')
             while True:
                 choice = input()
                 if (len(choice) is 1 and '0' <= choice <= '9'):
                     choice = int(choice)
                     if choice in available:
                         break
-                print("Choose again", end = '')
+                print("Choose again", end='')
                 for i in available:
-                    print(", %d" % i, end = '')
-                print(" : ", end = '')
+                    print(", %d" % i, end='')
+                print(" : ", end='')
             print()
-            board[(choice-1)//3][(choice-1)%3] = ('O' if character else 'X')  # 선택한 위치에 말 놓기
+            board[(choice - 1) // 3][(choice - 1) % 3] = ('O' if character else 'X')  # 선택한 위치에 말 놓기
         first = not first  # 순서 바꾸기
 
         for j in range(8):  # 모든 줄을 보며 게임이 끝났는지 확인
@@ -184,7 +193,7 @@ while playAgain:
                 break
         if Done is not False:
             break
-        
+
     printBoard()
 
     if Done is 1:
@@ -193,17 +202,17 @@ while playAgain:
         print("You lose!")
     else:
         print("Tie!")
-    print("Will you play again? ( Y / N ) : ", end = '')  # 다시 할래요?
+    print("Will you play again? ( Y / N ) : ", end='')  # 다시 할래요?
     while True:
         response = input()
         if response in ['Y', 'y', 'Yes', 'yes', 'YES', 'O', 'o']:
             print()
             print()
             print()
-            board = [[3*i+j+1 for j in range(3)] for i in range(3)]  # 게임 판 리셋
+            board = [[3 * i + j + 1 for j in range(3)] for i in range(3)]  # 게임 판 리셋
             break
         elif response in ['N', 'n', 'No', 'no', 'NO', 'X', 'x']:
             playAgain = False
             break
         else:
-            print("Please choose again ( Y / N ) : ", end = '')
+            print("Please choose again ( Y / N ) : ", end='')

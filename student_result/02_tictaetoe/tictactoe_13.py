@@ -1,10 +1,8 @@
 import sys
 import random
 
-
 # A three by three board (index starts from 1)
 board = [[0 for i in range(0, 4)] for j in range(0, 4)]
-
 
 # Initalize the board with everything empty
 for i in range(0, 4):
@@ -40,7 +38,7 @@ def checkBoard(flag):
     # Finally check left - down line
     if board[1][3] == flag and board[2][2] == flag and board[3][1] == flag:
         return True
-    
+
     # If none returns, there is no line
     return False
 
@@ -78,7 +76,7 @@ def aiTurn(mark):
         player = 'O'
     else:
         player = 'X'
-    
+
     # Search for place where ai can win
     a, b = findspot(mark)
     # If there is such spot, place at that spot and win
@@ -99,7 +97,7 @@ def aiTurn(mark):
     a, b = random.randint(1, 3), random.randint(1, 3)
     while board[a][b] != ' ':
         a, b = random.randint(1, 3), random.randint(1, 3)
-    
+
     board[a][b] = mark
 
 
@@ -114,7 +112,7 @@ def playerTurn(mark):
 
             while not check(a, b):
                 a, b = map(int, input("Enter validate x y: ").split())
-            
+
             break
 
         except ValueError:
@@ -124,7 +122,7 @@ def playerTurn(mark):
     board[a][b] = mark
 
     # If the player made a line
-    if(checkBoard(mark)):
+    if (checkBoard(mark)):
         printBoard()
         # Player wins
         endGame(1)
@@ -134,9 +132,9 @@ def playerTurn(mark):
 def printBoard():
     print('\n-------------')
     for i in range(1, 4):
-        print("|", end = ' ')
+        print("|", end=' ')
         for j in range(1, 4):
-            print(board[i][j], end = ' | ')
+            print(board[i][j], end=' | ')
         print('\b\b\n-------------')
     print('\n')
 
@@ -161,7 +159,7 @@ def aiFirst(mark):
         aiTurn(aimark)
         printBoard()
         cnt += 1
-    
+
     # If the board is full then it's tie    
     endGame(0)
 

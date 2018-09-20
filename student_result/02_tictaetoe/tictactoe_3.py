@@ -1,7 +1,6 @@
 import random
 import time
 
-
 # intro, show_board, print_winner 함수 내 '=' 출력 횟수
 NUMBER_DASH = 50
 # 공백과 플레이어와 AI의 말 모양
@@ -15,11 +14,11 @@ def intro():
     print('=' * NUMBER_DASH)
     print('Tic Tac Toe')
     print('=' * NUMBER_DASH)
-    time.sleep(2)               # 2초 휴식
+    time.sleep(2)  # 2초 휴식
     print('게임 설명')
     print('플레이어와 컴퓨터가 차례로 3x3 크기의 게임판 위에 말을 놓습니다.')
     print('한 줄이 자신의 말로 가득 찬다면 승리합니다.')
-    time.sleep(2)               # 2초 휴식
+    time.sleep(2)  # 2초 휴식
     print('입력 방법')
     print('┌─┬─┬─┐')
     print('│１│２│３│')
@@ -29,7 +28,7 @@ def intro():
     print('│７│８│９│')
     print('└─┴─┴─┘')
     print('각 칸에 쓰인 숫자를 입력하면 그 칸에 말을 놓을 수 있습니다.')
-    time.sleep(2)               # 2초 휴식
+    time.sleep(2)  # 2초 휴식
     print('=' * NUMBER_DASH)
 
 
@@ -38,12 +37,12 @@ def intro():
 def chk_restart():
     while True:
         s = input('게임을 다시 시작하시겠습니까?(Y/N) : ')
-        s = s.upper()                    # 전부 대문자로 변경
-        if s.startswith('Y'):           # Y로 시작하면 True 반환
+        s = s.upper()  # 전부 대문자로 변경
+        if s.startswith('Y'):  # Y로 시작하면 True 반환
             return True
-        elif s.startswith('N'):         # N으로 시작하면 False 반환
+        elif s.startswith('N'):  # N으로 시작하면 False 반환
             return False
-        else:                           # 둘 다 아니면 다시 입력
+        else:  # 둘 다 아니면 다시 입력
             print('형식에 맞게 입력해주세요.')
 
 
@@ -52,12 +51,12 @@ def chk_restart():
 def choose_mark():
     while True:
         s = input('O와 X 중 말을 선택하세요.(O/X) : ')
-        s = s.upper()                    # 전부 대문자로 변경
-        if s == 'O':                    # O이면,
+        s = s.upper()  # 전부 대문자로 변경
+        if s == 'O':  # O이면,
             return MARKS[0], MARKS[1]
-        elif s == 'X':                  # X이면,
+        elif s == 'X':  # X이면,
             return MARKS[1], MARKS[0]
-        else:                           # 둘 다 아니면 다시 입력
+        else:  # 둘 다 아니면 다시 입력
             print('형식에 맞게 입력해주세요.')
 
 
@@ -66,12 +65,12 @@ def choose_mark():
 def choose_first():
     while True:
         s = input('먼저 시작하시겠습니까?(Y/N) : ')
-        s = s.upper()                    # 전부 대문자로 변경
-        if s.startswith('Y'):           # Y로 시작하면 0 반환
+        s = s.upper()  # 전부 대문자로 변경
+        if s.startswith('Y'):  # Y로 시작하면 0 반환
             return 0
-        elif s.startswith('N'):         # N으로 시작하면 1 반환
+        elif s.startswith('N'):  # N으로 시작하면 1 반환
             return 1
-        else:                           # 둘 다 아니면 다시 입력
+        else:  # 둘 다 아니면 다시 입력
             print('형식에 맞게 입력해주세요.')
 
 
@@ -86,10 +85,10 @@ def place_mark(board, r, c, char):
 def get_input(board, p_mark):
     while True:
         s = input('어디에 놓으시겠습니까?(1~9) : ')
-        if s.isdigit() and 1 <= int(s) <= 9:        # 1~9의 정수인지 검사
+        if s.isdigit() and 1 <= int(s) <= 9:  # 1~9의 정수인지 검사
             s = int(s)
-            r = (s - 1) // 3        # 행
-            c = (s - 1) % 3         # 열
+            r = (s - 1) // 3  # 행
+            c = (s - 1) % 3  # 열
             if board[r][c] != NO_MARK:
                 print('이미 말이 놓여 있습니다.')
                 continue
@@ -119,19 +118,19 @@ def chk_two_consecutive_marks(board, tu, mark_to_chk, mark):
 # 매개변수 board: 게임판 lines: 검사할 라인 튜플들을 모은 튜플 p_mark: 플레이어의 말의 문자 c_mark: 컴퓨터의 말의 문자, 반환값 없음.
 def run_ai(board, lines, p_mark, c_mark):
     for i in lines:
-        if chk_two_consecutive_marks(board, i, c_mark, c_mark):     # 컴퓨터의 말이 한 줄에 2개 있는지 검사.
+        if chk_two_consecutive_marks(board, i, c_mark, c_mark):  # 컴퓨터의 말이 한 줄에 2개 있는지 검사.
             return
     for i in lines:
-        if chk_two_consecutive_marks(board, i, p_mark, c_mark):     # 플레이어의 말이 한 줄에 2개 있는지 검사.
+        if chk_two_consecutive_marks(board, i, p_mark, c_mark):  # 플레이어의 말이 한 줄에 2개 있는지 검사.
             return
-    a = list(range(9))                   # 0부터 8까지 리스트로 만듦.
+    a = list(range(9))  # 0부터 8까지 리스트로 만듦.
     b = a.copy()
     for i in b:
         r = i // 3
         c = i % 3
-        if board[r][c] != NO_MARK:      # 해당 칸이 차 있으면 원소 제거.
+        if board[r][c] != NO_MARK:  # 해당 칸이 차 있으면 원소 제거.
             a.remove(i)
-    random.shuffle(a)                   # 랜덤으로 섞어서 첫번째 원소가 가리키는 칸에 말을 놓음.
+    random.shuffle(a)  # 랜덤으로 섞어서 첫번째 원소가 가리키는 칸에 말을 놓음.
     place_mark(board, a[0] // 3, a[0] % 3, c_mark)
 
 
@@ -185,12 +184,12 @@ def show_board(board):
     print('└─┴─┴─┘')
 
 
-intro()     # 게임 설명과 입력 방법을 출력한다.
+intro()  # 게임 설명과 입력 방법을 출력한다.
 game = True
 while game:
-    bd = [[NO_MARK] * 3] + [[NO_MARK] * 3] + [[NO_MARK] * 3]    # 게임판
-    lines_to_win = (                # 승패를 판단하기 위해 검사해야 할 구역들
-        (0, 0, 0, 1, 0, 2),         # (<1번 칸의 행>, <1번 칸의 열>, <2번 칸의 행>, <2번 칸의 열>, <3번 칸의 행>, <3번 칸의 열>)
+    bd = [[NO_MARK] * 3] + [[NO_MARK] * 3] + [[NO_MARK] * 3]  # 게임판
+    lines_to_win = (  # 승패를 판단하기 위해 검사해야 할 구역들
+        (0, 0, 0, 1, 0, 2),  # (<1번 칸의 행>, <1번 칸의 열>, <2번 칸의 행>, <2번 칸의 열>, <3번 칸의 행>, <3번 칸의 열>)
         (1, 0, 1, 1, 1, 2),
         (2, 0, 2, 1, 2, 2),
         (0, 0, 1, 0, 2, 0),
@@ -201,23 +200,23 @@ while game:
     )
     winner = ''
 
-    player_mark, computer_mark = choose_mark()      # 말을 선택한다.
-    is_not_first = choose_first()                   # 먼저 시작할 것인지 선택한다.
+    player_mark, computer_mark = choose_mark()  # 말을 선택한다.
+    is_not_first = choose_first()  # 먼저 시작할 것인지 선택한다.
 
-    for turn in range(9):                          # 총 9번을 반복한다.
-        if turn % 2 == is_not_first:                # 플레이어 차례이면,
-            show_board(bd)                          # 게임판을 출력하고
-            get_input(bd, player_mark)              # 놓을 말의 위치를 입력받아 놓는다.
-        else:                                      # 컴퓨터 차례이면
-            show_board(bd)                          # 게임판을 출력하고
+    for turn in range(9):  # 총 9번을 반복한다.
+        if turn % 2 == is_not_first:  # 플레이어 차례이면,
+            show_board(bd)  # 게임판을 출력하고
+            get_input(bd, player_mark)  # 놓을 말의 위치를 입력받아 놓는다.
+        else:  # 컴퓨터 차례이면
+            show_board(bd)  # 게임판을 출력하고
             print('컴퓨터가 말을 놓는 중...')
-            time.sleep(1)                           # 1초 휴식한 다음
-            run_ai(bd, lines_to_win, player_mark, computer_mark)            # 컴퓨터의 말을 놓는다.
-        winner = chk_win(bd, lines_to_win, player_mark, computer_mark)      # 승리한 사람이 있는지 검사한다.
-        if winner != '':                           # 승리한 사람이 있으면 for 문을 탈출한다.
+            time.sleep(1)  # 1초 휴식한 다음
+            run_ai(bd, lines_to_win, player_mark, computer_mark)  # 컴퓨터의 말을 놓는다.
+        winner = chk_win(bd, lines_to_win, player_mark, computer_mark)  # 승리한 사람이 있는지 검사한다.
+        if winner != '':  # 승리한 사람이 있으면 for 문을 탈출한다.
             break
-    show_board(bd)              # 게임판을 출력하고
-    print_winner(winner)        # 게임 결과를 출력한다.
+    show_board(bd)  # 게임판을 출력하고
+    print_winner(winner)  # 게임 결과를 출력한다.
 
-    game = chk_restart()        # 재시작할지 선택한다.
+    game = chk_restart()  # 재시작할지 선택한다.
     print('=' * NUMBER_DASH)

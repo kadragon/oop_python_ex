@@ -29,7 +29,7 @@ def choose_character():
     """
     print('Choose X/O. X goes first.')
     player_character = input().upper()
-    while(player_character != 'X' and player_character != 'O'):
+    while (player_character != 'X' and player_character != 'O'):
         print('please type X, or O')
         player_character = input().upper()
 
@@ -147,7 +147,7 @@ def computers_turn(map_string, computer_character):
     return 5
 
 
-while True:     # 무한반복하게 while true
+while True:  # 무한반복하게 while true
     map_string = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
     if choose_character() == 'X':
         player_character = 'X'

@@ -5,6 +5,7 @@
 import random
 import time
 
+
 # board index
 # 0 1 2
 # 3 4 5
@@ -41,13 +42,12 @@ def is_full():
 
 # Print board. (Parameter : list, list)
 def print_board(m, d):
-
     for i in range(0, 7):
         for j in range(0, 7):
-            if j % 2 == 0 or i%2==0:  # print frame of board
+            if j % 2 == 0 or i % 2 == 0:  # print frame of board
                 print(m[i][j], end=' ')
-            else: # print data of board
-                print(d[3*int((i-1)/2)+int((j+1)/2)-1], end=' ')
+            else:  # print data of board
+                print(d[3 * int((i - 1) / 2) + int((j + 1) / 2) - 1], end=' ')
         print()
 
 
@@ -64,11 +64,11 @@ Choose where to put it ( 1 ~ 9 ): ''')
 # user turn method
 def turn_user():
     print("\nYour Turn!")
-    loc = int(new())-1
+    loc = int(new()) - 1
     # Check if user input location is Occupied
     while data[loc] != ' ':
         print("Location Occupied... Pick another Number")
-        loc = int(new())-1
+        loc = int(new()) - 1
     # Update data
     data[loc] = user
 
@@ -122,9 +122,11 @@ while game == 'R':
 
     # Pre Define Data
     # board's edge
-    board = [['-', '-', '-', '-', '-', '-', '-'], ['|', ' ', '|', ' ', '|', ' ', '|'], ['-', '-', '-', '-', '-', '-', '-'],
-            ['|', ' ', '|', ' ', '|', ' ', '|'], ['-', '-', '-', '-', '-', '-', '-'], ['|', ' ', '|', ' ', '|', ' ', '|'],
-            ['-', '-', '-', '-', '-', '-', '-']]
+    board = [['-', '-', '-', '-', '-', '-', '-'], ['|', ' ', '|', ' ', '|', ' ', '|'],
+             ['-', '-', '-', '-', '-', '-', '-'],
+             ['|', ' ', '|', ' ', '|', ' ', '|'], ['-', '-', '-', '-', '-', '-', '-'],
+             ['|', ' ', '|', ' ', '|', ' ', '|'],
+             ['-', '-', '-', '-', '-', '-', '-']]
     # board data
     data = [' '] * 9
 
@@ -138,7 +140,7 @@ while game == 'R':
     user = input('''Do you want to be X or O ? : ''')
     user = user.upper()
     # User input Error management
-    while not(user == 'O' or user == 'X'):
+    while not (user == 'O' or user == 'X'):
         user = input('''Invalid input. Please try again
 Do you want to be X or O ? : ''')
         user = user.upper()
@@ -178,12 +180,10 @@ Do you want to be X or O ? : ''')
                 print("\nComputer wins!")  # print computer winning message
                 win = 1  # win chk var
                 break
-        seq[0] = seq[0]*-1  # turn change
+        seq[0] = seq[0] * -1  # turn change
         print_board(board, data)  # print board
 
     if win == 0:  # check if draw
         print("\nDraw")
 
     game = input("\nInput R to restart, others to Exit...").upper()  # check if restart
-
-

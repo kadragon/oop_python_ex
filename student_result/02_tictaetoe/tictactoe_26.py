@@ -1,4 +1,4 @@
-map = [[' ']*4 for i in range(4)] # °ÔÀÓ ÇÃ·¹ÀÌ¿ë ¸Ê ¼±¾ğ
+map = [[' '] * 4 for i in range(4)]  # ê²Œì„ í”Œë ˆì´ìš© ë§µ ì„ ì–¸
 User = ' '
 Com = ' '
 play = 1
@@ -6,85 +6,87 @@ full = 0
 WhoseTurn = 0
 
 
-def Reset(): # °ÔÀÓ ½ÃÀÛ Àü Àç¼³Á¤
+def Reset():  # ê²Œì„ ì‹œì‘ ì „ ì¬ì„¤ì •
     global User
     global Com
     global play
     global full
     global WhoseTurn
-    print("\n\n\nSTART NEW TIATACTOE GAME") #°ÔÀÓ ½ÃÀÛ ¾Ë¸²
-    map = [[' ']*4 for i in range(4)]# ¸Ê ÃÊ±âÈ­
+    print("\n\n\nSTART NEW TIATACTOE GAME")  # ê²Œì„ ì‹œì‘ ì•Œë¦¼
+    map = [[' '] * 4 for i in range(4)]  # ë§µ ì´ˆê¸°í™”
     User = 'X'
-    Com = 'O' # »ç¿ëÇÒ ¸¶Ä¿ ÀúÀå. ±âº»°ªÀº ÇÃ·¹ÀÌ¾î°¡ X ¸¶Ä¿
-    full = 0 # °ÔÀÓ ÁøÃ´µµ ÀúÀå. ÆÇÀÌ ´Ù Â÷ÀÖÀ¸¸é ½Â¸®ÆÇÁ¤ ½ÃÇà
-    WhoseTurn = 1 # ´©±¸ ÅÏÀÎÁö ÆÇº°. ±âº»°ªÀº ÇÃ·¹ÀÌ¾î ¼±°ø. 2·Î ³ª´« ³ª¸ÓÁö·Î ÆÇº°ÇÔ
+    Com = 'O'  # ì‚¬ìš©í•  ë§ˆì»¤ ì €ì¥. ê¸°ë³¸ê°’ì€ í”Œë ˆì´ì–´ê°€ X ë§ˆì»¤
+    full = 0  # ê²Œì„ ì§„ì²™ë„ ì €ì¥. íŒì´ ë‹¤ ì°¨ìˆìœ¼ë©´ ìŠ¹ë¦¬íŒì • ì‹œí–‰
+    WhoseTurn = 1  # ëˆ„êµ¬ í„´ì¸ì§€ íŒë³„. ê¸°ë³¸ê°’ì€ í”Œë ˆì´ì–´ ì„ ê³µ. 2ë¡œ ë‚˜ëˆˆ ë‚˜ë¨¸ì§€ë¡œ íŒë³„í•¨
 
-def isOK(x, y): # ³õ¾Æµµ µÇ´ÂÁö È®ÀÎ
-    if x<0 or x>2 or y<0 or y>2: # µé¾î¿Â ÀÚ¸´°ªÀÌ ÀÌ»óÇÏ¸é 0 ¹İÈ¯
+
+def isOK(x, y):  # ë†“ì•„ë„ ë˜ëŠ”ì§€ í™•ì¸
+    if x < 0 or x > 2 or y < 0 or y > 2:  # ë“¤ì–´ì˜¨ ìë¦¿ê°’ì´ ì´ìƒí•˜ë©´ 0 ë°˜í™˜
         return 0
-    elif map[x][y] !=' ': # ÀÌ¹Ì Ã¤¿öÁø ÀÚ¸®¸é 0 ¹İÈ¯
+    elif map[x][y] != ' ':  # ì´ë¯¸ ì±„ì›Œì§„ ìë¦¬ë©´ 0 ë°˜í™˜
         return 0
-    else: # ¹®Á¦¾øÀ¸¸é 1 ¹İÈ¯
+    else:  # ë¬¸ì œì—†ìœ¼ë©´ 1 ë°˜í™˜
         return 1
 
-#¸ŞÀÎ Ãâ·ÂÇÔ¼ö
-def mapper(x, y, v): # À§Ä¡Á¤º¸, ³õÀ» ¸» ¹ŞÀ½
+
+# ë©”ì¸ ì¶œë ¥í•¨ìˆ˜
+def mapper(x, y, v):  # ìœ„ì¹˜ì •ë³´, ë†“ì„ ë§ ë°›ìŒ
     global map
     map[x][y] = v
     global full
-    full = full + 1 # Ã¤¿öÁø Ä­ÀÇ ¼ö ¼¼±â - °ÔÀÓ ÁøÇà·ü ÆÄ¾Ç
-        
-    # º¯È­ÇÑ ¸Ê Ãâ·Â
-    print("[%c|%c|%c]" %(map[0][0], map[0][1], map[0][2]))
-    print("[%c|%c|%c]" %(map[1][0], map[1][1], map[1][2]))
-    print("[%c|%c|%c]" %(map[2][0], map[2][1], map[2][2]))
+    full = full + 1  # ì±„ì›Œì§„ ì¹¸ì˜ ìˆ˜ ì„¸ê¸° - ê²Œì„ ì§„í–‰ë¥  íŒŒì•…
+
+    # ë³€í™”í•œ ë§µ ì¶œë ¥
+    print("[%c|%c|%c]" % (map[0][0], map[0][1], map[0][2]))
+    print("[%c|%c|%c]" % (map[1][0], map[1][1], map[1][2]))
+    print("[%c|%c|%c]" % (map[2][0], map[2][1], map[2][2]))
 
 
-def SelectMarker(): # ¸¶Ä¿ ¼±ÅÃ ÇÔ¼ö
+def SelectMarker():  # ë§ˆì»¤ ì„ íƒ í•¨ìˆ˜
     global User
     global Com
     global WhoseTurn
     print("Please Select Your Mark. First Attack is X. (X or O)")
     while 1:
-        Select = input().upper()  # ÇÃ·¹ÀÌ¾îÀÇ ¸¶Ä¿ °í¸£±â
-        if (Select != 'X') and (Select != 'O'):  # Àß¸øµÈ ÀÔ·Â ¹èÁ¦
+        Select = input().upper()  # í”Œë ˆì´ì–´ì˜ ë§ˆì»¤ ê³ ë¥´ê¸°
+        if (Select != 'X') and (Select != 'O'):  # ì˜ëª»ëœ ì…ë ¥ ë°°ì œ
             print("Please Select Again. ex) 'X' 'O' 'x' 'o'")
         else:
-            if Select == 'X': #»ç¿ëÀÚÀÇ ÀÔ·Â¿¡ µû¶ó °ªÀ» ¹İÈ¯ÇÕ´Ï´Ù.
+            if Select == 'X':  # ì‚¬ìš©ìì˜ ì…ë ¥ì— ë”°ë¼ ê°’ì„ ë°˜í™˜í•©ë‹ˆë‹¤.
                 User = 'X'
-                WhoseTurn = 1 # X°¡ ¼±°øÀÌ¹Ç·Î ÇÃ·¹ÀÌ¾î ¼±°øÀ¸·Î ¼³Á¤
+                WhoseTurn = 1  # Xê°€ ì„ ê³µì´ë¯€ë¡œ í”Œë ˆì´ì–´ ì„ ê³µìœ¼ë¡œ ì„¤ì •
                 Com = 'O'
             else:
                 User = 'O'
-                WhoseTurn = 0 # O°¡ ÈÄ°øÀÌ¹Ç·Î ÇÃ·¹ÀÌ¾î ÈÄ°øÀ¸·Î ¼³Á¤
+                WhoseTurn = 0  # Oê°€ í›„ê³µì´ë¯€ë¡œ í”Œë ˆì´ì–´ í›„ê³µìœ¼ë¡œ ì„¤ì •
                 Com = 'X'
         return
 
 
-
-# ÇÃ·¹ÀÌ¾î Â÷·Ê¿¡ ½ÇÇàµÇ´Â ÇÔ¼ö
+# í”Œë ˆì´ì–´ ì°¨ë¡€ì— ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 def user_turn():
     print("Your Turn")
     while 1:
         print("Where do you input? ex) '1 3' '2 2'")
-        position = (input().split()) # ¹®ÀÚÇüÀ¸·Î ¶ç¾î¾²±â Á¦°ÅÇØ ÀÔ·Â¹ŞÀ½
-        x = int(position[0])-1 # ¹®ÀÚÇüÀ» Á¤¼öÇüÀ¸·Î ¹Ù²Ş
-        y = int(position[1])-1
+        position = (input().split())  # ë¬¸ìí˜•ìœ¼ë¡œ ë„ì–´ì“°ê¸° ì œê±°í•´ ì…ë ¥ë°›ìŒ
+        x = int(position[0]) - 1  # ë¬¸ìí˜•ì„ ì •ìˆ˜í˜•ìœ¼ë¡œ ë°”ê¿ˆ
+        y = int(position[1]) - 1
 
-        # Àß¸øµÈ ÀÔ·Â ¹èÁ¦
-        if isOK(x,y) == 0:
+        # ì˜ëª»ëœ ì…ë ¥ ë°°ì œ
+        if isOK(x, y) == 0:
             print("Please Write Again. ex) '1 3' '2 2'")
         else:
-            mapper(x, y, User) # À§Ä¡°ª°ú ¸¶Ä¿¸¦ Ãâ·ÂÇÔ¼ö¿¡ Àü´Ş
-            return # ÅÏÀ» ³Ñ±ä´Ù
+            mapper(x, y, User)  # ìœ„ì¹˜ê°’ê³¼ ë§ˆì»¤ë¥¼ ì¶œë ¥í•¨ìˆ˜ì— ì „ë‹¬
+            return  # í„´ì„ ë„˜ê¸´ë‹¤
 
-# ÄÄÇ»ÅÍ Â÷·Ê¿¡ ½ÇÇàµÇ´Â ÇÔ¼ö
+
+# ì»´í“¨í„° ì°¨ë¡€ì— ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 def computer_turn():
-    doX = -1 # ÄÄÇ»ÅÍ°¡ ³õ¾Æ¾ß ÇÒ °÷
+    doX = -1  # ì»´í“¨í„°ê°€ ë†“ì•„ì•¼ í•  ê³³
     doY = -1
     print("Computer Turn")
 
-    # ¿Ï¼º °¡´ÉÇÑÁö ÀüÃ¼Å½»ö
+    # ì™„ì„± ê°€ëŠ¥í•œì§€ ì „ì²´íƒìƒ‰
     for i in range(0, 3):
         if (map[i][0] == map[i][1] == Com) and (isOK(i, 2)):
             doX = i
@@ -128,13 +130,13 @@ def computer_turn():
     elif (map[1][1] == map[0][2] == Com) and (isOK(2, 0)):
         doX = 2
         doY = 0
-    if doX != -1:  # ¸¸¾à °ø°İ °¡´ÉÇÑ °÷ÀÌ ÀÖ´Ù¸é
-        mapper(doX, doY, Com) # ³õÀº µÚ
-        return # ÅÏ ³Ñ±è
+    if doX != -1:  # ë§Œì•½ ê³µê²© ê°€ëŠ¥í•œ ê³³ì´ ìˆë‹¤ë©´
+        mapper(doX, doY, Com)  # ë†“ì€ ë’¤
+        return  # í„´ ë„˜ê¹€
 
 
-    else:# °ø°İÇÒ °÷ÀÌ ¾ø´Ù¸é
-        for i in range(0, 3):# ¸·À» °÷ Ã£±â
+    else:  # ê³µê²©í•  ê³³ì´ ì—†ë‹¤ë©´
+        for i in range(0, 3):  # ë§‰ì„ ê³³ ì°¾ê¸°
             if (map[i][0] == map[i][1] == User) and (isOK(i, 2)):
                 doX = i
                 doY = 2
@@ -178,12 +180,11 @@ def computer_turn():
             doX = 2
             doY = 0
 
-        if (doX != -1): # ¸¸¾à ¸·¾Æ¾ß ÇÒ °÷ÀÌ ÀÖ´Ù¸é
-            mapper(doX, doY, Com) # ³õÀº µÚ
-            return # ÅÏÀ» ³Ñ±è
+        if (doX != -1):  # ë§Œì•½ ë§‰ì•„ì•¼ í•  ê³³ì´ ìˆë‹¤ë©´
+            mapper(doX, doY, Com)  # ë†“ì€ ë’¤
+            return  # í„´ì„ ë„˜ê¹€
 
-
-    # ÃÖÀûÀü·«¿¡ ¾Ë¸Â°Ô ±Í,º¯,Áß¾Ó ¼øÀ¸·Î °¡´ÉÇÑ À§Ä¡¸¦ Å½»ö
+    # ìµœì ì „ëµì— ì•Œë§ê²Œ ê·€,ë³€,ì¤‘ì•™ ìˆœìœ¼ë¡œ ê°€ëŠ¥í•œ ìœ„ì¹˜ë¥¼ íƒìƒ‰
     while 1:
         if (isOK(0, 0)):
             doX = 0
@@ -212,25 +213,26 @@ def computer_turn():
         elif (isOK(1, 1)):
             doX = 1
             doY = 1
-        mapper(doX, doY, Com) # ³õÀº µÚ
-        return # ÅÏÀ» ³Ñ±è
+        mapper(doX, doY, Com)  # ë†“ì€ ë’¤
+        return  # í„´ì„ ë„˜ê¹€
 
-# ´Ù½Ã ÇÃ·¹ÀÌ ÇÒÁö ¹¯´Â ÇÔ¼ö - play °ªÀ» ¼öÁ¤ °¡´ÉÇÑ À¯ÀÏÇÑ ÇÔ¼öÀÓ
+
+# ë‹¤ì‹œ í”Œë ˆì´ í• ì§€ ë¬»ëŠ” í•¨ìˆ˜ - play ê°’ì„ ìˆ˜ì • ê°€ëŠ¥í•œ ìœ ì¼í•œ í•¨ìˆ˜ì„
 def PlayAgain():
-    while 1: # Àß¸øµÈ ÀÔ·Â ¹èÁ¦
+    while 1:  # ì˜ëª»ëœ ì…ë ¥ ë°°ì œ
         print("Play Again? Y or N")
         r = input().upper()
         if r == 'Y':
-            play = 1 # ÇÃ·¹ÀÌ »óÅÂ À¯Áö
+            play = 1  # í”Œë ˆì´ ìƒíƒœ ìœ ì§€
             return
         elif r == 'N':
-            play = 0 # ÇÃ·¹ÀÌ »óÅÂ ²¨Áü
+            play = 0  # í”Œë ˆì´ ìƒíƒœ êº¼ì§
             return
         else:
             print("Please Input Again. ex) 'Y' 'y' 'N' 'n'")
 
 
-def win(): # ½Â¸®ÇÑ ¸¶Ä¿¸¦ ¹İÈ¯
+def win():  # ìŠ¹ë¦¬í•œ ë§ˆì»¤ë¥¼ ë°˜í™˜
     if (map[0][0] == map[0][1]) and (map[0][1] == map[0][2]):
         return map[0][0]
     elif (map[1][0] == map[1][1]) and (map[1][1] == map[1][2]):
@@ -248,33 +250,34 @@ def win(): # ½Â¸®ÇÑ ¸¶Ä¿¸¦ ¹İÈ¯
     elif (map[0][2] == map[1][1]) and (map[1][1] == map[2][0]):
         return map[0][2]
 
-    elif full<9:
+    elif full < 9:
         return 'N'
     else:
         return 'D'
 
-#°ÔÀÓ Á¾·á ÇÔ¼ö
+
+# ê²Œì„ ì¢…ë£Œ í•¨ìˆ˜
 def Ender():
-    if win() == User: # ÇÃ·¹ÀÌ¾î°¡ ½Â¸®½Ã
-            print("You Win !!!")
-    elif win() == Com: # ÄÄÇ»ÅÍ ½Â¸®½Ã
-            print("You Lose ...")
+    if win() == User:  # í”Œë ˆì´ì–´ê°€ ìŠ¹ë¦¬ì‹œ
+        print("You Win !!!")
+    elif win() == Com:  # ì»´í“¨í„° ìŠ¹ë¦¬ì‹œ
+        print("You Lose ...")
     elif win() == 'D':
         print("DRAW")
     return
 
 
-while play == 1: # ÇÃ·¹ÀÌÇÏ´Â µ¿¾È
-    Reset() # »õ·ÎÀÌ ½ÃÀÛÇÏ±â À§ÇØ ¸®¼Â
-    SelectMarker() # ¸¶Ä¿ ¼±ÅÃ
-    while full<9: # ÆÇÀÌ ´Ù Âû¶§±îÁö °ÔÀÓ ÁøÇà
+while play == 1:  # í”Œë ˆì´í•˜ëŠ” ë™ì•ˆ
+    Reset()  # ìƒˆë¡œì´ ì‹œì‘í•˜ê¸° ìœ„í•´ ë¦¬ì…‹
+    SelectMarker()  # ë§ˆì»¤ ì„ íƒ
+    while full < 9:  # íŒì´ ë‹¤ ì°°ë•Œê¹Œì§€ ê²Œì„ ì§„í–‰
         if WhoseTurn % 2 == 1:
             user_turn()
-            WhoseTurn+=1
+            WhoseTurn += 1
         else:
             computer_turn()
-            WhoseTurn+=1
+            WhoseTurn += 1
         if win() == 'X' or win() == 'O' or win() == 'D':
             break
-    Ender() # °ÔÀÓ Á¾·áÈÄ °á°ú Ãâ·Â
-    PlayAgain() # ´Ù½Ã ÇÏ°Ú³Ä°í ¹°¾îº¸±â
+    Ender()  # ê²Œì„ ì¢…ë£Œí›„ ê²°ê³¼ ì¶œë ¥
+    PlayAgain()  # ë‹¤ì‹œ í•˜ê² ëƒê³  ë¬¼ì–´ë³´ê¸°

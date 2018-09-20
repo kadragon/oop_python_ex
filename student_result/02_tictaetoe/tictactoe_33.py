@@ -2,6 +2,7 @@ import random
 
 OXJudge = ['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ']
 
+
 def DefaultField():
     print("""
     --------------
@@ -13,6 +14,7 @@ def DefaultField():
     --------------
     """)
 
+
 def PrintResult():
     global OXJudge
     print("""
@@ -23,7 +25,4 @@ def PrintResult():
     --------------
      %s | %s | %s 
     --------------
-    """ %(OXJudge[0], OXJudge[1], OXJudge[2],OXJudge[3],OXJudge[4],OXJudge[5],OXJudge[6], OXJudge[7], OXJudge[8]))
-
-
-print('피치 못할 사정이 있어 완성하지 못했습니다')
+    """ % (OXJudge[0], OXJudge[1], OXJudge[2], OXJudge[3], OXJudge[4], OXJudge[5], OXJudge[6], OXJudge[7], OXJudge[8]))
