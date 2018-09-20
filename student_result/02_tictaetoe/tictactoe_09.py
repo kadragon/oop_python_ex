@@ -1,5 +1,5 @@
-import random  # 시작 순서에 대한 랜덤이 필요하다
 import copy  # 리스트를 변경하지 않고 사용하기 위해 deepcopy가 필요하다
+import random  # 시작 순서에 대한 랜덤이 필요하다
 
 # t와 c는 각각 자신과 컴퓨터의 기호
 t = ''

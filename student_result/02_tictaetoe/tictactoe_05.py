@@ -1,6 +1,6 @@
 # 필요한 모듈 import
-import random
 import copy
+import random
 
 BOARD_SIZE = 3  # 게임판의 가로/세로 크기
 

@@ -1,5 +1,5 @@
-import random  # ai가 임의의 자리를 선택
 import copy  # ai가 ai 나 user의 승리시행을 판단
+import random  # ai가 임의의 자리를 선택
 import time  # 딜레이 함수 사용
 
 
