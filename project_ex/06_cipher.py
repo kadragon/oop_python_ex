@@ -41,15 +41,15 @@ def get_mode_other():
 def get_message():
     """
     암호화나 복호화 할 문자열을 입력 받는 메소드
-    :return: 입력값 반환
+    :return: 사용자가 입력한 문자열을 반환함.
     """
     return input('Enter your message: ')
 
 
 def get_key():
     """
-    암호화 키를 입력 받아, MAX_KEY_SIZE 인지 확인하는 코드
-    :return:
+    암호화 키를 입력 받아, 1 <= a <= MAX_KEY_SIZE 을 만족하면 입력 받은 값을 반환하고 아니면, 다시 입력 받는 함수
+    :return: 1 <= a <= MAX_KEY_SIZE 를 만족하는 정수 a
     """
     while True:
         """
@@ -70,6 +70,13 @@ def get_key():
 
 
 def get_trans_message(mode, message, key):
+    """
+    mode 를 확인하여, message를 key 기준으로 암호화 or 복호화하여 반환함
+    :param mode: encrypt OR e OR decrypt OR d
+    :param message: 사용자가 입력한 값
+    :param key: 암호화 키 (이동 횟수)
+    :return: mode에 의해 암호화 or 복호화된 값
+    """
     # mode 의 상태를 확인하여 key 값을 더할지, 뺄지를 결정한다.
     if mode[0] == 'd':
         key = -key
