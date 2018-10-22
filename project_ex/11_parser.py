@@ -46,7 +46,7 @@ for i in news_main:
     news_title = i.getText().strip()  # <a> 에 담겨있는 text 를 가져온다.
     news_url = i.get('href')  # <a> 에 설정되어 있는 href 값을 가져온다.
 
-    # hotissue 가 주소 내에 있을 경우, 기사로 바로 전달되지 않기 때문에 등록일이나 언론사 찾지 않는다.
+    # hotissue 가 주소 내에 있을 경우, 기사로 바로 전달되지 않기 때문에 등록일이나 언론사 찾지 않는다. | bug fix
     if 'hotissue' not in news_url.split('/') and 'officeList' != news_url.split('/')[4][0:10]:
         news_insert_time, news_press = sub_get_insert_time_and_press(news_url)
         print("%s | %s | %s | %s" % (news_title, news_press, news_insert_time, news_url))
