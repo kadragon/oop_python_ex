@@ -1,5 +1,5 @@
-# pip3 install -U beautifulsoup4
-# pip3 install -U requests
+# pip install beautifulsoup4
+# pip install requests
 
 import bs4
 import requests

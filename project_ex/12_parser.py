@@ -1,3 +1,6 @@
+# pip install beautifulsoup4
+# pip install requests
+
 import datetime  # 날짜 관련 라이브러리
 
 import requests  # 웹 접속 관련 라이브러리
