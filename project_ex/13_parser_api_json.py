@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # https://www.data.go.kr 에서 발급 받은 API_KEY
-API_AUTH_KEY = "jjg9PodXGlwYYrfmH0VNL%2BmmUjU4h%2BNp4RxysfJihzOqGGN3mucbkB96AAFh0bUkAldnsSv6fWJXBarx8n9otw%3D%3D"
+API_AUTH_KEY = "API_KEY"
 
 
 """
