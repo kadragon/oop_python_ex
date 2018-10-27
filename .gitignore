@@ -1,0 +1,7 @@
+/venv
+/.idea
+
+*.txt
+*.log
+
+study_ex/10_file

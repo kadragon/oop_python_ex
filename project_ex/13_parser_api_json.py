@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 # pip install requests
 # pip install matplotlib
 
-=======
-import bs4
->>>>>>> 10704d6040b90faaee692d915b121931305f76f3
 import requests
 import urllib.request
 from urllib import parse
@@ -12,13 +8,9 @@ import json
 import matplotlib.pyplot as plt
 import numpy as np
 
-<<<<<<< HEAD
 # https://www.data.go.kr 에서 발급 받은 API_KEY
 API_AUTH_KEY = "jjg9PodXGlwYYrfmH0VNL%2BmmUjU4h%2BNp4RxysfJihzOqGGN3mucbkB96AAFh0bUkAldnsSv6fWJXBarx8n9otw%3D%3D"
 
-=======
-API_AUTH_KEY = "API_KEY"
->>>>>>> 10704d6040b90faaee692d915b121931305f76f3
 
 """
 https://www.data.go.kr/dataset/15000581/openapi.do
@@ -40,7 +32,6 @@ serviceKey=API_AUTH_KEY
 &ver=1.3
 """
 
-<<<<<<< HEAD
 # 시도별 실시간 측정정보를 조회 할 수 있는 REST BASE_URL 
 getCtprvnRltmMesureDnsty = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty"
 
@@ -61,29 +52,13 @@ with urllib.request.urlopen(target_url) as url:  # 웹페이지에 접속해서 
     """
 
     # 여러 동이 나오지만, 학교가 있는 아름동만 추출하기 위한 코드
-=======
-getCtprvnRltmMesureDnsty = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty"
-
-
-def make_url_getCtprvnRltmMesureDnsty(sidoName, numOfRows=10):
-    return "%s?serviceKey=%s&numOfRows=%d&sidoName=%s&ver=1.3&_returnType=json" % (getCtprvnRltmMesureDnsty, API_AUTH_KEY, numOfRows, parse.quote(sidoName))
-
-
-target_url = make_url_getCtprvnRltmMesureDnsty('세종', 20)
-
-with urllib.request.urlopen(target_url) as url:
-    data = json.loads(url.read().decode(url.headers.get_content_charset()))
->>>>>>> 10704d6040b90faaee692d915b121931305f76f3
     my_place = ''
     for sub_data in data['list']:
         if sub_data['stationName'] == '아름동':
             my_place = sub_data
             break
 
-<<<<<<< HEAD
     # json 으로 받은 많은 데이터중에 출력하지 않을 정보들을 제외
-=======
->>>>>>> 10704d6040b90faaee692d915b121931305f76f3
     data_column = list(my_place)
     no_use_column = "stationName dataTime dataTerm mangName pageNo resultCode resultMsg rnum serviceKey sidoName stationCode stationName totalCount ver _returnType"
 
@@ -130,17 +105,11 @@ itemCode=PM10&dataGubun=DAILY
 &ServiceKey=서비스키
 """
 
-<<<<<<< HEAD
 # 시도별 실시간 평균 정보를 조회하기 위한 BASE_URL
 getCtprvnMesureList = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnMesureLIst"
 
 
 # 시도별 실시간 평균 정보를 조회하기 위해 파라미터를 기준으로 요청할 url을 만들어주는 함수
-=======
-getCtprvnMesureList = "http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnMesureLIst"
-
-
->>>>>>> 10704d6040b90faaee692d915b121931305f76f3
 def make_url_getCtprvnMesureList(itemCode, dataGubun, searchCondition = 'WEEK'):
     return "%s?serviceKey=%s&itemCode=%s&dataGubun=%s&searchCondition=%s&_returnType=json" % (getCtprvnMesureList, API_AUTH_KEY, itemCode, dataGubun, searchCondition)
 
@@ -169,7 +138,6 @@ with urllib.request.urlopen(target_url) as url:
             city_air_contidion_data[city_name.index(city)].append(int(sub_data[city]))
             
     for i in range(0, len(city_name)):
-<<<<<<< HEAD
         if city_name[i] in "seoul sejong jeju".split():
             plt.plot(in_date, city_air_contidion_data[i], label=city_name[i])
     
@@ -180,23 +148,3 @@ with urllib.request.urlopen(target_url) as url:
     plt.grid(True)
 
     plt.show()
-=======
-        plt.plot(in_date, city_air_contidion_data[i], label=city_name[i])
-    
-    plt.title('PM10')
-    plt.xlabel('date')
-    plt.ylabel('value')
-    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., fancybox=True, shadow=True)
-    plt.grid(True)
-
-    plt.show()
-
-    
-
-
-
-    
-        
-
-
->>>>>>> 10704d6040b90faaee692d915b121931305f76f3
