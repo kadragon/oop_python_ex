@@ -3,7 +3,7 @@ import time       # time.sleep() 사용
 
 
 def client_thread(clientname, sec):
-    for i in range(10):
+    for _ in range(10):
         print("%s - 지연 %d" % (clientname, sec))
         time.sleep(sec)
 
