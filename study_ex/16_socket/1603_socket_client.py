@@ -36,6 +36,10 @@ def receive():
 def main_thread():
     global mysock
     
+    # 메시지 받는 스레스 시작
+    thread_recv = threading.Thread(target=receive, args=())
+    thread_recv.start()
+
     while True:
         try:
             data = input('>')
@@ -55,19 +59,15 @@ def main_thread():
     mysock.shutdown(socket.SHUT_WR)
     thread_recv.join()
 
-# 메시지 받는 스레스 시작
-thread_recv = threading.Thread(target=receive, args=())
-thread_recv.start()
 
 # 메시지 보내는 스레드 시작
 thread_main = threading.Thread(target=main_thread, args=())
 thread_main.start()
 
 # 메시지를 받고, 보내는 스레드가 종료되길 기다림
-thread_recv.join()
 thread_main.join()
 
-# 스레드가 종료되면, 열어둔 소켓을 닫음.
+# 스레드가 종료되면, 열어둔 소켓을 닫는다.
 mysock.close()
 print('소켓을 닫습니다.')
 print('클라이언트 프로그램이 정상적으로 종료되었습니다.')
