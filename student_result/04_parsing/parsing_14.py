@@ -13,8 +13,8 @@ def get_html(url):
 def is_it_today_yesterday(date):
     t = time.localtime()
     y = time.localtime(time.time() - 86400)
-    today = str(t.tm_year) + str(t.tm_mon) + str(t.tm_mday)  # 현재시간을 년, 월, 일로 구분하여 연결된 문자열로 만들어준다.
-    yesterday = str(y.tm_year) + str(y.tm_mon) +str(y.tm_mday)  #하루 전 날짜를 년, 월, 일로 구분하여 연결된 문자열로 만들어준다.
+    today = "%d%02d%02d" % (t.tm_year, t.tm_mon, t.tm_mday)  # 현재시간을 년, 월, 일로 구분하여 연결된 문자열로 만들어준다.
+    yesterday = "%d%02d%02d" % (y.tm_year, y.tm_mon, y.tm_mday)  # 하루 전 날짜를 년, 월, 일로 구분하여 연결된 문자열로 만들어준다.
     d = date.replace('-', '').split(' ')[0]  # 받은 날짜에서 '-'를 지우고 년월일까지만 저장하자.
     if today == d or yesterday == d:
         return True
@@ -54,7 +54,7 @@ def page_indi_info(url):
             print('발견장소 : ' + info[0].getText().split('-')[0] + ' ' + info[0].getText().split('-')[1] + ' ' + info[5].getText())
             # 발견장소가 구체적으로 적히지 않은 경우가 많아 공고번호 '지역-지역-2018-00000'꼴의 앞자리 지역이름을 가져와 상세주소와 붙여주자.
             print('보호센터 : ' + info_area + info[13].getText() + ' (연락처 : ' + info[14].getText() + ')')
-            print('자세히 보기 ☞ ' + 'http://www.animal.go.kr' + detail[1].get('href'))
+            print('자세히 보기 ☞ ' + 'http://www.animal.go.kr' + detail[1].get('href') + '\n')
             cnt += 1
         else:
             info_area_raw = info[14].getText().split()
@@ -68,7 +68,7 @@ def page_indi_info(url):
             print('성별 : ' + info[3].getText(), end="| ")
             print('발견장소 : ' + info[0].getText().split('-')[0] + ' ' + info[0].getText().split('-')[1] + ' ' + info[5].getText())
             print('보호센터 : ' + info_area + info[12].getText() + ' (연락처 : ' + info[13].getText() + ')')
-            print('자세히 보기 ☞ ' + 'http://www.animal.go.kr' + detail[1].get('href'))
+            print('자세히 보기 ☞ ' + 'http://www.animal.go.kr' + detail[1].get('href') + '\n')
             cnt += 1
     else:
         pass
@@ -86,8 +86,8 @@ for page in range(1,len(html_list)):
     page_pars = bs4.BeautifulSoup(page_html, 'html.parser')  # 보호중유기동물 페이지의 각 목록 페이지를 파싱
 
     # 페이지별 유기동물들의 각 자세히보기 링크가 담긴 (<div class='thumbnail01'>을 모두 검색하여 리스트로 반환.
-    page_catlist = page_pars.select('div.abandarea div.thumbnail01')
+    page_petlist = page_pars.select('div.abandarea div.thumbnail01')
 
-    for i in page_catlist:
+    for i in page_petlist:
         detail = i.select('div.thumb_inner01 p a')
         page_indi_info(detail[1].get('href'))  # 동물별 자세히 보기 페이지 url일부를 page_indi_info()에게 넘겨줌.

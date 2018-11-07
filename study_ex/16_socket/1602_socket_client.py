@@ -9,13 +9,22 @@ address = (server_ip, server_port)
 mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 mysock.connect(address)
 
+# 스레드 종료 키
+thread_end = 0
+
 
 # 서버가 보내는 메시지를 수신할 함수 | Thread 활용
 def receive():
     global mysock
+    
     while True:
-        data = mysock.recv(1024)
-        print(data.decode('UTF-8'), " *from Server")
+        try:
+            data = mysock.recv(1024)
+            print(data.decode('UTF-8'), " *from Server")
+        except OSError:
+            print('연결이 종료되었습니다.')
+            break
+
     mysock.close()
 
 
@@ -31,8 +40,8 @@ while True:
     except KeyboardInterrupt:
         break
     if data == '!quit' or '':
-        mysock.close()
         break
+
     mysock.send(bytes(data, 'UTF-8'))
 
 # 서버 접속 종료

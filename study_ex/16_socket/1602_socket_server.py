@@ -21,8 +21,15 @@ print("===== 클라이언트가 접속하였습니다.")
 def receive():
     global client_sock
     while True:
-        data = client_sock.recv(1024)
-        print(data.decode('UTF-8'), " *from Client")
+        try:
+            data = client_sock.recv(1024)
+            if data == '':
+                break
+        except OSError:
+            print('연결이 종료되었습니다.')
+            break
+
+        # print(data.decode('UTF-8'), " *from Client")
     client_sock.close()
 
 # Thread 생성 및 실행

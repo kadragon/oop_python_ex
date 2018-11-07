@@ -21,6 +21,9 @@ def receive():
         except ConnectionError:
             print("서버와 접속이 끊겼습니다. Enter를 누르세요.")
             break
+        except OSError:
+            print("서버와의 접속을 끊었습니다.")
+            break
 
         if not data:  # 넘어온 데이터가 없다면.. 로그아웃!
             print("서버로부터 정상적으로 로그아웃했습니다.")
@@ -29,7 +32,10 @@ def receive():
         print(data.decode('UTF-8'))  # 서버로 부터 받은 값을 출력
 
     print('소켓의 읽기 버퍼를 닫습니다.')
-    mysock.shutdown(socket.SHUT_RD)
+    try:
+        mysock.shutdown(socket.SHUT_RD)
+    except OSError:
+        print("읽기 버퍼를 닫기 전에 서버에서 연결이 종료되었습니다.")
 
 
 # 서버에게 메시지를 발송하는 함수 | Thread 활용
