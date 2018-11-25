@@ -1,0 +1,85 @@
+import socket, threading
+
+# 접속할 서버의 정보
+server_ip = '127.0.0.1'
+server_port = 50000
+address = (server_ip, server_port)
+
+# 소켓을 이용해서 서버에 접속
+mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+try:
+    mysock.connect(address)
+except ConnectionRefusedError:
+    print("인원초과입니다. 잠시 후에 다시 시도해주세요")
+    quit()
+print("연결 성공")
+print("가위바위보 게임을 시작합니다.")
+print("게임을 그만두고 싶으시면 !quit을 입력해주세요.")
+print("바위를 내고 싶으면 r 또는 R, 가위를 내고 싶으면 s 또는 S, 보자기를 내고 싶으면 p 또는 P를 입력해주세요")
+
+
+# 서버로부터 메시지를 받아, 출력하는 함수.
+def receive():
+    global mysock
+    while True:
+        try:
+            data = mysock.recv(1024)  # 서버로 부터 값을 받는것
+        except ConnectionError:
+            print("서버와 접속이 끊겼습니다. Enter를 누르세요.")
+            break
+        except OSError:
+            print("서버와의 접속을 끊었습니다.")
+            break
+        if not data:  # 넘어온 데이터가 없다면.. 로그아웃!
+            print("서버로부터 정상적으로 로그아웃했습니다.")
+            break
+
+        print(data.decode('UTF-8'))  # 서버로 부터 받은 값을 출력
+
+    print('소켓의 읽기 버퍼를 닫습니다.')
+    try:
+        mysock.shutdown(socket.SHUT_RD)
+    except OSError:
+        print("읽기 버퍼를 닫기 전에 서버에서 연결이 종료되었습니다.")
+
+
+# 서버에게 메시지를 발송하는 함수 | Thread 활용
+def main_thread():
+    global mysock
+
+    # 메시지 받는 스레스 시작
+    thread_recv = threading.Thread(target=receive, args=())
+    thread_recv.start()
+
+    while True:
+        try:
+            data = input('>')
+        except KeyboardInterrupt:
+            continue
+
+        if data == '!quit':
+            print("서버와의 접속을 끊는 중입니다.")
+            break
+        if data=='r' or data =='R' or data=='S' or data=='s' or data=="p" or data=='P':
+            try:
+                mysock.send(bytes(data, 'UTF-8'))  # 서버에 메시지를 전송
+            except ConnectionError:
+                break
+        else: print("다시 입력해주세요.")
+
+    print("소켓의 쓰기 버퍼를 닫습니다.")
+    mysock.shutdown(socket.SHUT_WR)
+    thread_recv.join()
+
+
+# 메시지 보내는 스레드 시작
+thread_main = threading.Thread(target=main_thread, args=())
+thread_main.start()
+
+# 메시지를 받고, 보내는 스레드가 종료되길 기다림
+thread_main.join()
+
+# 스레드가 종료되면, 열어둔 소켓을 닫는다.
+mysock.close()
+print('소켓을 닫습니다.')
+print('클라이언트 프로그램이 정상적으로 종료되었습니다.')
