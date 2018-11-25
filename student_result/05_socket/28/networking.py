@@ -15,10 +15,11 @@ print('Start game')
 # 접속한 클라이언트들을 저장할 공간
 client_list = []
 client_id = []
-client_input = ['python'] # 시작은 언제나 apple!
+client_input = ['python']  # 시작은 언제나 apple!
 now_input = ''
 prev_input = 'python'
-turn = 0 #
+turn = 0
+
 
 # 서버로 부터 메시지를 받는 함수 | Thread 활용
 def receive(client_sock):
@@ -40,25 +41,28 @@ def receive(client_sock):
 
         # 제대로된 사람이 들어왔는가, 한번도 입력되지 않은 값인가
         if client_sock.fileno() != client_id[turn]:
-            client_sock.send(bytes(">>{}의 순서가 아닙니다".format(client_sock.fileno()), 'utf-8'))
+            client_sock.send(
+                bytes(">>{}의 순서가 아닙니다".format(client_sock.fileno()), 'utf-8'))
         elif now_input in client_input:
             for sock in client_list:
                 client_sock.send(bytes(">>이미 입력한 값입니다.", 'utf-8'))
         else:
             if prev_input[len(prev_input) - 1] == now_input[0]:
                 turn += 1
-                turn = turn%len(client_list)
+                turn = turn % len(client_list)
                 client_input.append(now_input)
                 for sock in client_list:
                     sock.send(bytes(">>{}를 입력하셨습니다".format(now_input), 'UTF-8'))
-                    sock.send(bytes("!!!{}님 정답입니다!!!\n".format(client_sock.fileno()), 'UTF-8'))
-                    sock.send(bytes(">>{}님 차례입니다".format(client_id[turn]), 'UTF-8'))
-                prev_input=now_input
+                    sock.send(bytes("!!!{}님 정답입니다!!!\n".format(
+                        client_sock.fileno()), 'UTF-8'))
+                    sock.send(bytes(">>{}님 차례입니다".format(
+                        client_id[turn]), 'UTF-8'))
+                prev_input = now_input
             else:
                 for sock in client_list:
                     sock.send(bytes(">>{}를 입력하셨습니다".format(now_input), 'UTF-8'))
-                    sock.send(bytes(">>{}님 오답입니다. 다시 시도하세요\n".format(client_sock.fileno()), 'utf-8'))
-
+                    sock.send(bytes(">>{}님 오답입니다. 다시 시도하세요\n".format(
+                        client_sock.fileno()), 'utf-8'))
 
     # 메시지 송발신이 끝났으므로, 대상인 client는 목록에서 삭제.
     client_id.remove(client_sock.fileno())
@@ -77,7 +81,7 @@ def connection():
     global client_id
 
     while True:
-        if len(client_id)<4:
+        if len(client_id) < 4:
             # 클라이언트들이 접속하기를 기다렸다가, 연결을 수립함.
             client_sock, client_addr = server_sock.accept()
 

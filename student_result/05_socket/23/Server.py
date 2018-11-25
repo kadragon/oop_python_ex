@@ -19,6 +19,7 @@ print('Start Quiz - Server')
 client_list = []
 client_id = []
 
+
 def send_data(client_sock, data):
     try:
         client_sock.send(bytes(data, 'utf-8'))
@@ -39,8 +40,8 @@ def question(sock):
     while True:
         try:
             data = sock.recv(1024)
-            #print(data)
-            #print(ans)
+            # print(data)
+            # print(ans)
             if data.decode('UTF-8') == str(ans):
                 send_data(sock, 'Right')
                 break
@@ -48,7 +49,6 @@ def question(sock):
                 send_data(sock, 'wrong')
         except ConnectionError:
             print("{}와 연결이 끊겼습니다. #code1".format(sock.fileno()))
-
 
 
 # 서버로 부터 메시지를 받는 함수 | Thread 활용
@@ -68,6 +68,8 @@ def receive(client_sock):
     return 0
 
 # 연결 수립용 함수 | Thread 활용
+
+
 def connection():
     global client_list
     global client_id
@@ -83,11 +85,10 @@ def connection():
         #print("{}가 접속하였습니다.".format(client_sock.fileno()))
         #print("{}가 접속하였습니다.".format(client_addr))
         print("현재 연결된 사용자: {}\n".format(client_list))
-        #start()
+        # start()
         # 접속한 클라이언트를 기준으로 메시지를 수신 할 수 있는 스레드를 생성함.
         thread_recv = threading.Thread(target=receive, args=(client_sock, ))
         thread_recv.start()
-
 
 
 # 연결 수립용 스레드 생성 및 실행.

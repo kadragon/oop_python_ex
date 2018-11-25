@@ -1,6 +1,5 @@
 """
 Project     과제4|네트워킹|MafiaGame|Client
-Auth        2513 지명금
 Date        2018.11.10.
 """
 # 네트워킹을 이용하여 진행하는 마피아 게임
@@ -25,6 +24,7 @@ textline = 30
 first = True
 myid = 0
 
+
 def aboutWaiting(client_len):
     """
     게임 접속 현황에 대한 설명을 하는 함수
@@ -39,6 +39,7 @@ def aboutWaiting(client_len):
     explain += "=" * (textline * 2 + 11) + "\n"
     print(explain)
 
+
 def aboutGame():
     """
     게임에 대한 설명을 작성한 함수 (Server & Client)에게 동시 공지
@@ -51,15 +52,17 @@ def aboutGame():
     explain += "=" * (textline * 2 + 11) + "\n"
     print(explain)
 
+
 def receive():
     """
     서버로부터 메시지를 받는 함수
     """
     global first
-    
+
     while True:
-        try :
-            data = mysock.recv(1024).decode('utf-8') # 전달되는 data의 속성에 따라 코드를 다르게 하여 진행함
+        try:
+            # 전달되는 data의 속성에 따라 코드를 다르게 하여 진행함
+            data = mysock.recv(1024).decode('utf-8')
         except ConnectionError:
             print(">> 서버와 접속이 끊겼습니다. Enter를 눌러주세요")
             break
@@ -70,40 +73,42 @@ def receive():
         if not data:
             print(">> 서버가 준비되지 않은 상태입니다")
             break
-        
-        if data[1:4]=='5-1': # [#5-1]:접속자와 관련된 안내
+
+        if data[1:4] == '5-1':  # [#5-1]:접속자와 관련된 안내
             print(data[5:])
             if first == True:
                 myid = data[5:8]
                 first = False
-        elif data[1:4] == '5-2': # [#5-2]:접속자 수에 대한 안내
-            aboutWaiting(data[5:]) # aboutWaiting() 함수를 통해 접속자와 관련된 정보를 제공
-        elif data[1] == '0': # [#0]: 게임 시작에 대한 안내
+        elif data[1:4] == '5-2':  # [#5-2]:접속자 수에 대한 안내
+            aboutWaiting(data[5:])  # aboutWaiting() 함수를 통해 접속자와 관련된 정보를 제공
+        elif data[1] == '0':  # [#0]: 게임 시작에 대한 안내
             print(data[3:])
-            aboutGame() # aboutGame() 함수를 통해 게임에 대한 설명을 제공
-        elif data[1] == '1': # [#1]: 게임 캐릭터에 대한 안내
-            print("> 당신[ {} ]의 캐릭터는 [ {} ]입니다!\n".format(myid,data[3:])) # 본인의 id와 캐릭터를 알려주고 있음
-        elif data[1] == '2': # [#2]: 접속자 전체 안내 
+            aboutGame()  # aboutGame() 함수를 통해 게임에 대한 설명을 제공
+        elif data[1] == '1':  # [#1]: 게임 캐릭터에 대한 안내
+            print("> 당신[ {} ]의 캐릭터는 [ {} ]입니다!\n".format(
+                myid, data[3:]))  # 본인의 id와 캐릭터를 알려주고 있음
+        elif data[1] == '2':  # [#2]: 접속자 전체 안내
             print(data[3:])
-        elif data[1] == '4': # [#4]: 입력이 필요한 안내
+        elif data[1] == '4':  # [#4]: 입력이 필요한 안내
             while True:
                 select = input(' [ 입력 ]>')
                 if select != '':
-                    mysock.send(bytes(select,'utf-8'))
+                    mysock.send(bytes(select, 'utf-8'))
                     break
-        elif data[1] == '3': # [#3]: 특정 접속자에게 보내는 안내
+        elif data[1] == '3':  # [#3]: 특정 접속자에게 보내는 안내
             print(data[3:])
-        elif data[1] == '7': # [#7]: 접속자 프로그램 종료 요청
+        elif data[1] == '7':  # [#7]: 접속자 프로그램 종료 요청
             break
-        
+
+
 # socket을 이용해서 접속 할 준비
 mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-try :
+try:
     mysock.connect(address)
-except ConnectionRefusedError: # 서버와 연결이 되지 않는 경우에 ConnectionRefusedError 발생
+except ConnectionRefusedError:  # 서버와 연결이 되지 않는 경우에 ConnectionRefusedError 발생
     print(">> 서버오류입니다. 나중에 다시 시도해주십시오")
-else :
+else:
     receive()
-finally :
+finally:
     mysock.close()
     sys.exit()

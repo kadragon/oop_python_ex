@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
-import socket, threading
+import socket
+import threading
 
 # 접속할 서버의 정보
 server_ip = '127.0.0.1'
@@ -25,6 +26,8 @@ else:
 print("-"*60)
 
 # 서버로부터 메시지를 받아, 출력하는 함수.
+
+
 def receive():
     global mysock
     while True:
@@ -49,6 +52,8 @@ def receive():
         print("읽기 버퍼를 닫기 전에 서버에서 연결이 종료되었습니다.")
 
 # 서버에게 메시지를 발송하는 함수 | Thread 활용
+
+
 def main_thread():
     global mysock
 

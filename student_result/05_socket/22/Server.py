@@ -1,4 +1,4 @@
-#서버 코드입니다.
+# 서버 코드입니다.
 import socket
 import threading
 print('술래잡기 게임입니다. 서버를 실행 후 Client 1, 2를 연결해 주세요.\nw, a, s, d로 조종하며, 각 방향 입력 후 엔터를 쳐서 서버로 송신해 주세요.\n게임은 두 명이 모두 서버에 접속한 순간 부터 시작해주십시오. 미리 이동시 두 플레이어간 맵이 동기화되지 않습니다.\n술래 1이 도망자 2를 잡게 되면 게임이 종료되고 바로 다음 게임이 시작됩니다.')
@@ -16,6 +16,7 @@ server_sock.listen()
 # 접속한 클라이언트들을 저장한다
 client_list = []
 client_id = []
+
 
 # 서버로 부터 이동정보를 받는다. | Thread 활용한다.
 def receive(client_sock):
@@ -55,7 +56,7 @@ def connection():
     global client_id
 
     while True:
-        if len(client_list)>=2:
+        if len(client_list) >= 2:
             break
         client_sock, client_addr = server_sock.accept()
         client_list.append(client_sock)
@@ -66,6 +67,8 @@ def connection():
         print("현재 연결된 사용자: {}\n".format(client_list))
         thread_recv = threading.Thread(target=receive, args=(client_sock,))
         thread_recv.start()
+
+
 thread_server = threading.Thread(target=connection, args=())
 thread_server.start()
 

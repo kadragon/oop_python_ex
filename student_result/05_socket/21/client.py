@@ -1,6 +1,5 @@
 
 
-
 import socket
 import sys
 
@@ -21,11 +20,13 @@ SAVE 메소드를 이용하여 Server의 database에 새로운 데이터를 업�
 
 ''')
 
+
 def send_data(client_sock, data):
     try:
         client_sock.send(bytes(data, 'utf-8'))
     except ConnectionError:
         print("Lost Connection with {}.".format(client_sock.fileno()))
+
 
 # 소켓을 이용해서 서버에 접속
 mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -82,8 +83,6 @@ except ConnectionError:
     sys.exit()
 
 mysock.shutdown(socket.SHUT_RD)
-
-
 
 
 # 스레드가 종료되면, 열어둔 소켓을 닫는다.

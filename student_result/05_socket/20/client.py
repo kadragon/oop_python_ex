@@ -1,4 +1,5 @@
-import socket, threading
+import socket
+import threading
 
 # 접속할 서버의 정보
 server_ip = '127.0.0.1'
@@ -20,6 +21,7 @@ if not data:  # 넘어온 데이터가 없다면.. 로그아웃!
     pass
 else:
     print(data.decode('UTF-8'))  # 서버로 부터 받은 값을 출력
+
 
 # 서버로부터 메시지를 받아, 출력하는 함수.
 def receive():

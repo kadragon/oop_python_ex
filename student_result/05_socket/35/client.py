@@ -1,4 +1,6 @@
-import socket, threading, time
+import socket
+import threading
+import time
 
 # 접속할 서버의 정보
 server_ip = '127.0.0.1'
@@ -52,7 +54,7 @@ def main_thread():
         except (KeyboardInterrupt, ValueError):
             continue
 
-        if not data.isdigit():  #숫자 정보인지 확인
+        if not data.isdigit():  # 숫자 정보인지 확인
             print('다시 치세요. 0과 100000 사이의 숫자입니다.')
             continue
 

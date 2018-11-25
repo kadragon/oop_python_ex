@@ -1,4 +1,5 @@
-import socket, threading
+import socket
+import threading
 
 # 접속할 서버의 정보
 server_ip = '127.0.0.1'
@@ -60,12 +61,13 @@ def main_thread():
         if data == '!quit':
             print("서버와의 접속을 끊는 중입니다.")
             break
-        if data=='r' or data =='R' or data=='S' or data=='s' or data=="p" or data=='P':
+        if data == 'r' or data == 'R' or data == 'S' or data == 's' or data == "p" or data == 'P':
             try:
                 mysock.send(bytes(data, 'UTF-8'))  # 서버에 메시지를 전송
             except ConnectionError:
                 break
-        else: print("다시 입력해주세요.")
+        else:
+            print("다시 입력해주세요.")
 
     print("소켓의 쓰기 버퍼를 닫습니다.")
     mysock.shutdown(socket.SHUT_WR)

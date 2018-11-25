@@ -9,6 +9,7 @@ server_ip = '127.0.0.1'
 server_port = 50000
 address = (server_ip, server_port)
 
+
 def send_data(client_sock, data):
     try:
         client_sock.send(bytes(data, 'utf-8'))
@@ -49,8 +50,6 @@ for i in range(10):
 
 
 mysock.shutdown(socket.SHUT_RD)
-
-
 
 
 # 스레드가 종료되면, 열어둔 소켓을 닫는다.

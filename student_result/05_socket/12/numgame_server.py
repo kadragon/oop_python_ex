@@ -22,13 +22,15 @@ client_ans = []
 client_cnt = []
 
 # 클라이언트로 부터 메시지를 받는 함수 | Thread 활용
+
+
 def receive(client_sock):
     global client_list  # 받은 메시지를 다른 클라이언트들에게 전송하고자 변수를 가져온다.
-    global client_ans #클라이언트 별 정답을 저장한다.
+    global client_ans  # 클라이언트 별 정답을 저장한다.
     global client_cnt
 
-    client_index=-1
-    senddata=''
+    client_index = -1
+    senddata = ''
 
     while True:
         # 클라이언트로부터 데이터를 받는다.
@@ -38,11 +40,11 @@ def receive(client_sock):
             print("{}와 연결이 끊겼습니다. #code1".format(client_sock.fileno()))
             break
 
-        client_index=client_list.index(client_sock) #클라이언트 리스트에서 메시지를 받은 소켓의 위치를 찾는다.
-        recv=data.decode('UTF-8') #받은 메시지를 str로 디코딩한다.
+        # 클라이언트 리스트에서 메시지를 받은 소켓의 위치를 찾는다.
+        client_index = client_list.index(client_sock)
+        recv = data.decode('UTF-8')  # 받은 메시지를 str로 디코딩한다.
 
-        client_cnt[client_index]+=1 #클라이언트의 시도횟수를 1늘린다.
-
+        client_cnt[client_index] += 1  # 클라이언트의 시도횟수를 1늘린다.
 
         # 만약 클라이언트로부터 종료 요청이 온다면, 종료함. code0 : 클라이언트 전송 기능 닫았을때 오는 메시지
         if not data:
@@ -51,24 +53,25 @@ def receive(client_sock):
             break
 
         if int(recv) < client_ans[client_index]:
-            senddata=recv+': up'
+            senddata = recv+': up'
         elif int(recv) > client_ans[client_index]:
             senddata = recv + ': down'
-        else :
+        else:
             senddata = 'Answer!'
 
-        client_sock.send(bytes(senddata,'utf-8'))
+        client_sock.send(bytes(senddata, 'utf-8'))
 
-        #정답을 맞추면 연결을 종료한다.
-        if senddata=='Answer!':
-            client_sock.send(bytes("정답을 맞추셨으니 서버에서 클라이언트 정보를 삭제하는 중입니다ㅎㅎ", 'utf-8'))
+        # 정답을 맞추면 연결을 종료한다.
+        if senddata == 'Answer!':
+            client_sock.send(
+                bytes("정답을 맞추셨으니 서버에서 클라이언트 정보를 삭제하는 중입니다ㅎㅎ", 'utf-8'))
             break
 
-        #시도 횟수가 10이 되어도 종료한다.
-        if client_cnt[client_index]>9:
-            client_sock.send(bytes("10번째 시도에 실패했습니다. 서버에서 클라이언트 정보를 삭제합니닿", 'utf-8'))
+        # 시도 횟수가 10이 되어도 종료한다.
+        if client_cnt[client_index] > 9:
+            client_sock.send(
+                bytes("10번째 시도에 실패했습니다. 서버에서 클라이언트 정보를 삭제합니닿", 'utf-8'))
             break
-
 
     # 메시지 송발신이 끝났으므로, 대상인 client는 목록에서 삭제.
     client_id.remove(client_sock.fileno())
@@ -93,7 +96,7 @@ def connection():
     while True:
         # 클라이언트들이 접속하기를 기다렸다가, 연결을 수립함.
         client_sock, client_addr = server_sock.accept()
-        ans= random.randint(1,100)
+        ans = random.randint(1, 100)
 
         # 연결된 정보를 가져와서 list에 저장함.
         client_list.append(client_sock)

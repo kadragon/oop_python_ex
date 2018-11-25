@@ -1,4 +1,5 @@
-import socket, threading
+import socket
+import threading
 
 # 접속할 서버의 정보, 통신 서버의 IP주소를 확인
 server_ip = '192.168.101.145'
@@ -16,6 +17,7 @@ thread_end = 0
 thread_recv = threading.Thread(target=receive, args=())
 thread_recv.start()
 
+
 # 서버가 보내는 메시지를 수신할 함수 | Thread 활용
 def receive():
     global mysock
@@ -29,6 +31,7 @@ def receive():
             break
 
     mysock.close()
+
 
 # 메시지 전송 및 판단
 while True:

@@ -23,6 +23,7 @@ print('Start Chat - Server')
 client_list = []
 client_id = []
 
+
 def find_teacher(name):
     with requests.Session() as s:
         # 로그인 페이지를 가져와서 html 로 만들어 파싱을 시도한다.
@@ -38,15 +39,18 @@ def find_teacher(name):
         LOGIN_INFO.update({'csrf_test_name': csrf['value']})
 
         # 만들어진 로그인 데이터를 이용해서, 로그인을 시도한다.
-        login_req = s.post('https://go.sasa.hs.kr/auth/login/', data=LOGIN_INFO)
-        get_timetable = s.get('https://go.sasa.hs.kr/timetable/search_new/teacher?target='+name, data={'target': ''}).text
+        login_req = s.post(
+            'https://go.sasa.hs.kr/auth/login/', data=LOGIN_INFO)
+        get_timetable = s.get(
+            'https://go.sasa.hs.kr/timetable/search_new/teacher?target='+name, data={'target': ''}).text
         timetable_soup = bs(get_timetable, 'html.parser')
         qmp = timetable_soup.select('script')
         qmp = str(qmp).split('\n')
         qmp = list(qmp)
         qmp2 = []
         qmp3 = []
-        qoard = [['','','','','','','','','','','',''],['','','','','','','','','','','',''],['','','','','','','','','','','',''],['','','','','','','','','','','',''],['','','','','','','','','','','',''],['','','','','','','','','','','','']]
+        qoard = [['', '', '', '', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '', '', '', ''], [
+            '', '', '', '', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '', '', '', '']]
         for i in qmp:
             if "tar = " in i:
                 qmp2.append(i)
@@ -55,15 +59,15 @@ def find_teacher(name):
 
         for i in qmp2:
             if "tar = " in i:
-                i = i.split('"')[1].replace("<br />"," / ").split(" / ")[0:3]
+                i = i.split('"')[1].replace("<br />", " / ").split(" / ")[0:3]
                 qmp3.append(i)
             if "$('#time" in i:
                 if "append(tar)" in i:
-                    i = i.split("'")[1].replace("#time","").split("-")
+                    i = i.split("'")[1].replace("#time", "").split("-")
                     qmp3.extend(i)
                 else:
                     i = i.split("'")[4:0:-3]
-                    i[0] = i[0].replace(">","").replace('</button");',"")
+                    i[0] = i[0].replace(">", "").replace('</button");', "")
                     qre_i = i[1].replace("#time", "").split("-")
                     i[1] = qre_i[0]
                     i.append(qre_i[1])
@@ -71,6 +75,7 @@ def find_teacher(name):
         for i in range(0, len(qmp3), 3):
             qoard[int(qmp3[i+1])-1][int(qmp3[i+2])-1] = qmp3[i]
         return qoard
+
 
 def get_html(url):
     """
@@ -84,6 +89,8 @@ def get_html(url):
     return response.text
 
 # 서버로 부터 메시지를 받는 함수 | Thread 활용
+
+
 def receive(client_sock):
     global client_list  # 받은 메시지를 다른 클라이언트들에게 전송하고자 변수를 가져온다.
     while True:
@@ -105,13 +112,13 @@ def receive(client_sock):
         # 데이터가 들어왔다면 접속하고 있는 모든 클라이언트에게 메시지 전송
         for sock in client_list:
             if sock == client_sock:
-                for i in range(0,6):
-                    for j in range(0,12):
+                for i in range(0, 6):
+                    for j in range(0, 12):
                         if type(qoard[i][j]) == list:
                             qoard[i][j] = qoard[i][j][2]
                         elif qoard[i][j] == "":
                             qoard[i][j] = "-"
-                for i in range(0,6):
+                for i in range(0, 6):
                     strr = ",".join(qoard[i])
                     sock.send(bytes(strr, 'UTF-8'))
 
@@ -139,7 +146,6 @@ def connection():
         client_list.append(client_sock)
         client_id.append(client_sock.fileno())
 
-
         print("{}가 접속하였습니다.".format(client_sock.fileno()))
         print("{}가 접속하였습니다.".format(client_addr))
         print("현재 연결된 사용자: {}\n".format(client_list))
@@ -157,4 +163,3 @@ print("============== Chat Server ==============")
 
 thread_server.join()
 server_sock.close()
-

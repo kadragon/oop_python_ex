@@ -15,6 +15,7 @@ mysock.connect(address)
 print("connection complete")
 print("If you want to leave chat, just type !quit\n")
 
+
 def draw_board(board):
     window = tkinter.Tk()
     window.title("Time_Table")
@@ -24,36 +25,41 @@ def draw_board(board):
     for j in range(0, 12):
         for i in range(0, 6):
             if i == 0 and j == 0:
-                t = tkinter.Button(window, text="시간표",height=3, width=10)
+                t = tkinter.Button(window, text="시간표", height=3, width=10)
             elif i == 0:
-                t = tkinter.Button(window, text="%d교시" % j,height=3, width=10)
+                t = tkinter.Button(window, text="%d교시" % j, height=3, width=10)
             elif j == 0:
                 if i == 1:
-                    t = tkinter.Button(window, text="월요일",height=3, width=33)
+                    t = tkinter.Button(window, text="월요일", height=3, width=33)
                 elif i == 2:
-                    t = tkinter.Button(window, text="화요일",height=3, width=33)
+                    t = tkinter.Button(window, text="화요일", height=3, width=33)
                 elif i == 3:
-                    t = tkinter.Button(window, text="수요일",height=3, width=33)
+                    t = tkinter.Button(window, text="수요일", height=3, width=33)
                 elif i == 4:
-                    t = tkinter.Button(window, text="목요일",height=3, width=33)
+                    t = tkinter.Button(window, text="목요일", height=3, width=33)
                 elif i == 5:
-                    t = tkinter.Button(window, text="금요일",height=3, width=33)
+                    t = tkinter.Button(window, text="금요일", height=3, width=33)
             else:
                 if board[i-1][j-1] == "-":
-                    t = tkinter.Button(window, text="%s" % board[i - 1][j - 1], height=3, width=33)
+                    t = tkinter.Button(window, text="%s" %
+                                       board[i - 1][j - 1], height=3, width=33)
                 else:
-                    t = tkinter.Button(window, text="%s" % board[i - 1][j - 1], height=3, width=33, fg = "blue", bg = "skyblue")
+                    t = tkinter.Button(
+                        window, text="%s" % board[i - 1][j - 1], height=3, width=33, fg="blue", bg="skyblue")
             t.grid(row=j, column=i)
 
     window.mainloop()
 
 # 서버로부터 메시지를 받아, 출력하는 함수.
+
+
 def receive():
     global mysock
     while True:
         try:
             qoard = [['', '', '', '', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '', '', '', ''],
-                     ['', '', '', '', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '', '', '', ''],
+                     ['', '', '', '', '', '', '', '', '', '', '', ''], [
+                         '', '', '', '', '', '', '', '', '', '', '', ''],
                      ['', '', '', '', '', '', '', '', '', '', '', ''], ['', '', '', '', '', '', '', '', '', '', '', '']]
             for i in range(6):
                 data = mysock.recv(2048)  # 서버로 부터 값을 받는것
@@ -113,4 +119,3 @@ thread_main.join()
 mysock.close()
 print('소켓을 닫습니다.')
 print('클라이언트 프로그램이 정상적으로 종료되었습니다.')
-

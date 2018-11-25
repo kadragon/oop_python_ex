@@ -5,9 +5,9 @@ import threading
 myip = '127.0.0.1'
 myport = 50000
 address = (myip, myport)
-memo=[]
-numb=1
-#메모장 배열
+memo = []
+numb = 1
+# 메모장 배열
 for i in range(101):
     memo.append('empty')
 
@@ -26,8 +26,8 @@ client_id = []
 # 서버로 부터 메시지를 받는 함수 | Thread 활용
 def receive(client_sock):
     global client_list  # 받은 메시지를 다른 클라이언트들에게 전송하고자 변수를 가져온다.
-    global memo #메모장
-    global numb #몇 번 메모지?
+    global memo  # 메모장
+    global numb  # 몇 번 메모지?
     while True:
         # 클라이언트로부터 데이터를 받는다.
         try:
@@ -43,31 +43,33 @@ def receive(client_sock):
             break
 
         # 데이터가 들어왔다면 접속하고 있는 모든 클라이언트에게 메시지 전송
-        dedata=(data.decode('UTF-8')).split("/")
+        dedata = (data.decode('UTF-8')).split("/")
         try:
-            numb=int(dedata[1])
+            numb = int(dedata[1])
         except ValueError:
             continue
         except IndexError:
             continue
 
-        if numb<0 or numb>99:
+        if numb < 0 or numb > 99:
             continue
 
-        if dedata[0]=='write':
-            memo[int(dedata[1])]=dedata[2]
+        if dedata[0] == 'write':
+            memo[int(dedata[1])] = dedata[2]
             for sock in client_list:
-                a=str(client_sock.fileno())+'이 '+dedata[1]+'번 메모지에 내용을 업데이트했습니다.'
+                a = str(client_sock.fileno())+'이 ' + \
+                    dedata[1]+'번 메모지에 내용을 업데이트했습니다.'
                 sock.send(bytes(a, 'utf-8'))
                 #sock.send(bytes("{}이 {}번 메모지에 내용을 업데이트했습니다.", format(sock.fileno(), dedata[1]), 'utf-8'))
                 #sock.send(bytes("updated", 'utf-8'))
-        if dedata[0]=='read':
+        if dedata[0] == 'read':
             for sock in client_list:
                 sock.send(bytes(memo[int(dedata[1])], 'utf-8'))
-        if dedata[0]=='clear':
-            memo[int(dedata[1])]='empty'
+        if dedata[0] == 'clear':
+            memo[int(dedata[1])] = 'empty'
             for sock in client_list:
-                a = str(client_sock.fileno()) + '이 ' + dedata[1] + '번 메모지를 초기화했습니다.'
+                a = str(client_sock.fileno()) + '이 ' + \
+                    dedata[1] + '번 메모지를 초기화했습니다.'
                 sock.send(bytes(a, 'utf-8'))
                 #sock.send(bytes("{}이 {}번 메모지를 초기화했습니다.", format(sock.fileno(), dedata[1]), 'utf-8'))
                 #sock.send(bytes("cleared", 'utf-8'))

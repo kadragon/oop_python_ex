@@ -1,4 +1,5 @@
-import socket, threading
+import socket
+import threading
 
 # 접속할 서버의 정보
 server_ip = '127.0.0.1'
@@ -22,7 +23,6 @@ ex) clear/14\n
 그 외 명령어가 입력될 경우 아무 일도 일어나지 않습니다
 """)
 print("나가고 싶으시면 !quit 을 입력해 주시면 됩니다")
-
 
 
 # 서버로부터 메세지 받기

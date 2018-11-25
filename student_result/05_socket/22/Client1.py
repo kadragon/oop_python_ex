@@ -1,48 +1,52 @@
-#Client 1, 즉 술래의 코드입니다.
-import socket, threading
+# Client 1, 즉 술래의 코드입니다.
+import socket
+import threading
 import sys
 import time
 from os import system
 
 init_map = [[0]*10 for i in range(20)]
-init1=[0,0]
-init2=[19, 9]
+init1 = [0, 0]
+init2 = [19, 9]
 
-#술래의 승리 시 게임을 초기화하여 다시 시작한다.
+
+# 술래의 승리 시 게임을 초기화하여 다시 시작한다.
 def init_game():
     time.sleep(3)
     print("게임을 다시 시작합니다.")
     global init1, init2
-    init1=[0,0]
-    init2=[19,9]
+    init1 = [0, 0]
+    init2 = [19, 9]
     map_print(init1, init2)
 
-#입력된 문자에 따라 각 플레이어의 위치를 바꾼다.
+
+# 입력된 문자에 따라 각 플레이어의 위치를 바꾼다.
 def mover(to, pl):
-    place=[0, 0]
+    place = [0, 0]
     global init1, init2
-    if pl==1:
-        place=init1
+    if pl == 1:
+        place = init1
     else:
-        place=init2
-    if to =='w':
-        if place[1]>=1:
-            place[1]=place[1]-1
-    if to =='a':
-        if place[0]>=1:
-            place[0]=place[0]-1
-    if to =='s':
-        if place[1]<=8:
-            place[1]=place[1]+1
-    if to =='d':
-        if place[0]<=18:
-            place[0]=place[0]+1
+        place = init2
+    if to == 'w':
+        if place[1] >= 1:
+            place[1] = place[1]-1
+    if to == 'a':
+        if place[0] >= 1:
+            place[0] = place[0]-1
+    if to == 's':
+        if place[1] <= 8:
+            place[1] = place[1]+1
+    if to == 'd':
+        if place[0] <= 18:
+            place[0] = place[0]+1
     return place
-#맵을 출력합니다. 두 개의 위치 정보를 입력 받습니다.
+# 맵을 출력합니다. 두 개의 위치 정보를 입력 받습니다.
+
 
 def map_print(p1, p2):
     print("\n")
-    if init1==init2:
+    if init1 == init2:
         print("술래[1]이 잡았습니다!! 승리했습니다.")
         now_map = [[0] * 10 for i in range(20)]
         now_map[p1[0]][p1[1]] = 1
@@ -59,6 +63,8 @@ def map_print(p1, p2):
             for j in range(0, 20):
                 print(now_map[j][i], end=' ')
             print('')
+
+
 # 접속할 서버의 정보
 server_ip = '127.0.0.1'
 server_port = 50000
@@ -76,6 +82,8 @@ print("connection complete")
 print("If you want to leave chat, just type !quit\n")
 
 # 서버로부터 메시지를 받아, 출력하는 함수.
+
+
 def receive():
     global mysock
     while True:
@@ -89,7 +97,7 @@ def receive():
             print("서버로부터 정상적으로 로그아웃했습니다.")
             break
         global init1, init2
-        init2=mover((data.decode('UTF-8')).split(':')[1], 2)
+        init2 = mover((data.decode('UTF-8')).split(':')[1], 2)
         map_print(init1, init2)
 
     print('소켓의 읽기 버퍼를 닫습니다.')
@@ -117,7 +125,7 @@ def main_thread():
         try:
             mysock.send(bytes(data, 'UTF-8'))  # 서버에 메시지를 전송
             global init1, init2
-            init1=mover(data, 1)
+            init1 = mover(data, 1)
             map_print(init1, init2)
         except ConnectionError:
             break

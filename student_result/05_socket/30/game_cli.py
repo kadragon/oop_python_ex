@@ -1,4 +1,5 @@
-import socket, threading
+import socket
+import threading
 
 # 접속할 서버의 정보
 server_ip = '127.0.0.1'
@@ -38,7 +39,7 @@ def receive():
 # 서버에게 메시지를 발송하는 함수 | Thread 활용
 def main_thread():
     global mysock
-    
+
     # 메시지 받는 스레스 시작
     thread_recv = threading.Thread(target=receive, args=())
     thread_recv.start()
@@ -52,12 +53,12 @@ def main_thread():
         if data == '!quit':
             print("서버와의 접속을 끊는 중입니다.")
             break
-        
+
         try:
             mysock.send(bytes(data, 'UTF-8'))  # 서버에 메시지를 전송
         except ConnectionError:
             break
-    
+
     print("소켓의 쓰기 버퍼를 닫습니다.")
     mysock.shutdown(socket.SHUT_WR)
     thread_recv.join()

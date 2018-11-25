@@ -19,6 +19,7 @@ client_id = []
 
 ans = random.randrange(1, 100000)
 
+
 # 서버로 부터 정보를 받는 함수 | Thread 활용
 def receive(client_sock, lastaccess=None):
     global client_list  # 받은 메시지를 다른 클라이언트들에게 전송하고자 변수를 가져온다.
@@ -41,11 +42,13 @@ def receive(client_sock, lastaccess=None):
         elif ans > data:
             data_with_id = bytes(str(data), 'utf-8') + b": up"
         elif ans == data:
-            data_with_id = b'user' + bytes(str(client_sock.fileno()), 'utf-8') + b" win!! the answer was....." + bytes(str(data), 'utf-8')
+            data_with_id = b'user' + bytes(str(client_sock.fileno()), 'utf-8') + \
+                b" win!! the answer was....." + bytes(str(data), 'utf-8')
             ans = random.randrange(1, 100000)
         for sock in client_list:
             sock.send(data_with_id)
-            sock.send(bytes(str('============================================'), 'utf-8'))
+            sock.send(
+                bytes(str('============================================'), 'utf-8'))
 
     # 메시지 송발신이 끝났으므로, 대상인 client는 목록에서 삭제.
     client_id.remove(client_sock.fileno())

@@ -1,7 +1,3 @@
-'''
-
-'''
-
 import socket
 import threading
 
@@ -34,7 +30,9 @@ print('SERVER ACTIVE')
 client_list = []
 client_id = []
 
-database = {'Introduction':'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace.', 'Developer':'Guido van Rossum'}
+database = {'Introduction': 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace.', 'Developer': 'Guido van Rossum'}
+
+
 def send_data(client_sock, data):
     try:
         client_sock.send(bytes(data, 'utf-8'))
@@ -62,7 +60,8 @@ def response(client_sock):
                     except KeyError:
                         send_data(client_sock, 'KeyError: Try it Again')
                 except ConnectionError:
-                    print("Lost Connection with {}.".format(client_sock.fileno()))
+                    print("Lost Connection with {}.".format(
+                        client_sock.fileno()))
                     break
 
             elif rec.decode('UTF-8') == 'SAVE':
@@ -70,18 +69,18 @@ def response(client_sock):
                     name = client_sock.recv(1024)
                     contents = client_sock.recv(1024)
                     database[name.decode('utf-8')] = contents.decode('utf-8')
-                    #print(name.decode('utf-8'))
-                    #print(contents.decode('utf-8'))
-                    #print(database)
+                    # print(name.decode('utf-8'))
+                    # print(contents.decode('utf-8'))
+                    # print(database)
                 except ConnectionError:
-                    print("Lost Connection with {}.".format(client_sock.fileno()))
+                    print("Lost Connection with {}.".format(
+                        client_sock.fileno()))
                     break
         except ConnectionError:
             print("Lost Connection with {}.".format(client_sock.fileno()))
             break
 
-
-    #print(send)
+    # print(send)
 
     # 메시지 송발신이 끝났으므로, 대상인 client는 목록에서 삭제.
     client_id.remove(client_sock.fileno())
@@ -94,6 +93,8 @@ def response(client_sock):
     return 0
 
 # 연결 수립용 함수 | Thread 활용
+
+
 def connection():
     global client_list
     global client_id

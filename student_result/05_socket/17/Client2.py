@@ -1,4 +1,5 @@
-import socket, threading
+import socket
+import threading
 
 # 접속할 서버의 정보
 server_ip = '127.0.0.1'
@@ -7,7 +8,7 @@ address = (server_ip, server_port)
 position = 0
 marker = 'X'
 ano_marker = 'O'
-pos = [' ', ' ', ' ',' ', ' ', ' ',' ', ' ', ' ',' ']
+pos = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
 # 소켓을 이용해서 서버에 접속
 mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,6 +17,8 @@ print("connection complete")
 print("If you want to leave chat, just type !quit\n")
 
 # 처음 시작 화면 출력하기(각 위치는 1~9의 숫자로 지정)
+
+
 def display_intro():
     print('-'*50)
     print("""
@@ -31,6 +34,8 @@ def display_intro():
     print('-'*50)
 
 # 현재 보드판 상황 출력하기
+
+
 def display_board(position, mark):
     pos[int(position)] = mark
     print("""
@@ -39,17 +44,20 @@ def display_board(position, mark):
       %c  |  %c  |  %c  
     ------------------
       %c  |  %c  |  %c 
-    """ %(pos[1], pos[2], pos[3], pos[4], pos[5], pos[6], pos[7], pos[8], pos[9]))
-    pos[0]=' '
+    """ % (pos[1], pos[2], pos[3], pos[4], pos[5], pos[6], pos[7], pos[8], pos[9]))
+    pos[0] = ' '
 
 # 플레이어가 표식을 놓을 위치 입력받기
+
+
 def get_value():
     try:
         a = int(input('Enter the position number: '))
         if a < 1 or a > 9:                                                  # 위치는 1~9의 숫자로 지정되어 있음
             print("Hey, you entered the wrong value! enter again!")
             return get_value()
-        elif pos[a] != ' ':                                                 # 이미 표식이 있는 곳에 또 놓을 수 없도록 하기
+        # 이미 표식이 있는 곳에 또 놓을 수 없도록 하기
+        elif pos[a] != ' ':
             print("Hey, you can't put your marker there. enter again!")
             return get_value()
         else:
@@ -62,6 +70,8 @@ def get_value():
         return get_value()
 
 # 서버로부터 메시지를 받아, 출력하는 함수.
+
+
 def receive():
     global mysock, turn, position, ano_marker, marker, ano_position
     while True:
@@ -77,7 +87,7 @@ def receive():
             break
 
         info_arr = str(data).split(".")
-        #print(info_arr)
+        # print(info_arr)
         position = info_arr[2]
 
         turn = info_arr[3]
@@ -113,8 +123,8 @@ def main_thread():
         try:
             if turn == "OK":
                 display_board(senddata, marker)
-                data = '.'+ marker +'.'+ str(senddata)+'. .'
-                #print(data)
+                data = '.' + marker + '.' + str(senddata)+'. .'
+                # print(data)
                 mysock.send(bytes(data, 'UTF-8'))  # 서버에 메시지를 전송
                 turn = ' '
         except ConnectionError:
@@ -123,6 +133,7 @@ def main_thread():
     print("소켓의 쓰기 버퍼를 닫습니다.")
     mysock.shutdown(socket.SHUT_WR)
     thread_recv.join()
+
 
 display_intro()
 

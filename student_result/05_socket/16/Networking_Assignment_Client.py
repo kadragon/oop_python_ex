@@ -3,7 +3,8 @@ Title       죄수의 딜레마 게임 Client
 Date        2018.11.11
 """
 
-import socket, threading
+import socket
+import threading
 
 # 접속할 서버의 정보
 server_ip = '127.0.0.1'
@@ -28,6 +29,8 @@ print("죄수의 딜레마 게임에 오신 것을 환영합니다. 게임에 �
       "자 그럼 게임을 시작하겠습니다. Enter 키를 누르시면 시작합니다.")
 
 # 서버로부터 메시지를 받아, 출력하는 함수.
+
+
 def receive():
     global mysock
     global turn  # 전역변수 turn
@@ -110,7 +113,6 @@ def main_thread():
     print("소켓의 쓰기 버퍼를 닫습니다.")
     mysock.shutdown(socket.SHUT_WR)
     thread_recv.join()
-
 
 
 # 메시지 보내는 스레드 시작

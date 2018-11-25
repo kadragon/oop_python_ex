@@ -31,17 +31,17 @@ def receive(client_sock):
     while True:
         # 클라이언트로부터 데이터를 받는다.
         q_number = random.randint(0, n)
-        if q_number not in check :
+        if q_number not in check:
             check.append(q_number)
-            client_sock.send(bytes(problems[q_number][1],'utf-8'))
+            client_sock.send(bytes(problems[q_number][1], 'utf-8'))
         try:
             data = client_sock.recv(1024).decode('utf-8')
-            data.replace(' ','')
-            
+            data.replace(' ', '')
+
         except ConnectionError:
             print("{}와 연결이 끊겼습니다. #code1".format(client_sock.fileno()))
             break
-        
+
         # 만약 클라이언트로부터 종료 요청이 온다면, 종료함. code0 : 클라이언트 전송 기능 닫았을때 오는 메시지
         if not data:
             print("{}이 연결 종료 요청을 합니다. #code0".format(client_sock.fileno()))
@@ -55,19 +55,19 @@ def receive(client_sock):
                 sock.send(data_with_id)
         '''
         print(data)
-        print('답 : ',problems[q_number][2])
-        while True :
-            if type(problems[q_number][2]) == 'list' :
-                if data in problems[q_number][2] :
+        print('답 : ', problems[q_number][2])
+        while True:
+            if type(problems[q_number][2]) == 'list':
+                if data in problems[q_number][2]:
                     break
-            else :
-                if data == problems[q_number][2] :
+            else:
+                if data == problems[q_number][2]:
                     break
 
-            client_sock.send(bytes('땡!\n','utf-8'))
+            client_sock.send(bytes('땡!\n', 'utf-8'))
             data = client_sock.recv(1024).decode('utf-8')
-        client_sock.send(bytes('정답입니다!!\n','utf-8'))
-        
+        client_sock.send(bytes('정답입니다!!\n', 'utf-8'))
+
     # 메시지 송발신이 끝났으므로, 대상인 client는 목록에서 삭제.
     client_id.remove(client_sock.fileno())
     client_list.remove(client_sock)
@@ -87,7 +87,7 @@ def connection():
     while True:
         # 클라이언트들이 접속하기를 기다렸다가, 연결을 수립함.
         client_sock, client_addr = server_sock.accept()
-        
+
         # 연결된 정보를 가져와서 list에 저장함.
         client_list.append(client_sock)
         client_id.append(client_sock.fileno())
@@ -102,6 +102,7 @@ def connection():
         thread_recv = threading.Thread(target=receive, args=(client_sock, ))
         thread_recv.start()
 
+
 def fix(problems):  # 넌센스 퀴즈 문제를 수정하는 과정!
     delete = []
     x = []
@@ -110,7 +111,7 @@ def fix(problems):  # 넌센스 퀴즈 문제를 수정하는 과정!
     problems[1][2] = x
 
     for i in range(len(problems)):
-        if problems[i][1].find('란?') != -1 :
+        if problems[i][1].find('란?') != -1:
             delete.append(i)
 
     delete.append(9)
@@ -132,14 +133,14 @@ def fix(problems):  # 넌센스 퀴즈 문제를 수정하는 과정!
     delete.append(251)
     delete.append(252)
     delete.append(259)
-    for i in range(269,276):
+    for i in range(269, 276):
         delete.append(i)
     delete.append(277)
     delete.append(279)
     delete.append(281)
-    for i in range(289,295):
+    for i in range(289, 295):
         delete.append(i)
-    for i in range(297,305):
+    for i in range(297, 305):
         delete.append(i)
     delete.append(307)
     delete.append(310)
@@ -147,24 +148,24 @@ def fix(problems):  # 넌센스 퀴즈 문제를 수정하는 과정!
     delete.append(319)
     delete.append(321)
     delete.append(322)
-    for i in range(326,340):
+    for i in range(326, 340):
         if i != 329:
             delete.append(i)
     delete.append(353)
     delete.append(128)
-    
-    problems[72][1] = problems[72][1].replace('공중에서','대부분의')
+
+    problems[72][1] = problems[72][1].replace('공중에서', '대부분의')
     problems[90][1] = '두 발로 걷는 소는?'
-    problems[123][1] = problems[123][1].replace('탤런트 최지우','SASA의 홍지우')
-    problems[144][1] = problems[144][1].replace('데','뎅')
+    problems[123][1] = problems[123][1].replace('탤런트 최지우', 'SASA의 홍지우')
+    problems[144][1] = problems[144][1].replace('데', '뎅')
     problems[256][2] += '금지'
-    problems[306][2] = problems[306][2].replace(".",",")
-    problems[190][2] = problems[190][2].replace(".",",")
+    problems[306][2] = problems[306][2].replace(".", ",")
+    problems[190][2] = problems[190][2].replace(".", ",")
 
     delete.sort(reverse=True)
     for i in delete:
         del(problems[i])
-    
+
 
 # 연결 수립용 스레드 생성 및 실행.
 thread_server = threading.Thread(target=connection, args=())
@@ -172,7 +173,7 @@ thread_server.start()
 
 
 # 넌센스 문제 파싱
-with requests.Session() as q :
+with requests.Session() as q:
     quiz_page = q.get('http://w3devlabs.net/wp/?p=1561')
     quiz_page.encoding = 'utf-8'
     quiz_html = quiz_page.text
@@ -182,8 +183,8 @@ with requests.Session() as q :
 problems = str(quiz_soup.select('div.entry-content p'))
 problems = problems.split('<br/>\n')
 n = len(problems)-1
-problems[0] = problems[0].replace('[<p>','')
-problems[n] = problems[n].replace('</p>]','')
+problems[0] = problems[0].replace('[<p>', '')
+problems[n] = problems[n].replace('</p>]', '')
 problems[2] += ' ' + problems[3]
 del(problems[3])
 
@@ -193,24 +194,24 @@ for i in range(int(len(problems))):
     del(problems[i][0])
     problems[i].append(problems[i][0])
     del(problems[i][0])
-    if len(problems[i]) == 4 :
-        problems[i][1] =problems[i][1] + problems[i][2]
+    if len(problems[i]) == 4:
+        problems[i][1] = problems[i][1] + problems[i][2]
         del(problems[i][2])
     problems[i][1] += '?'
-    
-    #print(problems[i])
-    
-    problems[i][2] = problems[i][2].replace(' ','')
-    if '(' in problems[i][2] :
+
+    # print(problems[i])
+
+    problems[i][2] = problems[i][2].replace(' ', '')
+    if '(' in problems[i][2]:
         pro = problems[i][2].split('(')
         problems[i][2] = pro[0]
-    if ',' in problems[i][2] :
+    if ',' in problems[i][2]:
         problems[i][2] = problems[i][2].split(',')
-    #print(problems[i])
+    # print(problems[i])
 
-    try :
+    try:
         problems[i][0] = int(problems[i][0])-1
-    except ValueError :
+    except ValueError:
         continue
 
 fix(problems)

@@ -25,6 +25,8 @@ latest_nv = []
 turn = 0
 
 # 연결 수립용 함수
+
+
 def connection():
     global client_list
     global client_id
@@ -43,7 +45,8 @@ def connection():
         # 다른 접속자들에게 새로운 접속자를 알림, 새로운 접속자에게는 현재 상황을 알려줌.
         for sock in client_list:
             if sock != client_sock:
-                sock.send(bytes('-'*15+"> {}님이 참여합니다!".format(client_sock.fileno()), 'utf-8'))
+                sock.send(
+                    bytes('-'*15+"> {}님이 참여합니다!".format(client_sock.fileno()), 'utf-8'))
 
 
 # 연결 수립용 스레드 생성 및 실행.
@@ -108,7 +111,8 @@ while True:
                     # 작성자가 작성을 완료함을 다른 접속자들이게 알림
                     for other in client_list:
                         if client_list.index(other) != this_turn:
-                            other.send(bytes("{}님이 작성을 완료하였습니다.".format(writer.fileno()), 'utf-8'))
+                            other.send(
+                                bytes("{}님이 작성을 완료하였습니다.".format(writer.fileno()), 'utf-8'))
 
     else:
         # relay_nv에 저장된 내용을 문자열로 들어 전송

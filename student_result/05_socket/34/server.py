@@ -57,7 +57,7 @@ def connection():
     global client_id
 
     while True:
-        if(len(client_list)<2):
+        if(len(client_list) < 2):
             # 클라이언트들이 접속하기를 기다렸다가, 연결을 수립함.
             client_sock, client_addr = server_sock.accept()
 
@@ -71,6 +71,7 @@ def connection():
             # 접속한 클라이언트를 기준으로 메시지를 수신 할 수 있는 스레드를 생성함.
             thread_recv = threading.Thread(target=receive, args=(client_sock,))
             thread_recv.start()
+
 
 # 연결 수립용 스레드 생성 및 실행.
 thread_server = threading.Thread(target=connection, args=())

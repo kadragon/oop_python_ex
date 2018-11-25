@@ -25,17 +25,21 @@ client_id = []
 client_q = []
 
 # 각각의 클라이언트의 선택에 따라 형량을 return
+
+
 def def_jingyouk(a, b):
-    if a==1 and b==1:
+    if a == 1 and b == 1:
         return [3, 3]
-    elif a==1 and b==0:
+    elif a == 1 and b == 0:
         return [-1, 10]
-    elif a==0 and b==1:
+    elif a == 0 and b == 1:
         return [10, -1]
     else:
         return [2, 2]
 
 # 서버로 부터 메시지를 받는 함수 | Thread 활용
+
+
 def receive(client_sock):
     global client_list  # 받은 메시지를 다른 클라이언트들에게 전송하고자 변수를 가져온다.
     global client_q
@@ -68,8 +72,6 @@ def receive(client_sock):
                     sock.send(bytes(str(jing[1]), 'utf-8'))
             # 결과 return 후 client_q 리스트는 reset
             client_q = []
-
-
 
     # 메시지 송발신이 끝났으므로, 대상인 client는 목록에서 삭제.
     client_id.remove(client_sock.fileno())
@@ -108,7 +110,6 @@ def connection():
             print('다른 플레이어를 기다리고 있습니다... (%d / 2)' % len(client_list))
         else:
             print('모든 플레이어 입장!')
-
 
 
 # 연결 수립용 스레드 생성 및 실행.
