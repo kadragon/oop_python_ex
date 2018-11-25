@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Title       AIPaper (Client)
-Author      ITSC (Taewon Kang)
 Date        2018.11.07
 """
 
-import socket, threading
+import socket
+import threading
 
 # 접속할 서버의 IP, 포트 입력
 ip = '127.0.0.1'
@@ -55,7 +54,7 @@ def receive():
             exit()
 
         print('=' * 50)
-        print('읽어볼 만한 최신 인공지능 논문 추천') # 논문 정보 출력
+        print('읽어볼 만한 최신 인공지능 논문 추천')  # 논문 정보 출력
         print('=' * 50)
 
         # 논문 정보를 아래와 같이 가공함
@@ -76,6 +75,7 @@ def receive():
         sck.shutdown(socket.SHUT_RD)
     except OSError:
         print("읽기 버퍼를 닫기 전에 서버에서 연결이 종료되었습니다. !quit로 종료하십시오.")
+
 
 def main_thread():
     global sck

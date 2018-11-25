@@ -1,4 +1,5 @@
-import socket, threading
+import socket
+import threading
 
 # 접속할 서버의 정보
 server_ip = '127.0.0.1'
@@ -11,19 +12,21 @@ mysock.connect(address)
 print("connection complete")
 print("If you want to leave chat, just type !quit\n")
 
-#아이디의 입력을 기다려주세요...
-#스레딩으로 반환값을 받지 못해 id입력을 순서대로 기다립니다
+# 아이디의 입력을 기다려주세요...
+# 스레딩으로 반환값을 받지 못해 id입력을 순서대로 기다립니다
 print("Pleas wait unitl [Welcome to my server. What's your nickname?] printed")
 
 # 서버로부터 메시지를 받아, 출력하는 함수.
+
+
 def receive():
     global mysock
     while True:
         try:
-            #서버로부터 데이터를 수신
+            # 서버로부터 데이터를 수신
             data = mysock.recv(1024)
         except ConnectionError:
-            #연결 오류시 종료
+            # 연결 오류시 종료
             print("You has disconnected")
             break
         except OSError:

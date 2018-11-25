@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Title       AIPaper (Server)
-Author      ITSC (Taewon Kang)
 Date        2018.11.07
 """
 
@@ -53,6 +51,8 @@ client_list = []
 client_id = []
 
 # 서버로부터 메시지 수신
+
+
 def receive(client_sock):
     global client_list  # 받은 메시지를 다른 클라이언트들에게 전송하고자 변수를 가져온다.
     while True:

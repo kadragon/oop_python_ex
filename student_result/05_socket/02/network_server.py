@@ -26,7 +26,8 @@ def receive(client_sock):
     while True:
         # 클라이언트로부터 데이터를 받는다.
         a = random.randint(1, 1000)
-        client_sock.send(bytes('주어지는 수와 합해서 1000을 만들 수 있는 수를 입력하세요.\n', 'UTF-8'))
+        client_sock.send(
+            bytes('주어지는 수와 합해서 1000을 만들 수 있는 수를 입력하세요.\n', 'UTF-8'))
         client_sock.send(bytes(str(a), 'UTF-8'))
         try:
             data = client_sock.recv(1024)

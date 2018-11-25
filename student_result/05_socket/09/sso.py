@@ -1,5 +1,6 @@
 # 클라이언트 코드
-import socket, threading
+import socket
+import threading
 
 # 접속할 서버의 정보
 server_ip = '127.0.0.1'
@@ -19,6 +20,8 @@ print("시작한 후 다시 start를 입력하시면 새로운 문제가 로드�
 print("당신의 ID 입니다!")
 
 # 서버로부터 메시지를 받아, 출력하는 함수.
+
+
 def receive():
     global mysock
     while True:
@@ -64,6 +67,7 @@ def main_thread():
     print("소켓의 쓰기 버퍼를 닫습니다.")
     mysock.shutdown(socket.SHUT_WR)
     thread_recv.join()
+
 
 # 메시지 보내는 스레드 시작
 thread_main = threading.Thread(target=main_thread, args=())

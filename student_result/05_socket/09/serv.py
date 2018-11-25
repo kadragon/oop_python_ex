@@ -6,8 +6,10 @@ myip = '127.0.0.1'
 myport = 50000
 address = (myip, myport)
 
-prob = ["1+1", "1!", "1*2", "3/2", "5+6", "31+111", "111-2","99*88","2+2", "33333/11111", "ln(e)", "3^2", "99%2"]
-answ = ["2", "1", "2", "1.5", "11", "144", "109", "8712", "4", "3", "1", "9", "1"]
+prob = ["1+1", "1!", "1*2", "3/2", "5+6", "31+111", "111-2",
+        "99*88", "2+2", "33333/11111", "ln(e)", "3^2", "99%2"]
+answ = ["2", "1", "2", "1.5", "11", "144",
+        "109", "8712", "4", "3", "1", "9", "1"]
 
 # 서버를 연다.
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -23,7 +25,7 @@ client_id = []
 # 서버로 부터 메시지를 받는 함수 | Thread 활용
 def receive(client_sock):
     global client_list  # 받은 메시지를 다른 클라이언트들에게 전송하고자 변수를 가져온다.
-    num=0
+    num = 0
     while True:
         # 클라이언트로부터 데이터를 받는다.
         try:
@@ -40,34 +42,32 @@ def receive(client_sock):
 
         use_data = data.decode("utf-8")
 
-
-
-        if use_data == "start" :
+        if use_data == "start":
             num = 0
-            data_sending= bytes(str(prob[num]),'utf-8')
+            data_sending = bytes(str(prob[num]), 'utf-8')
             for sock in client_list:
                 if sock == client_sock:
                     sock.send(data_sending)
 
-        if num == 12 :
-            num=0
-            a="게임 종료!\n"
-            b="다시 시작하려면 start를 눌러주세요\n"
+        if num == 12:
+            num = 0
+            a = "게임 종료!\n"
+            b = "다시 시작하려면 start를 눌러주세요\n"
 
-            client_sock.send(bytes(str(a),'utf-8'))
-            client_sock.send(bytes(str(b),'utf-8'))
-        elif use_data == str(answ[num]) :
-            num+=1
-            data_sending= bytes(str(prob[num]),'utf-8')
+            client_sock.send(bytes(str(a), 'utf-8'))
+            client_sock.send(bytes(str(b), 'utf-8'))
+        elif use_data == str(answ[num]):
+            num += 1
+            data_sending = bytes(str(prob[num]), 'utf-8')
 
-            a="정답입니다!\n"
-            b="다음 문제입니다!\n"
+            a = "정답입니다!\n"
+            b = "다음 문제입니다!\n"
 
-            client_sock.send(bytes(str(a),'utf-8'))
-            client_sock.send(bytes(str(b),'utf-8'))
+            client_sock.send(bytes(str(a), 'utf-8'))
+            client_sock.send(bytes(str(b), 'utf-8'))
             client_sock.send(data_sending)
         elif use_data != "start":
-            t="입력이 틀렸습니다!\n"
+            t = "입력이 틀렸습니다!\n"
             client_sock.send(bytes(str(t), 'utf-8'))
 
     # 메시지 송발신이 끝났으므로, 대상인 client는 목록에서 삭제.

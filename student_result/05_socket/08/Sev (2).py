@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import socket
 import threading
 
@@ -11,8 +5,8 @@ import threading
 myip = '127.0.0.1'
 myport = 50000
 address = (myip, myport)
-num = ['1','2','3','4']
-result = {'1':0 , '2':0 , '3':0, '4':0}
+num = ['1', '2', '3', '4']
+result = {'1': 0, '2': 0, '3': 0, '4': 0}
 
 # 서버를 연다.
 server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -35,7 +29,7 @@ def receive(client_sock):
         except ConnectionError:
             print("{}와 연결이 끊겼습니다. #code1".format(client_sock.fileno()))
             break
-        
+
         # 만약 클라이언트로부터 종료 요청이 온다면, 종료함. code0 : 클라이언트 전송 기능 닫았을때 오는 메시지
         if not data:
             print("{}이 연결 종료 요청을 합니다. #code0".format(client_sock.fileno()))
@@ -45,12 +39,11 @@ def receive(client_sock):
         # 데이터가 들어왔다면 접속하고 있는 모든 클라이언트에게 메시지 전송
         D = str(data.decode('UTF-8'))
         if D in num:
-            result[D]=result[D]+1
+            result[D] = result[D]+1
             print(result)
             break
         else:
             client_sock.send(bytes("형식에 맞지 않습니다. 다시 투표해 주세요", 'utf-8'))
-            
 
     # 메시지 송발신이 끝났으므로, 대상인 client는 목록에서 삭제.
     client_id.remove(client_sock.fileno())
@@ -71,7 +64,7 @@ def connection():
     while True:
         # 클라이언트들이 접속하기를 기다렸다가, 연결을 수립함.
         client_sock, client_addr = server_sock.accept()
-        
+
         # 연결된 정보를 가져와서 list에 저장함.
         client_list.append(client_sock)
         client_id.append(client_sock.fileno())
@@ -79,12 +72,13 @@ def connection():
         print("{}가 접속하였습니다.".format(client_sock.fileno()))
         print("{}가 접속하였습니다.".format(client_addr))
         print("현재 연결된 사용자: {}\n".format(client_list))
-        client_sock.send(bytes("투표=====================================\n",'UTF-8'))
-        client_sock.send(bytes("1. -----\n",'UTF-8'))
-        client_sock.send(bytes("2. -----\n",'UTF-8'))
-        client_sock.send(bytes("3. -----\n",'UTF-8'))
-        client_sock.send(bytes("4. -----\n",'UTF-8'))
-        client_sock.send(bytes("위의 말 중 하나를 골라 번호를 입력하세요",'UTF-8'))
+        client_sock.send(
+            bytes("투표=====================================\n", 'UTF-8'))
+        client_sock.send(bytes("1. -----\n", 'UTF-8'))
+        client_sock.send(bytes("2. -----\n", 'UTF-8'))
+        client_sock.send(bytes("3. -----\n", 'UTF-8'))
+        client_sock.send(bytes("4. -----\n", 'UTF-8'))
+        client_sock.send(bytes("위의 말 중 하나를 골라 번호를 입력하세요", 'UTF-8'))
 
         # 접속한 클라이언트를 기준으로 메시지를 수신 할 수 있는 스레드를 생성함.
         thread_recv = threading.Thread(target=receive, args=(client_sock, ))
@@ -100,10 +94,3 @@ print("============== 투표 프로그램 ==============")
 thread_server.join()
 
 server_sock.close()
-
-
-# In[ ]:
-
-
-
-

@@ -18,7 +18,8 @@ def chat(client_sock):
 
     while status == 0:
         client_sock.send(bytes(repr(tuple(partition.keys())), 'utf-8'))
-        print("\r{}에게 채팅방 정보를 전송했습니다.\n\n> ".format(client_sock.fileno()), end='')
+        print("\r{}에게 채팅방 정보를 전송했습니다.\n\n> ".format(
+            client_sock.fileno()), end='')
 
         try:
             data = client_sock.recv(1024)
@@ -32,9 +33,11 @@ def chat(client_sock):
         selected_partition = data.decode('utf-8')
         if selected_partition not in partition:
             partition.setdefault(selected_partition, [])
-            print("\r{}이(가) {} 채팅방을 생성했습니다.".format(client_sock.fileno(), selected_partition))
+            print("\r{}이(가) {} 채팅방을 생성했습니다.".format(
+                client_sock.fileno(), selected_partition))
         partition[selected_partition].append(client_sock.fileno())
-        print("{}이(가) {} 채팅방에 들어갔습니다.".format(client_sock.fileno(), selected_partition))
+        print("{}이(가) {} 채팅방에 들어갔습니다.".format(
+            client_sock.fileno(), selected_partition))
         print("현재 연결된 사용자: {}".format(client_id))
         print("현재 생성된 채팅방과 사용자: {}\n\n> ".format(partition), end='')
 
@@ -53,18 +56,21 @@ def chat(client_sock):
                 partition[selected_partition].remove(client_sock.fileno())
                 break
             if data == b'!leave':
-                print("\r{}이(가) {} 채팅방을 나갑니다.".format(client_sock.fileno(), selected_partition))
+                print("\r{}이(가) {} 채팅방을 나갑니다.".format(
+                    client_sock.fileno(), selected_partition))
                 client_sock.send(bytes("!pauseReceiving", 'utf-8'))
                 partition[selected_partition].remove(client_sock.fileno())
                 print("현재 연결된 사용자: {}".format(client_id))
                 print("현재 생성된 채팅방과 사용자: {}\n\n> ".format(partition), end='')
                 break
 
-            data_with_id = bytes(str(client_sock.fileno()), 'utf-8') + b" : " + data
+            data_with_id = bytes(str(client_sock.fileno()),
+                                 'utf-8') + b" : " + data
             for sock in client_list:
                 if sock != client_sock and sock.fileno() in partition[selected_partition]:
                     sock.send(data_with_id)
-            print("\r{}이(가) {} 채팅방에 메시지를 전송했습니다.\n\n> ".format(client_sock.fileno(), selected_partition), end='')
+            print("\r{}이(가) {} 채팅방에 메시지를 전송했습니다.\n\n> ".format(
+                client_sock.fileno(), selected_partition), end='')
 
     client_list.remove(client_sock)
     client_id.remove(client_sock.fileno())

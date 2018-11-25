@@ -17,16 +17,18 @@ print('Start Word Scramble Server')
 client_list = []
 client_id = []
 words = 'people history way art world information map tow family government health system computer meat year thanks music person reading method data food understanding theory law bird literature problem software control knowlegde power ability economics love internet television science library nature fact product idea temperature investment area society passable cultivator knitting trip audio acquire active oxford'.split()
-#총 47개의 단어를 무작위로
+# 총 47개의 단어를 무작위로
 # 서버로 부터 메시지를 받는 함수 | Thread 활용
+
+
 def receive(client_sock):
     while True:
         global success
-        chk=True
-        success=True
+        chk = True
+        success = True
         while True:
             # 클라이언트로부터 데이터를 받는다
-            word=""
+            word = ""
             if chk:
                 num = random.randrange(1, len(words))
                 word = words[num]
@@ -34,31 +36,31 @@ def receive(client_sock):
                 random.shuffle(list_word)
                 message = "".join(list_word)
                 client_sock.send(bytes(message, 'utf-8'))
-            chk=False
+            chk = False
             try:
                 data = client_sock.recv(1024)
             except ConnectionError:
                 print("{}와 연결이 끊겼습니다. #code1".format(client_sock.fileno()))
-                success=False
+                success = False
                 break
             # 만약 클라이언트로부터 종료 요청이 온다면, 종료함. code0 : 클라이언트 전송 기능 닫았을때 오는 메시지
             if not data:
                 print("{}이 연결 종료 요청을 합니다. #code0".format(client_sock.fileno()))
                 client_sock.send(bytes("서버에서 클라이언트 정보를 삭제하는 중입니다.", 'utf-8'))
-                success=False
+                success = False
                 break
-            elif data.decode('utf-8')=='again':
-                chk=True
+            elif data.decode('utf-8') == 'again':
+                chk = True
                 continue
             elif data.decode('utf-8') == word:
                 client_sock.send(bytes("정답입니다!", 'utf-8'))
-                chk=True
+                chk = True
             elif data.decode('utf-8') == 'answer':
                 client_sock.send(bytes(word, 'utf-8'))
-                chk=True
+                chk = True
             else:
                 client_sock.send(bytes('다시 도전해보세요!', 'utf-8'))
-        if success==False:
+        if success == False:
             break
 
     # 메시지 송발신이 끝났으므로, 대상인 client는 목록에서 삭제.
@@ -102,4 +104,3 @@ print("============== World Scramble Server ==============")
 
 thread_server.join()
 server_sock.close()
-

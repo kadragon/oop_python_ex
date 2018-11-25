@@ -156,7 +156,7 @@ for client_info in values:
     client_socket = client_info[0]
     client_address = client_info[1]
     try:
-        new_client=client(client_socket,client_address)
+        new_client = client(client_socket, client_address)
         client_dict.update({client_socket.fileno(): new_client})
     except TypeError:
         client_info_dict.pop(client_socket.fileno(), None)

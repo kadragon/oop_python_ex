@@ -36,8 +36,7 @@ def receive():
         if msg.decode('UTF-8') == 'end':
             flag = False
             exit()
-            
-        
+
 
 def main():
 
