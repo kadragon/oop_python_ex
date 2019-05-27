@@ -12,7 +12,7 @@ LOGIN_INFO = {
     'passwd': 'USER_PASSWORD'
 }
 
-# 오늘의 날씨는 구하가
+# 오늘의 날짜 구하기
 now = datetime.date.today()
 tmp_date = now + datetime.timedelta(days=-2)  # 2일 전 날짜를 구하기
 
