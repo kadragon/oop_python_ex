@@ -3,7 +3,7 @@
 소과제 1
 숫자야구게임 제작하기
 
-2306 박유진
+23** 박**
 """
 
 import random
@@ -20,7 +20,7 @@ def intro():
     :return: 없음
     """
     print("=" * 20)
-    print("SASA의 숫자야구게임")
+    print("SASA 의 숫자야구게임")
     print("컴퓨터가 만들어내는 3자리 임의의 숫자를 플레이어가 맞추는 게임")
     print("숫자는 0~9까지 서로 다름")
     print("숫자와 위치가 모두 맞으면 스트라이크(S)")
@@ -64,20 +64,20 @@ def takeinput(i):
             print("\n에러발생\n형식을 맞춰 입력해주세요\n")
 
     except (KeyError, ValueError, TypeError, IndexError) as e:
-        print("\n에러 발생 (%s) \n형식을 맞춰주세요\n" % e)
+        print("\n에러 발생 (%s) \n 형식을 맞춰주세요\n" % e)
 
 
 def calcguess():
     """
     사용자가 입력한 숫자 3개와 컴퓨터가 정한 숫자 3개를 비교해서, S, B, O의 개수를 반환한다
-    반환형식은 tuple이다
+    반환형식은 tuple 이다
     :return int, int, int
     """
-    S = 0   # type: int
-    B = 0
+    S = 0  # type: int
+    B = 0  # T. python 에서 대문자로 변수 이름을 지정하면 '상수' 처럼 생각하는 룰이 있다.
     O = 0
     for i in range(3):
-        cmp = user[i]  # cmp로 임시 지정
+        cmp = user[i]  # cmp 로 임시 지정
         for j in range(3):
             if cmp == secret[j]:  # 같은 수가 있는 경우
                 if i == j:  # 같은 자리인 경우(S)
@@ -90,9 +90,9 @@ def calcguess():
 
 def det_process():
     """
-    사용자가 입력한 숫자와 임의로 제작한 숫자를 비교한 calcguess의 반환 값을 출력하고
-    숫자를 맞췄으면 축하하고 main의 for을 탈출할 수 있는 True를 반환한다
-    :return: True / False (True면 맞춘것)
+    사용자가 입력한 숫자와 임의로 제작한 숫자를 비교한 calcguess 의 반환 값을 출력하고
+    숫자를 맞췄으면 축하하고 main 의 for 을 탈출할 수 있는 True 를 반환한다
+    :return: True / False (True 면 맞춘것)
     """
     try:
         score = calcguess()
@@ -109,6 +109,7 @@ def det_process():
 
 intro()
 makenum()
+
 while True:
     for i in range(10, 0, -1):
         user = takeinput(i)
@@ -121,7 +122,8 @@ while True:
     print("다시 도전하고 싶으십니까? (yes or no)")
     try:
         ans = input()
-        if (ans == "yes") or (ans == 'y') or (ans == 'Y'):  # 다시 도전하면 While문을 돎
+        # if (ans == "yes") or (ans == 'y') or (ans == 'Y'):  # 다시 도전하면 While문을 돎
+        if ans in "yes y Y".split():  # 다시 도전하면 While문을 돎
             print('reset...')
         else:
             print("종료함...")

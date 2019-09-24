@@ -36,17 +36,19 @@ def is_error(new_answer):
     :param new_answer: BSB_LEN 길이의 유저 답 리스트 권장. 그러나 공백으로 띄워진 숫자 리스트도 답으로 인정한다
     :return: new_answer 가 BSB_LEN 개의 숫자를 가졌으면 다듬은 숫자 리스트를 반환. 그렇지 않으면 False 반환
     """
-    the_list = list(new_answer)  # 유저의 답(str)을 문자 한글자씩을 원소로 가지는 list 형태로 바꾼다.
+    # the_list = list(new_answer)  # 유저의 답(str)을 문자 한글자씩을 원소로 가지는 list 형태로 바꾼다.
 
-    while True:
-        try:  # 공백이 없을 때까지 try 를 반복하여 공백을 지운다.
-            the_list.remove(' ')  # (remove 함수는 찾는 것이 없으면 에러가 난다.)
-        except:
-            break
+    # while True:
+    #     try:  # 공백이 없을 때까지 try 를 반복하여 공백을 지운다.
+    #         the_list.remove(' ')  # (remove 함수는 찾는 것이 없으면 에러가 난다.)
+    #     except:
+    #         break
+    the_list = new_answer.replace(" ", '')
+    the_list = list(the_list)
 
     try:
         the_list = list(map(int, the_list))  # 리스트의 모든 문자를 숫자로 만든다
-    except:
+    except:  # T. 예외 처리를 할 때에는 무엇을 예외처리 할지 명시하는 것을 권장한다.
         return False  # 숫자 이외의 것이 있으면 거짓을 반환한다.
 
     if len(the_list) is not BSB_LEN:
@@ -99,7 +101,8 @@ def check_and_print_user_answers(the_user_answer):
 
 
 admin_dict: dict = {'soi': 0, 'kdragon': 0}  # admin 권한을 가진 pw. id가 admin 일 때 입력할 수 있다.
-admin_check: bool = 0  # admin 인지 아닌지 확인하는 bool
+# admin_check: bool = 0  # admin 인지 아닌지 확인하는 bool
+admin_check: bool = False  # admin 인지 아닌지 확인하는 bool  # T. bool type 을 쓰기로 했다면, 0 대신 False 로
 
 user_id = input("user_id>>")
 user_pw = ''
@@ -110,7 +113,8 @@ while user_id == 'admin' and user_pw is '':  # 유저가 답을 입력할 때 �
         admin_dict[user_pw] = 1
         admin_check = 1
 
-check: bool = 1  # 게임을 계속할 것인지 아닌지 확인하는 bool
+# check: bool = 1  # 게임을 계속할 것인지 아닌지 확인하는 bool
+check: bool = True  # 게임을 계속할 것인지 아닌지 확인하는 bool
 
 while check:
     user_answers = []  # user_answers 리스트 초기화
@@ -130,7 +134,7 @@ while check:
             else:
                 len_check_FxxK -= 1  # 값이 이상하면 기회를 하나씩 줄인다
                 print("not right integer.")
-                if len_check_FxxK == 0:  # 기회를 모두 소진했다 하하!!
+                if len_check_FxxK == 0:  # 기회를 모두 소진했다 하하!!  # T. 기회 소진 관련한 부분을 분리해도 되지 않았을까?
                     print("you don't have another chance")
                     BSB_LEN = 10
                     print("F YOU")
@@ -147,15 +151,19 @@ while check:
                 break
             print("you have", len_check_FxxK, "chance")
             set_len = input("please write integer(3~10):")
+
     print("the length is", BSB_LEN)
+
     the_answer = make_random_number()  # 정답을 만든다.
     if admin_check:  # admin 인 경우만, 정답을 알려준다.
         print("***admin: the answer is ", end='')
         for j in the_answer:
             print(j, end='')
         print(" ***")
+
     set_try_num = input("the maximum try num?(3~20)")
     try_num_check_FxxK = 3  # 참는 기회를 준다
+
     while True:
         try:
             set_try_num = int(set_try_num)
@@ -181,8 +189,10 @@ while check:
                 break
             print("you have", try_num_check_FxxK, "chance")
             set_try_num = input("please write number(3~20):")
+
     print("the try chance:", TRY_NUM)
     print_equal_15()
+
     print("If you want to show your history, write 'show my answers'")
     print_equal_15()
 

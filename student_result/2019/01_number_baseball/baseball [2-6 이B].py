@@ -49,6 +49,7 @@ def give_hint(string):  # 사용자가 입력한 string 을 받아, S,B,O를 알
         for i in range(3):
             if (string[i] != answer[i]) & (string[i] in answer):  # 내가 입력한 수의 i 번째 숫자가 위치는 다른데, 답에 있는 숫자이기는 한 경우 (ball)
                 ball += 1
+
     if not is_answer:
         print("%d S | %d B | %d O" % (strike, ball, num_len - strike - ball))  # 답을 맞추지 못했을 경우 S,B,O를 출력한다.
     return is_answer
@@ -89,11 +90,13 @@ while play_game:
     print("I have thought up a number. You have %d guesses to get it." % guess_given)
     while (used_guesses <= guess_given) & (not got_answer):  # 답을 아직 맞추지 못했고, 추리 시도 횟수가 남아있는 동안 계속 시행된다.
         a = ' '  # 입력 받기 전 상태... 이후 input 받으면서 갱신됨
+
         while not right_input(a):  # 올바른 입력이 들어오기 전까지 계속 시행된다.
             print("Guess #%d:" % used_guesses, end=' ')  # 몇 번째 입력인지 표시
             a = input()  # 입력을 받아 a 에 저장한 뒤, right_input 함수를 통해 올바른 입력인지 확인한다.
             if not right_input(a):  # 올바른 입력이 아닐 경우, 잘못되었음을 알려 주고 다시 입력을 받는다.
                 print("Wrong input!")
+
         used_guesses += 1  # 추리 시도 횟수를 1 증가시킨다.
         got_answer = give_hint(a)  # 답이 맞았을 경우 give_hint 함수에서 True 가 반환된다.
 

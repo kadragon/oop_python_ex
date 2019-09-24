@@ -17,11 +17,9 @@ def get_input(input_string, input_mode='default'):
         raise Exception(f"input_modes 목록에 없습니다. {input_modes} 중 하나를 선택하세요.")
 
     while True:
-
         my_input = input(input_string)  # 안내 문구를 넣어서 입력 받기
 
         if input_mode == 'default':
-
             try:
                 if my_input in commands:  # 명령어 목록에 있다면
                     return my_input  # 입력 그대로 반환
@@ -52,12 +50,13 @@ def get_input(input_string, input_mode='default'):
 
 def find_sbo(ans_list, user_list):
     """
-    strike, ball, out의 개수를 찾는 함수입니다.
+    strike, ball, out 의 개수를 찾는 함수입니다.
     :param ans_list: 정답 숫자열
     :param user_list: 들어온 숫자열
     :return: strike, ball, out 개수를 담는 dictionary
     """
     result = {'strike': 0, 'ball': 0, 'out': 0}
+
     for j in range(0, 3):
         if user_list[j] == ans_list[j]:  # 위치와 숫자 모두 일치
             result['strike'] += 1
@@ -90,6 +89,7 @@ def play_round(round_number):
                 num_list = something
             sbo = find_sbo(ans_list, num_list)
             print(f"Strike: {sbo['strike']} | Ball: {sbo['ball']} | out: {sbo['out']}")  # S/B/O 정보 출력
+
             if sbo['strike'] == 3:  # 모두 맞았으면
                 is_successful = True  # 성공으로 표시
                 break  # for 문 탈출
@@ -99,8 +99,9 @@ def play_round(round_number):
         else:  # 아니라면
             reveal_answer(ans_list)  # 답을 공개함
 
-    something = get_input("Quit or restart?\n[quit / restart]: ", 'cmd_only')
-    return something
+    # something = get_input("Quit or restart?\n[quit / restart]: ", 'cmd_only')
+    # return something
+    return get_input("Quit or restart?\n[quit / restart]: ", 'cmd_only')
 
 
 def print_instructions():

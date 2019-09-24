@@ -1,6 +1,7 @@
 import random
 
-def get_numbers(): #비밀번호를 반환
+
+def get_numbers():  # 비밀번호를 반환
     num = list(range(10))
     random.shuffle(num)
 
@@ -11,13 +12,13 @@ def get_numbers(): #비밀번호를 반환
     return numbers
 
 
-def get(): #유저의 입력값이 형식에 맞는지 확인하고 반환
+def get():  # 유저의 입력값이 형식에 맞는지 확인하고 반환
     while 1:
         num = input()
 
         try:
             int(num)
-        except:
+        except:  # T. python 에서 예외처리를 할때에는 어떠한 예외를 처리 할지 명기 해야 한다.
             print('숫자 3개를 띄어쓰기 없이 입력하세요')
             continue
 
@@ -27,7 +28,7 @@ def get(): #유저의 입력값이 형식에 맞는지 확인하고 반환
             return num
 
 
-def play(secret, user): #유저의 입력값과 비밀번호를 비교하여 결과 출력
+def play(secret, user):  # 유저의 입력값과 비밀번호를 비교하여 결과 출력
     if user == secret:
         return '정답!'
 
@@ -46,8 +47,8 @@ def play(secret, user): #유저의 입력값과 비밀번호를 비교하여 결
     return str(s) + 'S |' + str(b) + 'B |' + str(o) + 'O'
 
 
-def play_again(): #게임 재시작 여부 확인
-    print('다시 할래요? 다시 하려면 y / 끝내려면 n : ', end = ' ')
+def play_again():  # 게임 재시작 여부 확인
+    print('다시 할래요? 다시 하려면 y / 끝내려면 n : ', end=' ')
     answer = input()
     if answer == 'y':
         return 1

@@ -9,10 +9,10 @@ def get_random_number(num_digits):
     :param num_digits: 원하는 문자열의 길이
     :return: 중복되지 않은 숫자로 이루어진 문자열
     """
-    numbers = list(range(10))       # range() 함수의 반환형은 iterator 형식의 객체 / list() 를 이용하여 list 형으로 변경
-    random.shuffle(numbers)         # list 의 값을 임의의 순서로 섞는다. [0, 1, ~ 8, 9] > [1, 7, ~ 6, 2] 와 같이..
+    numbers = list(range(10))  # range() 함수의 반환형은 iterator 형식의 객체 / list() 를 이용하여 list 형으로 변경
+    random.shuffle(numbers)  # list 의 값을 임의의 순서로 섞는다. [0, 1, ~ 8, 9] > [1, 7, ~ 6, 2] 와 같이..
     correct_answer = ''
-    for i in range(num_digits):     # 원하는 길이 만큼 반복하며 원하는 길이의 문자열을 만듬 / 이렇게 만들경우 중복이 생기지 않는다.
+    for i in range(num_digits):  # 원하는 길이 만큼 반복하며 원하는 길이의 문자열을 만듬 / 이렇게 만들경우 중복이 생기지 않는다.
         correct_answer += str(numbers[i])
     return correct_answer
 
@@ -59,32 +59,36 @@ def only_digits(num):
     return True
 
 
-def play_again(): #플레이어가 다시 게임을 시작할지 결정한다.
+def play_again():  # 플레이어가 다시 게임을 시작할지 결정한다.
 
     return input('다시 하시겠습니까? 다시 하시려면 y를 누르고 엔터키를 누르시고, 그렇지 않으면 엔터키를 눌러주세요').lower().startswith('y')
 
+
 # Python 에서 상수처럼 사용하고 싶으면, 대문자 + _ 을 사용
 
-def decide_level(level): #게임의 난이도를 결정한다
-    if level == 'a': #a를 입력할 시 5를 리턴
+def decide_level(level):  # 게임의 난이도를 결정한다
+    if level == 'a':  # a를 입력할 시 5를 리턴
         return 5
-    elif level == 'b': #b를 입력할 시 7을 리턴
+    elif level == 'b':  # b를 입력할 시 7을 리턴
         return 7
     elif level == 'c':
-        return 10 #c를 입력할 시 10을 리턴
+        return 10  # c를 입력할 시 10을 리턴
+
 
 while True:
-
     print("난이도를 설정하세요.")
+
     while True:
-        level = ' ' #난이도 입력을 저장하는 변수
+        level = ' '  # 난이도 입력을 저장하는 변수
         print("어려운 난이도는 a, 보통 난이도는 b, 쉬운 난이도는 c를 누르고 엔터를 누르세요 :")
-        level = input() #난이도 입력
-        if level == 'a' or level == 'b' or level == 'c': #a,b,c를 입력할 때만 레벨을 결정하게 함
-            decidedlevel = decide_level(level) #decide_level로 결정된 리턴 값을 decidedlevel변수에 저장
+
+        level = input()  # 난이도 입력
+        # if level == 'a' or level == 'b' or level == 'c':  # a,b,c를 입력할 때만 레벨을 결정하게 함
+        if level in "abc":  # a,b,c를 입력할 때만 레벨을 결정하게 함
+            decidedlevel = decide_level(level)  # decide_level로 결정된 리턴 값을 decidedlevel변수에 저장
             break
 
-    max = decidedlevel #decidedlevel을 max에 대입함으로써 decide level의 리턴 값을 max에 저장
+    max = decidedlevel  # decidedlevel을 max에 대입함으로써 decide level의 리턴 값을 max에 저장
 
     print("=" * 80)
     print("제가 생각하는 세 자리 정수를 맞춰보세요.")
@@ -100,13 +104,13 @@ while True:
     real_answer = get_random_number(3)  # 정답 생성
     print('\n수 하나를 생각했습니다. %s번의 기회를 드릴 테니 제가 생각한 수를 맞추십시오.' % max)
 
-    num_guesses = 1                         # 몇번 시도했는지 확인하기 위한 변수 객체
-    while num_guesses <= max:         # 시도 횟수가 초과하지 않았는지 확인
-        guess = ' '                         # 사용자 입력 값 저장하기 위한 변수 객체
-        while len(guess) != 3 or not only_digits(guess):    # 입력한 값이 길이가 적당한지, 정수만 입력했는지 확인
-            print('#%s째 시도 (틀릴 시 #%s번 남음):' % (num_guesses, max-num_guesses), end=' ')
+    num_guesses = 1  # 몇번 시도했는지 확인하기 위한 변수 객체
+    while num_guesses <= max:  # 시도 횟수가 초과하지 않았는지 확인
+        guess = ' '  # 사용자 입력 값 저장하기 위한 변수 객체
+        while len(guess) != 3 or not only_digits(guess):  # 입력한 값이 길이가 적당한지, 정수만 입력했는지 확인
+            print('#%s째 시도 (틀릴 시 #%s번 남음):' % (num_guesses, max - num_guesses), end=' ')
             guess = input()
-            if guess == 'cheating': #cheating을 입력 시 real_answer, 즉 답이 출력되게 함. 일종의 이스터에그
+            if guess == 'cheating':  # cheating 을 입력 시 real_answer, 즉 답이 출력되게 함. 일종의 이스터에그
                 print("%s" % real_answer)
 
         print(get_clues(guess, real_answer))

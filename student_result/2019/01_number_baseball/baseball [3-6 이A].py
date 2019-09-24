@@ -1,10 +1,12 @@
 import random
+
+
 num_digits = 3  # 입력자릿수 변화 대비
 mguesses = 10  # 최대 입력 변화 대비
 guesses = 1  # 카운트를 1부터 시작한다.
 
 
-def make_number(num_digits):  # random을 이용해 임의의 3자리 숫자를 불러온다.
+def make_number(num_digits):  # random 을 이용해 임의의 3자리 숫자를 불러온다.
     candidate_list = list(range(10))  # 1부터 10까지 불러와 리스트 형태로 저장한다.
     random.shuffle(candidate_list)  # 리스트의 순서를 재배열한다.
     answer = ''
@@ -21,7 +23,7 @@ def output(user_guess, answer):  # 출력하는 함수이다.
     b_ans = 0
     o_ans = 0
 
-    for i in range(len(user_guess)):  # for문을 이용해 정답을 자릿수별로 나누어 SBO갯수를 체크한다.
+    for i in range(len(user_guess)):  # for 문을 이용해 정답을 자릿수별로 나누어 SBO 갯수를 체크한다.
         if user_guess[i] == answer[i]:
             s_ans += 1
         elif user_guess[i] in answer:
@@ -60,11 +62,11 @@ print("")
 
 while True:
     answer = make_number(num_digits)  # 정답 생성
-    print("\n숫자를 생각했습니다. %d번 안에 맞추십시오." % mguesses)
+    print("\n 숫자를 생각했습니다. %d번 안에 맞추십시오." % mguesses)
 
     guesses = 1
 
-    while (guesses <= mguesses):
+    while guesses <= mguesses:
         guess = ' '
         while not only_int(guess):
             print("%d번째 입력" % guesses)

@@ -13,6 +13,7 @@ def make_ans():                         # 답 만드는 함수
 def compare(player_num, ans):               # 사용자의 답 상태 확인
     if player_num == ans:                   # 사용자가 선택한 값이 정답과 같으면 승리로 결과
         return print('삼진 스트라이크 아웃!')
+
     stk = 0                                 # 스트라이크 수
     out = 0                                 # 아웃 수
     ball = 0                                # 볼 수
@@ -23,6 +24,7 @@ def compare(player_num, ans):               # 사용자의 답 상태 확인
             ball += 1
         else:                               # 나머지는 아웃
             out += 1
+
     print('S: '+str(stk)+' / B: '+str(ball)+' / O: '+str(out))      # 출력
     return
 
@@ -32,9 +34,11 @@ def play_again():                              # 재시작 여부 질문
     print('insert coin')
     print('Yes  No')
     re = str(input())                          # 스캔
-    if re == 'yes':                            # 재시작 조건 1
-        return True
-    elif re == 'Yes':                          # 재시작 조건 2
+    # if re == 'yes':                            # 재시작 조건 1
+    #     return True
+    # elif re == 'Yes':                          # 재시작 조건 2
+    #     return True
+    if re in "yes Yes".split():
         return True
     else:                                       # 나머지는
         return False
@@ -97,11 +101,14 @@ while True:
             if ctime == 15:
                 print('진짜 레알 ㅅㄱ ㅂㅇ')
             ctime += 1
+
         compare(num, ans)                              # S B O 값 알아내기
         if num == ans:                                  # 정답을 맞추면 탈출, 초기화
             break
+
         if i == 9:                                             # 기회를 다 소진하면
             print('아 이번 경기는 무득점으로 마무리하게 되는군요....')
             print('구단의 미래가 어둡습니다...')
+
     if not play_again():                               # 더 하는지 물어보고 그만두면 탈출
         break

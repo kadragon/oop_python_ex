@@ -9,7 +9,7 @@ def make_answer(user_len):
     """
     사용자가 입력한 숫자(user_len)만큼의 길이를 가진 암호를 생성하는 함수
     :param user_len: 사용자가 입력한 '숫자 길이'
-    :return: user_len만큼의 길이를 가진 현재 게임의 암호
+    :return: user_len 만큼의 길이를 가진 현재 게임의 암호
     """
     num_list = list(range(10))
     random.shuffle(num_list)  # 중복되지 않은 0부터 9까지의 숫자들을 랜덤으로 섞는다
@@ -144,7 +144,7 @@ while True:
 
     play_digit = input("도전 횟수를 입력하세요! 각 게임 당 최대 도전 횟수는 20회입니다. "
                        "잘못 입력하면 처음부터~ . : ")  # 도전 횟수를 입력받는 객체 play_digit
-    if not isnaturalnum(play_digit):  # play_digit이 숫자가 아니라면 다시 반복
+    if not isnaturalnum(play_digit):  # play_digit 이 숫자가 아니라면 다시 반복
         continue
     if cond_error(int(play_digit), PLAY_MAX):  # play_digit(도전 횟수)이 PLAY_MAX(최대 도전 횟수)에 벗어나면 다시 반복
         continue
@@ -159,11 +159,11 @@ while True:
     while count <= int(play_digit):  # 게임 진행 횟수가 사용자가 입력한 도전 횟수를 넘지 않을 때까지 반복
         print("%s차 시도 두두둥: " % count, end=' ')  # Ex. 3차 시도 두두둥:  (count = 3)
         user_ans = input()  # 사용자가 입력한 문자열을 받는 객체인 user_ans
-        if wrong_enter(user_ans):  # user_ans가 자연수열이 아닐 경우 다시 입력 반복
+        if wrong_enter(user_ans):  # user_ans 가 자연수열이 아닐 경우 다시 입력 반복
             continue
-        if not check_len(user_ans, password):  # user_ans의 길이가 암호의 길이와 다를 경우 반복
+        if not check_len(user_ans, password):  # user_ans 의 길이가 암호의 길이와 다를 경우 반복
             continue
-        if overlap(user_ans):  # user_ans에 중복되는 숫자가 있으면 반복
+        if overlap(user_ans):  # user_ans 에 중복되는 숫자가 있으면 반복
             continue
         if give_clues(user_ans, password) == 1:  # 게임 진행 중 사용자가 입력한 답과 게임의 암호가 동일할 경우 STOP!
             break

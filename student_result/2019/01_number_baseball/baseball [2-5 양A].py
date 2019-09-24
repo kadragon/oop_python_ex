@@ -41,11 +41,15 @@ def create_answer():  # 정답의 자릿수를 입력 받아 정답을 만들어
             ans_len = int(input('>> 정답을 몇 자리로 설정할 지 입력해주세요 [3 ~ 10]: ').strip())  # 정답의 자릿수를 입력 받음
             if not 3 <= ans_len <= 10:  # 입력값이 3 이상 10 이하가 아니거나 문자, 띄어쓰기를 포함하면 오류 발생
                 raise ValueError
+
             temp_array = list(range(10))  # 정답을 만들기 위한 숫자 생성, 중복은 없음
             random.shuffle(temp_array)  # 숫자의 순서를 섞음
             ans = ''.join(list(map(str, temp_array[0: ans_len])))  # 정답의 자릿수만큼 순서가 섞인 숫자들을 문자열로 정답에 저장
+
             print('>> 정답이 생성되었습니다. 모든 자릿수는 0부터 9까지 수 중 하나이며, 중복은 없습니다.')
+
             return [ans, ans_len]  # 생성된 정답과 정답의 자릿수를 반환
+
         except ValueError:  # 원하는 입력이 아니라면 입력값 범위 출력
             print('>> 3 이상, 10 이하의 자연수를 하나 입력해주세요.')
 
@@ -54,9 +58,12 @@ def scan_chance():  # 최대 시도 횟수를 입력 받고 그대로 반환하�
     while True:  # 사용자가 올바른 입력을 줄 때까지
         try:
             chance = int(input('>> 최대 시도 횟수를 입력해주세요 [3 ~ 100]: ').strip())  # 최대 시도 횟수를 입력 받음
+
             if not 3 <= chance <= 100:  # 입력값이 3 이상 100 이하가 아니거나 문자, 띄어쓰기를 포함하면 오류 발생
                 raise ValueError
+
             return chance  # 최대 시도 횟수 반환
+
         except ValueError:  # 원하는 입력이 아니라면 입력값 범위 출력
             print('>> 3 이상, 100 이하의 자연수를 하나 입력해주세요.')
 
@@ -67,7 +74,9 @@ def scan_hint():  # 최대 힌트 갯수를 입력 받고 그대로 반환하는
             clue = int(input('>> 최대 힌트 갯수를 입력해주세요 [0 ~ 10]: ').strip())  # 최대 힌트 갯수를 입력 받음
             if not 0 <= clue <= 10:  # 입력값이 0 이상 100 이하가 아니거나 문자, 띄어쓰기를 포함하면 오류 발생
                 raise ValueError
+
             return clue  # 최대 힌트 갯수 반환
+
         except ValueError:  # 원하는 입력이 아니라면 입력값 범위 출력
             print('>> 0 이상, 10 이하의 정수를 하나 입력해주세요.')
 

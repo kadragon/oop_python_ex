@@ -4,11 +4,11 @@ import random
 
 
 def ran_pick(num_digits):
-    secret = ''     # a random three digit number that has no number more than once
+    secret = ''  # a random three digit number that has no number more than once
     ran_num = str(random.randint(0, 9))  # pick a random number between 0 and 9
 
     for i in range(num_digits):  # to make all the numbers different
-        while ran_num in secret:    # loop runs till the state is True
+        while ran_num in secret:  # loop runs till the state is True
             ran_num = str(random.randint(0, 9))  # pick a new number that's not in 'secret' and escape the loop
         secret += str(ran_num)  # fill 'secret' with a random number from the front
 
@@ -16,9 +16,9 @@ def ran_pick(num_digits):
 
 
 def hint(num, key_num):
-    s = 0   # strike count
-    b = 0   # ball count
-    o = 0   # out count
+    s = 0  # strike count
+    b = 0  # ball count
+    o = 0  # out count
     for i in range(0, 3):
         if num[i] == key_num[i]:
             s += 1
@@ -26,10 +26,10 @@ def hint(num, key_num):
             b += 1
         else:
             o += 1
-    return 'S : ' + str(s) + ' |'+ " B : " +str(b) +' |'+ ' O : ' + str(o) + '\n'
+    return 'S : ' + str(s) + ' |' + " B : " + str(b) + ' |' + ' O : ' + str(o) + '\n'
 
 
-def wrong_check(num):      # check if the player's input was blank or wrong format
+def wrong_check(num):  # check if the player's input was blank or wrong format
     if num == ' ':
         return False
     elif num.isalpha():
@@ -70,6 +70,7 @@ while True:
     secret_num = ran_pick(3)
     while player_guess <= MAX_GUESS:
         scanned = ' '
+
         while len(scanned) != NUM_DIGITS or not wrong_check(scanned):
             print('\nI have a 3-digit number, and you have %s guesses to get it.' % (MAX_GUESS - player_guess + 1))
             print('Guess  #%s:' % player_guess, end=' ')
@@ -80,7 +81,7 @@ while True:
 
         if scanned == secret_num:
             break
-        if player_guess > MAX_GUESS:   # more guesses than 10 times, game over
+        if player_guess > MAX_GUESS:  # more guesses than 10 times, game over
             print("GAME OVER \nThe answer was %s." % secret_num)
 
     if not continue_game():

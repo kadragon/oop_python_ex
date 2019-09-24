@@ -1,5 +1,6 @@
 import random
 
+
 def make_num(num):
     """
     처음에 몇 자리수로 게임을 진행할 지 정해줌
@@ -12,10 +13,14 @@ def make_num(num):
         if '3' <= i <= '6':
             num_cnt += 1
             b = int(i)
-    if num_cnt != 1 or len(num)!=1:
+
+    if num_cnt != 1 or len(num) != 1:
         return -1
     else:
         return b
+        # T. 논리상 b가 선언 안되고 반환되는 경우는 없겠지만,
+        # 다른 if 문 내에서 선언되는 변수를 사용하는건 권장되지 않음
+
 
 def explain_rule():
     """
@@ -30,6 +35,7 @@ def explain_rule():
     print("O는 숫자가 맞지 않는 것입니다.")
     print("그럼, 건투를 빕니다.")
 
+
 def set_randnum(num):
     """
     사용자가 선택한 자릿수의 임의의 숫자를 생성함.
@@ -38,42 +44,45 @@ def set_randnum(num):
     """
     numbers = list(range(10))
     random.shuffle(numbers)
+
     ans = ''
     for i in range(num):  # 사용자가 선택한 (num)자릿수로 제작
         ans += str(numbers[i])
     return ans
 
-def check_input(guessstr,num):
+
+def check_input(guessstr, num):
     """
     입력값의 형식이 틀렸다면 왜 틀렸는지 설명해주고, 옳다면 다음 단계로 넘어가도록 함
     :param guessstr: 입력값의 형식이 옳은지 판단해줌
     :param num: 정답의 자릿수
     :return: 입력값의 형식이 옳은지의 여부
     """
-    check=[0]*10
+    check = [0] * 10
 
-    isok=1
-    for i in guessstr: # 0에서 9 사이의 숫자가 입력되었는지 확인
-        if i==' ':
+    isok = 1
+    for i in guessstr:  # 0에서 9 사이의 숫자가 입력되었는지 확인
+        if i == ' ':
             print("감독의 말: 띄어쓰기를 제외해!")
-            isok=0
+            isok = 0
             break
-        elif not '0'<=i<='9':
+        elif not '0' <= i <= '9':
             print("감독의 말: 입력 형식이 옳지 않아!")
-            isok=0
+            isok = 0
             break
-        elif check[int(i)]==1:
+        elif check[int(i)] == 1:
             print("감독의 말: 중복된 숫자가 있어서는 안된다!")
-            isok=0
+            isok = 0
             break
-        if check[int(i)]==0:
-            check[int(i)]=1
+        if check[int(i)] == 0:
+            check[int(i)] = 1
 
-    if len(guessstr)!=num and isok==1: # 설정한 자릿수가 맞는지 확인
-        isok=0
+    if len(guessstr) != num and isok == 1:  # 설정한 자릿수가 맞는지 확인
+        isok = 0
         print("감독의 말: 설정한 자릿수를 초과하였어!")
 
     return isok
+
 
 def check_clue(guess, ans, num):
     """
@@ -87,29 +96,30 @@ def check_clue(guess, ans, num):
     ball = 0
     out = 0
     for i in range(num):
-        if guess[i]==ans[i]:
-            strike+=1
+        if guess[i] == ans[i]:
+            strike += 1
         elif guess[i] in ans:
-            ball+=1
+            ball += 1
         else:
-            out+=1
-    if strike == num: # 정답!
+            out += 1
+    if strike == num:  # 정답!
         return '스트ㅡㅡㅡ라이크!!'
-    return '%d S  %d B  %d O' %(strike,ball,out)
+    return '%d S  %d B  %d O' % (strike, ball, out)
+
 
 def try_again():
     """
     사용자가 다시 게임을 진행할 것인지 물어보고 다시 시작함
     :return: 다시 시작하는지의 여부
     """
-    while True: # 올바른 입력값이 들어올 때까지
+    while True:  # 올바른 입력값이 들어올 때까지
         print("다시 하시겠습니까?(다시 하려면 Y, 아니면 N)")
-        trystr=input()
-        if trystr=='Y':
-            isok=1
+        trystr = input()
+        if trystr == 'Y':
+            isok = 1
             break
-        elif trystr=='N':
-            isok=0
+        elif trystr == 'N':
+            isok = 0
             break
         print("트와이스: 둘 중에 하나만 골라~")
 
@@ -133,32 +143,38 @@ while True:
     print("--------------------------------------")
     print("Game Start!")
 
-    ans = set_randnum(num) #숫자를 설정함
+    ans = set_randnum(num)  # 숫자를 설정함
     heart = 10  # 목숨은 처음에 10개이다.
 
     while heart > 0:
         print("목숨이 %d개 남았습니다." % (heart))
+
         while True:
             print("%d 자리수를 입력하세요." % (num))
-            guess=input()
-            if check_input(guess,num)==True: #추리한 값을 검사한다.
+            guess = input()
+            # if check_input(guess, num) == True:  # 추리한 값을 검사한다.
+            if check_input(guess, num):  # 추리한 값을 검사한다.
                 break
-        clue=check_clue(guess, ans, num)
+
+        clue = check_clue(guess, ans, num)
         print(clue)
-        if clue=='스트ㅡㅡㅡ라이크!!':
+
+        if clue == '스트ㅡㅡㅡ라이크!!':
             break
-        heart-=1
 
-    if heart == 0: # 정답을 맞추지 못함
-        print("정답은 %s였다. 당신의 직구는 상대 타자에게 정확히 들어맞아 홈런으로 이어졌다..." %(ans))
+        heart -= 1
 
-    else: # 정답을 맞춤
+    if heart == 0:  # 정답을 맞추지 못함
+        print("정답은 %s였다. 당신의 직구는 상대 타자에게 정확히 들어맞아 홈런으로 이어졌다..." % ans)
+
+    else:  # 정답을 맞춤
         print("삼진 아웃! 심판의 스트라이크 판정과 함께 경기장에는 환호성이 터져나왔다. 당신의 마무리로 팀은 승리의 트로피를 거머쥐게 되었다.")
 
-    if try_again() == False: # 더 이상 실행하지 않음
+    # if try_again() == False:  # 더 이상 실행하지 않음
+    if try_again() is False:  # 더 이상 실행하지 않음
         print("게임을 종료합니다.")
         break
-    else: # 게임을 반복함
+    else:  # 게임을 반복함
         print("""게임을 다시 시작합니다 
               
               

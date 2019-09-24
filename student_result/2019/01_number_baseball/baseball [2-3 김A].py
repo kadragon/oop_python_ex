@@ -1,7 +1,8 @@
 import random
 
-def makeans(): ##정답인 세 숫자를 생성, 리스트로 리턴한다
-    list=[]
+
+def makeans():  # 정답인 세 숫자를 생성, 리스트로 리턴한다
+    list = []
     randn = random.randint(0, 9)
     for i in range(3):
         while randn in list:
@@ -9,7 +10,8 @@ def makeans(): ##정답인 세 숫자를 생성, 리스트로 리턴한다
         list.append(randn)
     return list
 
-def giveinf(): ## 숫자야구를 아는지 여부 묻고 소개
+
+def giveinf():  # 숫자야구를 아는지 여부 묻고 소개
     print("""안녕 친구, 너는 지금부터 숫자야구 게임을 하게 될거야.
 게임을 하기 전!
 숫자야구의 규칙은 알고 있니?(y/n) :""", end=' ')
@@ -26,45 +28,48 @@ def giveinf(): ## 숫자야구를 아는지 여부 묻고 소개
 이렇게 해서 각각의 개수를 내가 출력할꺼야.
 설명 끝! 그럼 시작해볼까?""")
 
-def getmyguess(): ## 추측 세 숫자를 입력받고 리스트 형태로 리턴
+
+def getmyguess():  # 추측 세 숫자를 입력받고 리스트 형태로 리턴
     print("%d번째 시도 : " % cnt, end='')
     myans = input()
     list = []
     try:
         for i in myans:
             list.append(int(i))
-        if len(list)!= 3:
+        if len(list) != 3:
             print("다시 입력하시오")
             return getmyguess()
         else:
             return list
-    except:
+    except:  # T. except 를 사용 할때에는 어떤 예외를 처리 할 것인지 명시하는 것이 권장됩니다.
         print("다시 입력하시오")
         return getmyguess()
 
-def check(list): ##추측이 맞았는지 여부를 리턴
-    strike=0
-    ball=0
-    out=0
+
+def check(list):  # 추측이 맞았는지 여부를 리턴
+    strike = 0
+    ball = 0
+    out = 0
     for i in range(3):
         if list[i] not in anslist:
-            out+=1
+            out += 1
             continue
         for j in range(3):
             if list[i] is anslist[j]:
                 if i is j:
-                    strike+=1
+                    strike += 1
                 else:
-                    ball+=1
-    print("strike : ", strike, "\n", "ball :", ball, "\n", "out : ", out) ## strike, ball, out 개수 출력
+                    ball += 1
+    print("strike : ", strike, "\n", "ball :", ball, "\n", "out : ", out)  # strike, ball, out 개수 출력
     if strike == 3:
         return True
     else:
         return False
 
-def isitright(state, times): ##맞았으면 횟수에 따라 축하말을 하고, 게임이 끝나면 다시 플레이할지 여부 묻고 리턴
-    again=1
-    if state: ##정답이 맞은 경우(strike = 3)
+
+def isitright(state, times):  # 맞았으면 횟수에 따라 축하말을 하고, 게임이 끝나면 다시 플레이할지 여부 묻고 리턴
+    again = 1
+    if state:  # 정답이 맞은 경우(strike = 3)
         print("!!!!!CONGRATULATIONS!!!!!")
         if times == 1:
             print("금손이군!")
@@ -75,28 +80,29 @@ def isitright(state, times): ##맞았으면 횟수에 따라 축하말을 하고
         else:
             print("그럭저럭 하는군!")
         print("한번 더 해보겠나?(y/n) : ", end='')
-        again = (input() == 'y')
+        again = input() == 'y'
     else:
-        if times < 10: ## 도전 회수 남음
+        if times < 10:  # 도전 회수 남음
             print("다시 도전!")
-        else: ##도전 횟수 모두 소비
+        else:  # 도전 횟수 모두 소비
             print("실 패!!\n다시 도전할텐가?(y/n)", end=' ')
-            again = (input() == 'y')
+            again = input() == 'y'
     return again
 
-##main
-play=1
-giveinf() ## 숫자야구 규칙 아는지 물음
 
-while play: ##플레이어가 플레이하고 싶은 동안(play==True) 게임을 함
+# main
+play = 1
+giveinf()  # 숫자야구 규칙 아는지 물음
+
+while play:  # 플레이어가 플레이하고 싶은 동안(play==True) 게임을 함
     print("START!! 띄어쓰기 제외하고 숫자 세개 입력하시오")
-    anslist=makeans() ##정답 만들기
-    cnt=1
-    right=0
-    while cnt<=10 and not right: ##기회는 10번으로 제한, 정답이 맞으면 탈출
-        mylist=getmyguess() ##mylist에 정답이 되는 세 정수를 리스트로 넣음
-        right = check(mylist) ##제시한 추측이 정답인지 확인
-        play=isitright(right, cnt) ## 정답의 여부에 따라 축하하는 말을 전함, 게임이 끝나면 다시 플레이할지 여부를 물어 play에 넣음(true, false)
-        cnt+=1 ##횟수+=1
+    anslist = makeans()  # 정답 만들기
+    cnt = 1
+    right = 0
+    while cnt <= 10 and not right:  # 기회는 10번으로 제한, 정답이 맞으면 탈출
+        mylist = getmyguess()  # mylist에 정답이 되는 세 정수를 리스트로 넣음
+        right = check(mylist)  # 제시한 추측이 정답인지 확인
+        play = isitright(right, cnt)  #  정답의 여부에 따라 축하하는 말을 전함, 게임이 끝나면 다시 플레이할지 여부를 물어 play에 넣음(true, false)
+        cnt += 1  # 횟수+=1
 
 print("그럼 GOOD BYE~")

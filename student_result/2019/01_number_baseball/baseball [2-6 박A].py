@@ -19,11 +19,12 @@ class Baseball(object):
         self.ans = self.ans[:set.size_of_ball]
 
     def print_result(self, guess):
-        # guess가 들어왔을 때, strike, ball, out의 개수를 측정
-        # 만약 숫자가 정확하다면 True를 반환하여 정답을 맞추었음을 표현
+        # guess 가 들어왔을 때, strike, ball, out 의 개수를 측정
+        # 만약 숫자가 정확하다면 True 를 반환하여 정답을 맞추었음을 표현
         strike = 0
         ball = 0
         out = 0
+
         for i in range(set.size_of_ball):
             if self.ans[i] == guess[i]:
                 strike += 1
@@ -45,6 +46,7 @@ def chk_input(ipt):
     # 형식에 맞다면 True, 형식에 맞지 않다면 False 반환
     if len(ipt) != set.size_of_ball:
         return False
+
     for i in range(set.size_of_ball):
         try:
             int(ipt[i])

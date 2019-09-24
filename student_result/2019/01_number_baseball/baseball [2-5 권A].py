@@ -27,13 +27,13 @@ def create_number(li):
 
 
 def play_scanning(k):
-    # 몇 번째 시도인지를 안내하고, 입력을 받아 입력된 값을 리스트의 형태로 return한다
+    # 몇 번째 시도인지를 안내하고, 입력을 받아 입력된 값을 리스트의 형태로 return 한다
     # 잘못된 입력이 들어오면 다시 입력할 수 있도록 한다
     # k는 (시도 횟수)-1의 값을 저장하는 변수
     global scanlist
+
     try:
         scanlist = list(map(int, input("%d번째 시도 >>>  " % (k+1)).split( )))
-
     except (TypeError, ValueError, SyntaxError, KeyboardInterrupt):
         print("잘못된 입력입니다")
         play_scanning(k)
@@ -62,12 +62,13 @@ def play_scanning(k):
 
 
 def play_checking(checklist, answerlist):
-    # checklist는 플레이어가 입력한 답, answerlist는 정답
+    # checklist 는 플레이어가 입력한 답, answerlist 는 정답
     # s는 스트라이크 개수, b는 볼 개수, o는 아웃 개수
     # 스트라이크와 볼, 아웃의 개수를 출력
     s = 0
     b = 0
     o = 0
+
     for i in range(3):
         if checklist[i] == answerlist[i]:
             s = s + 1
@@ -87,8 +88,8 @@ def play_checking(checklist, answerlist):
 
 
 def play_ending(win_or_lose):
-    # win_or_lose가 1이면 승리, 0이면 패배
-    # win_or_lose의 값에 따라 마무리 멘트가 다름
+    # win_or_lose 가 1이면 승리, 0이면 패배
+    # win_or_lose 의 값에 따라 마무리 멘트가 다름
     # 다시 게임을 플레이할 것인지 물어보는 play_more 함수를 호출
     if win_or_lose == 1:
         print("축하합니다! 3 스트라이크!!")
@@ -106,6 +107,7 @@ def play_more():
     except(TypeError, ValueError, KeyboardInterrupt):
         print("다시 입력해주세요")
         play_more()
+
     if end == 1:
         print("좋은 선택이에요!")
         main()
@@ -122,7 +124,7 @@ def main():
     opening()
     # 오프닝 멘트
     answerlist = create_number(list(range(10)))
-    # create_number 함수에서 슬라이스하여 return된 리스트를 answerlist라고 한다
+    # create_number 함수에서 슬라이스하여 return 된 리스트를 answerlist 라고 한다
 
     for i in range(10):
         yourlist = play_scanning(i)
