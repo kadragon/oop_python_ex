@@ -1,91 +1,83 @@
 import random
 
 
-def make_number():
+# 랜덤 숫자 형성을 위해서
+
+def make_answer(leng):
+    ans_1 = ''
     """
-    랜덤 숫자 3개를 만드는 함수. 0~9를 나열한 리스트에서 임의로 3개를 샘플링한다.
-    :return: 문자열 secret_number
+    leng 길이만큼의 문자열 반환, 임의의 숫자로 되어있다
+    return:임의의 문자열
     """
-    number = list(range(10))
-    random.shuffle(number)
-    secret_number = ''
+    list_0 = list(range(10))  # 리스트 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] 생성
+    random.shuffle(list_0)  # 리스트를 무작위로 섞는다
     for i in range(3):
-        secret_number += str(number[i])
+        ans_1 += str(list_0[i])  # 정답 생성
+    return ans_1
 
-    return secret_number
 
-
-def number_test(num):
+def SBO(guess_1, answer_1):
     """
-    입력받은 숫자가 범위 안에 있는지 판단하는 함수이다.
-    :return: True or False
+    목적:사용자가 입력한 값의 S, B, O 값을 알려준다
+    guess_1:사용자가 입력한 수
+    answer_1:랜덤으로 생성된 정답
+    return:S, B, O의 값을 정리한 문자열
     """
-    if len(num) != 3:  # 숫자의 길이는 3개로 제한함.
+    if guess_1 == answer_1:  # 답이 맞을 시에 승리
+        return "You've got it!"
+    s = 0  # S값의 변수
+    b = 0  # B값의 변수
+    o = 0  # O값의 변수
+    for i in range(3):  # S의 개수를 센다
+        if guess_1[i] == answer_1[i]:
+            s += 1
+    for j in guess_1:  # B의 개수를 센다
+        for k in answer_1:
+            if j == k:
+                b += 1
+    b -= s
+    o = 3 - b - s  # O의 개수를 센다
+    return str(s) + 'S ' + str(b) + 'B ' + str(o) + 'O\n'
+
+
+def test(num):
+    """
+    목적:사용자가 입력한 값이 세자리 숫자인지 판별한다
+    num:사용자가 입력한 문자
+    return:True면 세자리 숫자 False면 다른 형식의 문자열
+    """
+    if num == ' ':
         return False
 
-    try:
-        for i in num:
-            if int(i) not in list(range(0, 10)):
-                return False
-    except ValueError:  # 입력받은 값이 숫자가 아니어서 오류가 뜬다면 예외로 처리하고 false 로 리턴한다.
-        return False
-
-    for i in range(3):
-        for j in range(3):
-            if i != j and num[i] == num[j]:
-                return False  # 만약 중복되는 숫자를 입력받았다면 다시 입력해야 한다.
-
-    return True  # 모든 조건을 만족하면 True 로 리턴.
+    for i in num:
+        if int(i) not in list(range(0, 10)):  # 각 자리의 수가 0~9인지 확인
+            return False
+    return True
 
 
-def game(answer_num, predict_num):
-    """
-    :param answer_num: 실제 정답인 숫자
-    :param predict_num: 사용자가 예측한 숫자
-    :return: 스트라이크, 볼, 아웃이 각각 몇개인지
-    """
-
-    ans_s = 0
-    ans_b = 0
-    ans_o = 0
-
-    for i in range(len(predict_num)):
-
-        if predict_num[i] == answer_num[i]:  # 스트라이크 개수
-            ans_s += 1
-        elif predict_num[i] in answer_num:  # 볼 개수
-            ans_b += 1
-        else:  # 아웃 개수
-            ans_o += 1
-
-    return 'Strike : ' + str(ans_s) + '   Ball : ' + str(ans_b) + '   Out : ' + str(ans_o)
-
-
+print('=' * 15)
+# 게임 시작
 while True:
-    print('숫자야구 게임입니다~')
-    answer = make_number()
-    cnt = 1
-    while cnt <= 10:
+    ans = make_answer(3)  # 세자리 숫자로 이루어진 임의의 문자열 생성
+    print("I made a answer, try to guess")
+    tri = 1  # tri:시도횟수
+    while tri <= 10:
+        guess = ' '
+        while len(guess) != 3 or not test(guess):  # 사용자가 입력한 값이 세자리 숫자일때까지 반복해서 입력받음
+            if len(guess) != 3 and guess != ' ':
+                print('your answer is uncorrect format, type like "123"')
+            print('Guess #%s:' % tri, end='')
+            guess = input()
 
-        print('-' * 50)
-        print('10번 안에 성공해야 해! --> 현재 시도횟수 : %d' % cnt)
-        print('서로 다른 숫자 3개를 입력해봐!')
-        predict = input()  # 문자열로 저장.
+        print(SBO(guess, ans))  # S, B, O값 출력
+        tri += 1
 
-        if answer == predict:
-            print('♥♥♥♥♥정답♥♥♥♥♥')
+        if guess == ans:  # 답을 입력할 시 게임 종료
             break
 
-        if number_test(predict):
-            print(game(answer, predict))
-            cnt = cnt + 1
-            if cnt == 11:
-                print('10번 틀렸어! 정답은 %s야.' % answer)
-        else:
-            print('숫자를 다시 입력해!')
-
-    print('-' * 50)
-    print('게임 다시 할거야? (tell yes or no)')
-    tell_answer = input()
-    if tell_answer == 'no':
+        if tri > 10:  # 시도가 10번 초과했을 때 게임 종료
+            print("You are wrong, The answer is %s" % ans)
+    print("Retry?")
+    print("Type yes or no")
+    if not input().lower().startswith('y'):  # 게임을 계속할지 결정
         break
