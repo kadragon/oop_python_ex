@@ -4,7 +4,7 @@ import threading
 
 # 서버의 정보 설정
 myip = '127.0.0.1'
-myport = 50000
+myport = 50001
 address = (myip, myport)
 
 # 소켓을 활용하여 서버 열기
@@ -29,8 +29,9 @@ def receive():
             print('연결이 종료되었습니다.')
             break
 
-        # print(data.decode('UTF-8'), " *from Client")
+        print(data.decode('UTF-8'), " *from Client")
     client_sock.close()
+
 
 # Thread 생성 및 실행
 thread_recv = threading.Thread(target=receive, args=())

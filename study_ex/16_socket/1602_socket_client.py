@@ -2,7 +2,7 @@ import socket, threading
 
 # 접속할 서버의 정보
 server_ip = '127.0.0.1'
-server_port = 50000
+server_port = 50001
 address = (server_ip, server_port)
 
 # 소켓을 이용해서 서버에 접속
