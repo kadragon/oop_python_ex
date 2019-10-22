@@ -1,7 +1,7 @@
 '''
 Title:tictactoe
 객체지향프로그래밍 2차 과제 | 틱택토를 만들어 보자
-제작자 2408 유동헌
+제작자 240* 유**
 날짜: 2019.9.28
 '''
 
@@ -158,7 +158,8 @@ roundcount = 0  # 전체 판수
 wincount = 0  # 이긴 횟수
 losecount = 0  # 진 횟수
 drawcount = 0  # 비긴 횟수
-while (1):
+
+while True:
     roundcount += 1  # 판 횟수추가
     isplayingGame = True  # 한 판의 게임에 대한 부울값
     board = [' ' for i in range(10)]  # 보드 초기화
@@ -171,9 +172,11 @@ while (1):
     first = setfirst() - 1  # 1혹은 2로 값이 리턴되니 인덱스 범위에 맞게 -1
     Whosturn = False  # 누구의 차례인지 구분하는 부울값
     print(iconset[first] + '이 먼저 시작합니다!')  # 차례 안내
+
     if iconset[first] == playericon:  # 플레이어 아이콘이 먼저일 경우
         Whosturn = True  # 부울값 수정
-    while (isplayingGame):
+
+    while isplayingGame:
         if Whosturn:  # 플레이어가 먼저일 때
             board[player(playericon, board)] = playericon  # 플레이어에게 위치 입력받고 보드 수정
             Whosturn = False  # 컴퓨터 차례로 전환

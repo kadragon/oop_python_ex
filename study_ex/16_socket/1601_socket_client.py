@@ -1,7 +1,7 @@
 import socket
 
 # 접속하고자 하는 서버의 주소 및 포트
-server_ip = '127.0.0.1'
+server_ip = '192.168.1.80'
 server_port = 50000
 address = (server_ip, server_port)
 

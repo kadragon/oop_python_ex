@@ -15,7 +15,7 @@ lis = [0, 1, 2]
 
 def intro():  # 인트로, 말 선택
     global a, user, cpu
-    print("2616 황인서 || 틱택토 게임")
+    print("26** 황** || 틱택토 게임")
     print("저를 이기실 수 있나요?")
     print("O와 X 중 당신의 말을 선택하세요.")
     while 1:

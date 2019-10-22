@@ -1,4 +1,4 @@
-'''
+"""
     함수 종류
     1. help : 규칙 설명
     2. print_score : 현재까지의 스코어 및 승률 출력
@@ -12,16 +12,16 @@
     9. check_f2 : 컴퓨터가 꼭 놓아야 하는 위치가 있는지 판단
     10. write_score : 우승자를 출력하고 점수를 기록하는 함수
     11. ask_retry : 재플레이 의사 확인
-'''
+"""
 
 import random
 import time
 
 
 def help():
-    '''
+    """
     게임 규칙 도움말
-    '''
+    """
     print('=' * 75)
     print('Tic Tac Toe !')
     print('본 게임은 3개의 연속된 표시를 컴퓨터보다 먼저 완성하면 이기는 게임입니다')
@@ -40,19 +40,19 @@ def help():
 
 
 def print_score(win_cnt):
-    '''
+    """
     컴퓨터와 사용자의 승리 횟수를 출력
     이긴 횟수 합이 0이 아니면 승률도 함께 출력
-    '''
+    """
     print('COM : %d VS YOU : %d' % (win_cnt['컴퓨터'], win_cnt['당신']))
     if win_cnt['컴퓨터'] + win_cnt['당신'] != 0:
         print('승률 : %0.2f' % (win_cnt['당신'] / (win_cnt['컴퓨터'] + win_cnt['당신'])))
 
 
 def choose_shape():
-    '''
+    """
     사용자가 원하는 모양을 선택하도록 하는 함수
-    '''
+    """
     shape = input('O,X 중 원하는 모양을 입력하세요').upper()
     if shape != 'O' and shape != 'X':
         print('잘못된 입력입니다. ')
@@ -62,9 +62,9 @@ def choose_shape():
 
 
 def choose_start():
-    '''
+    """
     사용자가 먼저 할지 나중에 할지 선택하도록 하는 함수
-    '''
+    """
     now = input('먼저 시작하시겠습니까? (예 : 1 / 아니오 : 0)')
     if now != '1' and now != '0':
         print('잘못된 입력입니다. ')
@@ -74,12 +74,12 @@ def choose_start():
 
 
 def play(now, board, check, shape_list, winner):
-    '''
+    """
     게임을 진행하는 함수
     now 가 1이면 사용자에게 직접 입력을 받고
     now 가 0이면 컴퓨터가 선택할 위치를 판단
     우승자 번호 winner 와 다음 차례의 번호 now 를 return
-    '''
+    """
     if now == 1:
         # 선택된 자리에 사용자의 모양을 채움
         board[get_input(board)] = shape_list[0]
@@ -106,9 +106,9 @@ def play(now, board, check, shape_list, winner):
 
 
 def watch(board):
-    '''
+    """
     말판을 출력해주는 함수
-    '''
+    """
     for i in range(0, 3):
         for j in range(1, 4):
             print('%c ' % board[i * 3 + j], end=' ')
@@ -117,10 +117,10 @@ def watch(board):
 
 
 def get_input(board):
-    '''
+    """
     사용자의 입력을 받는 함수
     1 ~ 9까지의 숫자만 입력 받도록 함
-    '''
+    """
     print('당신의 차례입니다')
     print('숫자를 입력하세요')
     try:
@@ -139,11 +139,11 @@ def get_input(board):
 
 
 def select(board, check):
-    '''
+    """
     컴퓨터가 선택할 수를 판단하는 함수
     check_f2 함수를 통해 꼭 놓아야하는 위치를 먼저 판단하고
     그런 위치가 없으면 랜덤으로 위치를 선정
-    '''
+    """
     print('컴퓨터의 차례입니다')
     num = check_f2(board, check)
     while board[num] != '-' or num == 0:
@@ -153,11 +153,11 @@ def select(board, check):
 
 
 def check_f(board, check):
-    '''
+    """
     이겼는지 판단하는 함수
     check 리스트에 저장된 모든 가로, 세로, 대각선을 확인해 줌
     이겼으면 1을 return
-    '''
+    """
     for list in check:
         if board[list[0]] == board[list[1]] == board[list[2]] != '-':
             return 1
@@ -165,11 +165,11 @@ def check_f(board, check):
 
 
 def check_f2(board, check):
-    '''
+    """
     꼭 놓아야하는 곳이 있는지 확인해주는 함수
     check 리스트에 저장된 모든 가로, 세로, 대각선 중 두칸이 같게 채워져있고, 나머지 한칸이 비어있는 경우
     비어있는 칸의 인덱스를 return
-    '''
+    """
     for list in check:
         if board[list[0]] == board[list[1]] != '-' and board[list[2]] == '-':
             return list[2]
@@ -182,19 +182,19 @@ def check_f2(board, check):
 
 
 def write_score(who, winner, win_cnt):
-    '''
+    """
     이긴 사람을 출력하고
     이긴 횟수를 1 증가시켜 점수를 기록
-    '''
+    """
     print('%s의 승리입니다' % (who[winner]))
     return win_cnt[who[winner]] + 1
 
 
 def ask_retry():
-    '''
+    """
     게임을 다시 할 것인지 물어보는 함수
     잘못된 입력을 걸러냄
-    '''
+    """
     print('게임을 다시 하시겠습니까?')
     print('예 : 1 / 아니오 : 0')
     retry = input()

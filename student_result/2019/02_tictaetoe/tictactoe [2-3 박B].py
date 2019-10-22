@@ -203,7 +203,7 @@ def playagain():
             print("%s check input..." % e)
 
 
-while (True):
+while True:
     board = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']]  # 시작하는 보드
     user, com = intro_set()  # 사용자와 컴퓨터 말 정하기
     order = random.randint(0, 1)  # 순서 정하기는 랜덤
@@ -232,5 +232,5 @@ while (True):
 
         order = not order  # 다음 플레이어 차례
 
-    if playagain() == False:  # 다시 플레이 할지 물어본다
+    if playagain() is False:  # 다시 플레이 할지 물어본다
         break

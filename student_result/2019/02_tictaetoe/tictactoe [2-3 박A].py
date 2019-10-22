@@ -116,11 +116,9 @@ def getComputerMove(board, computerLetter):
     # 다음 움직임에서 이길 수 있을지를 판단한다.
 
     for i in range(1, 10):
-
         copy = getBoardCopy(board)
 
         if isSpaceFree(copy, i):
-
             makeMove(copy, computerLetter, i)
 
             if isWinner(copy, computerLetter):
@@ -129,11 +127,9 @@ def getComputerMove(board, computerLetter):
     # 플레이어가 다음 움직임에서 이길 수 있을지를 판단하고, 그렇다면 그것을 막는다.
 
     for i in range(1, 10):
-
         copy = getBoardCopy(board)
 
         if isSpaceFree(copy, i):
-
             makeMove(copy, playerLetter, i)
 
             if isWinner(copy, playerLetter):
@@ -143,7 +139,7 @@ def getComputerMove(board, computerLetter):
 
     move = chooseRandomMoveFromList(board, [1, 3, 7, 9])
 
-    if move != None:
+    if move is not None:
         return move
 
     # 중앙이 비어 있다면 그 위치에 둔다.
@@ -158,9 +154,7 @@ def getComputerMove(board, computerLetter):
 
 def isBoardFull(board):
     # 판의 모든 자리가 차 있다면 true를, 그렇지 않다면 false를 리턴한다.
-
     for i in range(1, 10):
-
         if isSpaceFree(board, i):
             return False
 
@@ -169,7 +163,6 @@ def isBoardFull(board):
 
 def determinewinrate(win, lose, tie):
     # 이긴횟수, 진횟수, 비긴횟수, 승률을 출력하는 함수
-
     print("이긴 횟수 : %d 진 횟수 : %d 비긴 횟수 : %d" % (win, lose, tie))  # 총 이긴 횟수, 비긴 횟수, 진 횟수 출력
     print("승률 : %.2f퍼센트" % (win / (win + lose + tie) * 100))  # 승률을 계산하여 출력
 
@@ -177,17 +170,11 @@ def determinewinrate(win, lose, tie):
 print('틱택토를 플레이해봅시다')
 
 while True:
-
     # 판을 리셋한다.
-
     theBoard = [' '] * 10
-
     playerLetter, computerLetter = PlayerLetter()
-
     turn = determineFirst()
-
     print(turn + ' 가 먼저 합니다')
-
     gameIsPlaying = True
 
     wintime = 0  # 이긴 횟수 계산
@@ -195,41 +182,25 @@ while True:
     tietime = 0  # 비긴 횟수 계산
 
     while gameIsPlaying:
-
         if turn == 'player':
-
             # 플레이어의 차례.
-
             drawgame(theBoard)
-
             move = getPlayerMove(theBoard)
-
             makeMove(theBoard, playerLetter, move)
 
             if isWinner(theBoard, playerLetter):
-
                 drawgame(theBoard)
-
                 wintime = 1 + wintime  # 이길 시 이긴 횟수에 1 추가
-
                 print('플레이어가 이겼습니다!')
-
                 gameIsPlaying = False
-
             else:
                 if isBoardFull(theBoard):
-
                     drawgame(theBoard)
-
                     tietime = 1 + tietime  # 비길 시 비긴 횟수에 1 추가
-
                     print('무승부입니다.')
-
                     break
-
                 else:
                     turn = 'computer'
-
         else:
             # 컴퓨터의 차례
             move = getComputerMove(theBoard, computerLetter)
@@ -240,7 +211,6 @@ while True:
                 losetime = losetime + 1  # 질 시 진 횟수에 1 추가
                 print('컴퓨터가 이겼습니다!')
                 gameIsPlaying = False
-
             else:
                 if isBoardFull(theBoard):
                     drawgame(theBoard)
