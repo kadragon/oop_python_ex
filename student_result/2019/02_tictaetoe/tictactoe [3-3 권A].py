@@ -1,72 +1,152 @@
 import random
+import copy
 
-print("답을 입력할 때 공백 없이 숫자를 적어주세요")
-print("Ex] 123")
-print("S = 숫자와 위치가 모두 맞은 개수")
-print("B = 숫자는 맞지만 위치가 틀린 개수")
-print("O = 숫자와 위치가 모두 틀린 개수")
-print("=" * 100)
+w = 0
+t = 0
+l = 0
+
+print("Let's play Tic Tac Toe!")
+print("X goes first! O goes last!")
 
 
-def fun():
-    a = list(range(10))  # a=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    random.shuffle(a)  # a가 랜덤하게 배열
+def printpresent(alist):  # 화면에 현재 상태를 출력하는 기능
+    for i in [0, 3, 6]:
+        for j in [0, 1, 2]:
+            if j != 0:
+                print(" |", end='')
+            print(' ' + alist[i + j], end='')
+        print()
+        print('-' * 12)
 
-    ans = []
-    ans.extend(a[0:3])  # 중복 없는 random한 세자리 수 : 답
 
-    def game():
-        try:
-            expect = list(map(int, list(input())))  # 사용자의 답을 리스트 형태로 저장
+def compter(alist, struse, strcom):  # 컴퓨터가 다음 둘 곳을 판단하는 기능
+    a = list(range(0, 9))  # a = [ 0, 1, 2, 3, 4, 5, 6, 7 ,8 ]
+    random.shuffle(a)  # a를 랜덤하게 배열
+    t = 10
+    cp = copy.copy(alist)  # 현 게임판 복사
+    for i in range(0, 9):
+        if cp[i] == ' ':
+            cp = copy.copy(alist)  # cp를 현 게임판으로 초기화
+            cp[i] = strcom
+            if win(cp, struse, strcom) == 0:  # 컴퓨터가 승리할 수 있는 자리 계산
+                t = i
+    for i in range(0, 9):
+        if cp[i] == ' ':
+            cp = copy.copy(alist)
+            cp[i] = struse
+            if win(cp, struse, strcom) == 1:  # 사용자가 승리할 수 있는 자리 계산
+                t = i
+    if t == 10:  # 컴퓨터나 사용자가 승리할 수 있는 자리가 없으면 랜덤으로 자리 배치
+        for i in a:
+            if alist[i] == ' ':
+                t = i
+    alist[t] = strcom
 
-            S = 0  # 스트라이크 초기화
-            B = 0  # 볼 초기화
-            O = 0  # 아웃 초기화
 
-            if ans == expect:  # 정답일때
-                print("Answer!")
-                print("One more try? yes/no")  # 다시 하는 지 묻기
-                p = input()
-                if p == "yes":
-                    fun()  # 게임 실행
-                else:
-                    exit()  # 나가기
-            try:
-                for i in range(0, 3):
-                    if ans[i] == expect[i]:  # 스트라이크 개수
-                        S += 1
-                    elif ans[0] == expect[i]:  # 볼 개수
-                        B += 1
-                    elif ans[1] == expect[i]:
-                        B += 1
-                    elif ans[2] == expect[i]:
-                        B += 1
-                    else:  # 아웃 개수
-                        O += 1
-                print(" %dS || %dB || %dO " % (S, B, O))  # 결과 출력
+def check(alist, str):  # 사용자의 위치를 입력 받고 공간을 확인하는 함수
+    try:
+        print("What is your next move? (1-9)")
+        t = int(input())
 
-            except IndexError:
-                print("Try again")  # 숫자를 적게 넣었을 때 에러 방지
-        except ValueError:
-            print("Try again")  # 띄어쓰기 포함했을 때 에러 방지
+        while t not in [1, 2, 3, 4, 5, 6, 7, 8, 9]:  # 1~9 제외 다른 숫자 입력 시 재입력
+            print("Try again")
+            t = int(input())
 
-    i = 1
-    while i < 11:
-        print("Guess #%d" % i)
-        game()
-        i += 1  # 기회 10번
+        while alist[t - 1] != ' ':  # 이미 선택된 자리 입력 시 재입력
+            print("Can not be placed")
+            print("What is your next move? (1-9)")
+            t = int(input())
+        alist[t - 1] = str
+    except ValueError:  # 사용자가 숫자가 아닌 다른 문자를 입력했을 떄
+        print("Try again")
+        check(alist, str)
 
-    print("Game over!")  # 10번 안에 못 맞추었을 경우
-    print("Answer is", end=' ')
-    for j in range(0, 3):
-        print(ans[j], end='')  # 답 출력
-    print()
-    print("One more try? yes/no")  # 다시하는지 묻기
-    y = input()
-    if y == "yes":
-        fun()  # 게임 실행
+
+def win(alist, struse, strcom):
+    row1 = alist[0:3]
+    row2 = alist[3:6]
+    row3 = alist[6:9]
+    col1 = alist[0:9:3]
+    col2 = alist[1:9:3]
+    col3 = alist[2:9:3]
+    rit = alist[0:9:4]
+    lit = alist[2:8:2]
+
+    if row1.count(struse) == 3 or row2.count(struse) == 3 or row3.count(struse) == 3:  # 사용자 가로줄 확인
+        return 1
+    if col1.count(struse) == 3 or col2.count(struse) == 3 or col3.count(struse) == 3:  # 사용자 세로줄 확인
+        return 1
+    if rit.count(struse) == 3 or lit.count(struse) == 3:  # 사용자 대각선 확인
+        return 1
+    if row1.count(strcom) == 3 or row2.count(strcom) == 3 or row3.count(strcom) == 3:  # 컴퓨터 가로줄 확인
+        return 0
+    if col1.count(strcom) == 3 or col2.count(strcom) == 3 or col3.count(strcom) == 3:  # 컴퓨터 세로줄 확인
+        return 0
+    if rit.count(strcom) == 3 or lit.count(strcom) == 3:  # 컴퓨터 대각선 확인
+        return 0
     else:
-        exit()  # 나가기
+        return 2
 
 
-fun()  # 게임 실행
+def again():  # 사용자에게 다시 플레이 할 것인지 물어보는 함수
+    print("One more try? Y/N")
+    ans = str(input()).upper()
+    if ans == 'YES' or ans == 'Y':  # 재시작
+        ttt()
+    else:  # 끝
+        exit()
+
+
+def report(a, b, c):  # 승률을 기록하는 함수
+    global w
+    global t
+    global l
+    w += a  # 승리횟수
+    t += b  # 비긴 횟수
+    l += c  # 진 횟수
+    print("Win : %d Tie : %d Lose %d" % (w, t, l))
+
+
+def ttt():
+    alist = [' '] * 9  # 게임 판
+    print("Do you want to be X or O?")  # 사용자의 패 선택
+    a = str(input()).upper()
+    while a not in ['X', 'O']:  # O, X가 아닌 다른 패를 선택했을 때 재입력
+        print("Try again")
+        a = str(input()).upper()
+    if a == 'X':
+        print("--------You go first-------- ")
+        b = 'O'
+    else:
+        b = 'X'
+        print("--------Computer goes first-------- ")
+
+    for i in range(0, 9):
+        if a == 'X' and i % 2 == 0:  # X가 선, 사용자 입력
+            check(alist, a)
+        elif a == 'O' and i % 2 == 1:  # O가 후, 사용자 입력
+            check(alist, a)
+        elif a == 'X' and i % 2 == 1:  # X가 선, 컴퓨터 입력 및 게임 현황 출력
+            compter(alist, a, b)
+            printpresent(alist)
+        elif a == 'O' and i % 2 == 0:  # O가 후, 컴퓨터 입력 및 게임 현황 출력
+            compter(alist, a, b)
+            printpresent(alist)
+        if win(alist, a, b) == 1:  # 사용자 승리
+            printpresent(alist)
+            print("You win!")
+            report(1, 0, 0)  # 승 추가
+            again()
+        elif win(alist, a, b) == 0:  # 컴퓨터 승리
+            print("You lose!")
+            report(0, 0, 1)  # 패 추가
+            again()
+
+    if a == 'X':
+        printpresent(alist)
+    print("The game is tie!")  # 비김
+    report(0, 1, 0)  # 비김 추가
+    again()  # 다시 할 지 묻기
+
+
+ttt()
