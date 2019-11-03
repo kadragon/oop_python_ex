@@ -27,8 +27,8 @@ class Kakao_vision_api(Kakao_api):
             }
             return self.post_json(target_url, file=file, data=payload)['result']
 
-
-s = Kakao_vision_api()
-result = s.vision_face_detect(image_url='https://file.mk.co.kr/meet/neds/2019/10/image_readtop_2019_783017_15698844653918925.jpg')
-for i in result['faces']:
-    print(i['facial_attributes']['gender'])
+if __name__ == '__main__':
+    s = Kakao_vision_api()
+    result = s.vision_face_detect(image_url='https://file.mk.co.kr/meet/neds/2019/10/image_readtop_2019_783017_15698844653918925.jpg')
+    for i in result['faces']:
+        print(i['facial_attributes']['gender'])

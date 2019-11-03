@@ -71,15 +71,12 @@ class Kakao_translation(Kakao_api):
         return self.get_json(self.url_maker('/v1/translation/translate'), payload=data)['translated_text'][0]
 
 
-k = Kakao_local_api()
+if __name__ == '__main__':
+    k = Kakao_local_api()
 
-data_list = k.local_address('세종특별자치시 달빛1로 265')
-print(data_list[0])
+    data_list = k.local_address('세종특별자치시 달빛1로 265')
+    print(data_list[0])
 
-data_list = k.local_keyword('편의점', x='127.24904338902533', y='36.52262151763814', sort='distance', radius=1000)
-for data in data_list:
-    print("%s | %13s | %s | %s" % (data['place_name'], data['phone'], data['place_url'], data['road_address_name']))
-
-t = Kakao_translation()
-print(t.translation_translate('Hello', 'en', 'kr'))
-print(t.translation_translate('세종과학예술영재학교', 'kr', 'en'))
+    data_list = k.local_keyword('편의점', x='127.24904338902533', y='36.52262151763814', sort='distance', radius=1000)
+    for data in data_list:
+        print("%s | %13s | %s | %s" % (data['place_name'], data['phone'], data['place_url'], data['road_address_name']))
