@@ -17,5 +17,5 @@ class Kakao_translation(Kakao_api):
 
 if __name__ == '__main__':
     t = Kakao_translation()
-    print(t.translation_translate('Hello', 'en', 'kr'))
+    print(t.translation_translate('He that has no shame has no conscience', 'en', 'kr'))
     print(t.translation_translate('세종과학예술영재학교', 'kr', 'en'))
