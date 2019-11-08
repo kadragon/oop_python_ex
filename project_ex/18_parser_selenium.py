@@ -68,3 +68,5 @@ for post in posts:
     print("=" * 20)
 
 print('END')
+
+driver.quit()  # 드라이버 사용 종료. 이 코드가 없을 경우 프로세스가 남게 됨.
